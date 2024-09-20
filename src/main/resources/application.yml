@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/pattory
-    username : pattory
-    password : pattory
+    url: jdbc:mariadb://localhost:3306/pettory
+    username : pettory
+    password : pettory
   jpa:
     show-sql: true
     properties:
