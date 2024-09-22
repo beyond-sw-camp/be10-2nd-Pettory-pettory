@@ -18,4 +18,3 @@ mybatis:
 # image:
   # image-url: http://localhost:8080/productimgs/
   # image-dir: src/main/resources/static/productimgs
-  ddd
