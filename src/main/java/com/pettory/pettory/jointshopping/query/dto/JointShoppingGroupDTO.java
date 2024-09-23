@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class GroupDTO {
+public class JointShoppingGroupDTO {
     private Long jointShoppingGroupNum;
     private String jointShoppingGroupName;
     private String jointShoppingProducts;
@@ -16,6 +16,6 @@ public class GroupDTO {
     private Integer jointShoppingGroupMaximumCount;
     private Integer jointShoppingParticipationMaximumCount;
     private String hostInvoiceNum;
-    private CategoryDTO category;
+    private JointShoppingCategoryDTO category;
     private Long userId;
 }

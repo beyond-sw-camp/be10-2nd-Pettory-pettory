@@ -42,6 +42,8 @@ dependencies {
     // 09.22 지훈 - vaild, swagger 추가
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+    // 09.23 지훈 - 파일 입출력 io 추가
+    implementation 'commons-io:commons-io:2.11.0'
 }
 
 tasks.named('test') {
