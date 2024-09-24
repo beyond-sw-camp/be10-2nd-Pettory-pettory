@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/chat")
-public class PettoryChatController {
+public class ChatController {
 
     /* Test 를 위한 testChatting */
     @GetMapping("/testChatting")

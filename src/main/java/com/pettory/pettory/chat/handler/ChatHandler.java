@@ -13,7 +13,7 @@ import java.util.List;
 /* WebSocket 핸들러 생성
 * @Component 를 통한 Bean 등록 */
 @Component
-public class PettoryChatHandler extends TextWebSocketHandler {
+public class ChatHandler extends TextWebSocketHandler {
 
     /* 1. 채팅방에 들어와있는 session 들을 추적할 list 생성 */
     private static final List<WebSocketSession> userList = new ArrayList<>();
