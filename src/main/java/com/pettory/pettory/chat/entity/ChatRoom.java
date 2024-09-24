@@ -5,20 +5,22 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /* ChatRoomTable 에 대한 Entity 생성 */
 @Entity
-@Table(name="chatroom_table")
 @Getter
+@Table(name="chatroom_table")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChatRoom {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int chatroomUniqueNum;
-    private int chatroomInsertTime;
-    private int chatroomUpdateTime;
-    private int chatroomDeleteTime;
-    private int chatroomState;
-    private int chatroomType;
+    private LocalDateTime chatroomInsertTime;
+    private LocalDateTime chatroomUpdateTime;
+    private LocalDateTime chatroomDeleteTime;
+    private String chatroomState;
+    private String chatroomType;
     private int chatroomTypeNum;
 }
