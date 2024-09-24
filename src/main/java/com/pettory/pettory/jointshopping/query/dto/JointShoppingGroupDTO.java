@@ -9,7 +9,7 @@ public class JointShoppingGroupDTO {
     private Long jointShoppingGroupNum;
     private String jointShoppingGroupName;
     private String jointShoppingProducts;
-    private Character jointShoppingProductsState;
+    private String jointShoppingProductsState;
     private String jointShoppingProductsFileDirectory;
     private String jointShoppingInfo;
     private Integer jointShoppingCost;

@@ -36,11 +36,11 @@ public class JointShoppingGroupCommandController {
     @PutMapping("/group/{jointShoppingGroupNum}")
     public ResponseEntity<Void> updateGroup(
             @PathVariable Long jointShoppingGroupNum,
-            @RequestPart @Valid jointShoppingGroupUpdateRequest productRequest,
+            @RequestPart @Valid jointShoppingGroupUpdateRequest groupRequest,
             @RequestPart(required = false) MultipartFile productImg
     ) {
 
-        jointShoppingGroupApplicationService.updateGroup(jointShoppingGroupNum, productRequest, productImg);
+        jointShoppingGroupApplicationService.updateGroup(jointShoppingGroupNum, groupRequest, productImg);
 
         return ResponseEntity.created(URI.create("/jointshopping/group/" + jointShoppingGroupNum)).build();
 

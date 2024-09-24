@@ -19,10 +19,11 @@ public class JointShoppingGroupQueryController {
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
             @RequestParam(required = false) Long categoryNum,
-            @RequestParam(required = false) String groupName
+            @RequestParam(required = false) String groupName,
+            @RequestParam(required = false) String products
     ) {
 
-        JointShoppingGroupListResponse response = jointShoppingGroupQueryService.getGroups(page, size, categoryNum, groupName);
+        JointShoppingGroupListResponse response = jointShoppingGroupQueryService.getGroups(page, size, categoryNum, groupName, products);
 
         return ResponseEntity.ok(response);
     }

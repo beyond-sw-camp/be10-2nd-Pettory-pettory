@@ -27,16 +27,18 @@
         c.joint_shopping_category_title as "category.joint_shopping_category_title",
         g.user_id
         FROM joint_shopping_group g
-        JOIN joint_shopping_category c ON (g.joint_shopping_category_num = b.joint_shopping_category_num)
-        WHERE g.joint_shopping_group_state = 'A'
-        OR g.joint_shopping_group_state = 'C'
+        JOIN joint_shopping_category c ON (g.joint_shopping_category_num = c.joint_shopping_category_num)
+        WHERE (g.joint_shopping_group_state = 'APPLICATION' OR g.joint_shopping_group_state = 'CLOSE')
         <if test="categoryNum != null">
-            AND g.category_num = #{categoryNum}
+            AND g.joint_shopping_category_num = #{categoryNum}
         </if>
         <if test="groupName != null">
-            AND g.group_name LIKE CONCAT('%', #{groupName}, '%')
+            AND g.joint_shopping_group_name LIKE CONCAT('%', #{groupName}, '%')
         </if>
-        ORDER BY g.joint_shopping_group_num DESC
+        <if test="products != null">
+            AND g.joint_shopping_products LIKE CONCAT('%', #{products}, '%')
+        </if>
+        ORDER BY g.joint_shopping_group_num
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
@@ -56,21 +58,23 @@
         c.joint_shopping_category_title as "category.joint_shopping_category_title",
         g.user_id
         FROM joint_shopping_group g
-        JOIN joint_shopping_category c ON (g.joint_shopping_category_num = b.joint_shopping_category_num)
+        JOIN joint_shopping_category c ON (g.joint_shopping_category_num = c.joint_shopping_category_num)
         WHERE joint_shopping_group_num = #{groupNum}
-        AND (g.joint_shopping_group_state = 'A' OR g.joint_shopping_group_state = 'C')
+        AND (g.joint_shopping_group_state = 'APPLICATION' OR g.joint_shopping_group_state = 'CLOSE')
     </select>
 
     <select id="countGroups" resultType="long">
         SELECT COUNT(*)
         FROM joint_shopping_group
-        WHERE joint_shopping_group_state = 'A'
-        OR joint_shopping_group_state = 'C'
+        WHERE (joint_shopping_group_state = 'APPLICATION' OR joint_shopping_group_state = 'CLOSE')
         <if test="categoryNum != null">
-            AND g.category_num = #{categoryNum}
+            AND joint_shopping_category_num = #{categoryNum}
         </if>
         <if test="groupName != null">
-            AND g.group_name LIKE CONCAT('%', #{groupName}, '%')
+            AND joint_shopping_group_name LIKE CONCAT('%', #{groupName}, '%')
+        </if>
+        <if test="products != null">
+            AND joint_shopping_products LIKE CONCAT('%', #{products}, '%')
         </if>
     </select>
 

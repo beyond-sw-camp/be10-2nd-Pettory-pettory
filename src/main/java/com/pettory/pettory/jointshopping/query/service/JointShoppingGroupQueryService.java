@@ -19,11 +19,11 @@ public class JointShoppingGroupQueryService {
 
     /* 공동구매모임 목록 조회 */
     @Transactional(readOnly = true)
-    public JointShoppingGroupListResponse getGroups(Integer page, Integer size, Long categoryNum, String groupName) {
+    public JointShoppingGroupListResponse getGroups(Integer page, Integer size, Long categoryNum, String groupName, String products) {
         int offset = (page - 1) * size;
-        List<JointShoppingGroupDTO> groups = jointShoppingGroupMapper.selectGroups(offset, size, categoryNum, groupName);
+        List<JointShoppingGroupDTO> groups = jointShoppingGroupMapper.selectGroups(offset, size, categoryNum, groupName, products);
 
-        long totalItems = jointShoppingGroupMapper.countGroups(categoryNum, groupName);
+        long totalItems = jointShoppingGroupMapper.countGroups(categoryNum, groupName, products);
 
         return JointShoppingGroupListResponse.builder()    // 이 클래스가 가지고 있는 필드값들이 메서드에 자동완성, 세팅을 여기서 함
                 .groupList(groups)

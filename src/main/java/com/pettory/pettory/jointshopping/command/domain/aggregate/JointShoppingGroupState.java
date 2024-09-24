@@ -1,6 +1,6 @@
 package com.pettory.pettory.jointshopping.command.domain.aggregate;
 
-public enum JointShoppingGroupStatus {
+public enum JointShoppingGroupState {
 
     APPLICATION,    // 신청
     CLOSE,  // 마감

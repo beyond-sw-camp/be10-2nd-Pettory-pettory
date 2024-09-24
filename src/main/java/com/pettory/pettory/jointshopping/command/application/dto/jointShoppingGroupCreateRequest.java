@@ -11,26 +11,19 @@ import lombok.RequiredArgsConstructor;
 public class jointShoppingGroupCreateRequest {
 
     @NotBlank
-    @NotNull
     private final String jointShoppingGroupName;
     @NotBlank
-    @NotNull
     private final String jointShoppingProducts;
     private final String jointShoppingInfo;
-    @NotBlank
     @NotNull
     private final Integer jointShoppingCost;
-    @NotBlank
     @NotNull
     private final Integer jointShoppingGroupMaximumCount;
-    @NotBlank
     @NotNull
     private final Integer jointShoppingParticipationMaximumCount;
     private final String hostInvoiceNum;
-    @NotBlank
     @NotNull
     private final Long jointShoppingCategoryNum;
-    @NotBlank
     @NotNull
     private final Long userId;
 

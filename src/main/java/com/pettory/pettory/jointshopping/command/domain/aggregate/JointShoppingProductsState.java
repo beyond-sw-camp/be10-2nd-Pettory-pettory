@@ -1,6 +1,6 @@
 package com.pettory.pettory.jointshopping.command.domain.aggregate;
 
-public enum JointShoppingProductStatus {
+public enum JointShoppingProductsState {
 
     Recruitment,    // 모집중
     OrderCompleted, // 주문완료

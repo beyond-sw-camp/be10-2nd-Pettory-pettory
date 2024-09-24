@@ -16,18 +16,22 @@ import org.springframework.web.multipart.MultipartFile;
 public class JointShoppingGroupDomainService {
 
     private String IMAGE_URL = "http://localhost:8080/joint-shopping-groupimgs/";
-    private String IMAGE_DIR = "src/main/resources/static/jointShoppingGroupImgs";
+    private String IMAGE_DIR = "src/main/resources/static/jointshoppinggroupimgs/";
 
     private final JointShoppingGroupRepository jointShoppingGroupRepository;
 
     /* 도메인 객체를 생성하는 로직 */
     public JointShoppingGroup createGroup(jointShoppingGroupCreateRequest groupRequest, MultipartFile productImg) {
 
-        /* 전달 된 파일을 서버의 지정 경로에 저장 */
-        String replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, productImg);
+        /* 전달 된 파일을 서버의 지정 경로에 저장
+        * 파일이 없으면 저장 안함 */
+        String replaceFileName = null;
+        if(productImg != null) {
+            replaceFileName = IMAGE_DIR + FileUploadUtils.saveFile(IMAGE_DIR, productImg);
+        }
 
         /* dto to entity */
-        JointShoppingGroup newJointShoppingGroup = JointShoppingGroupMapper.toEntity(groupRequest, IMAGE_DIR + replaceFileName);
+        JointShoppingGroup newJointShoppingGroup = JointShoppingGroupMapper.toEntity(groupRequest, replaceFileName);
 
         return newJointShoppingGroup;
     }
@@ -38,7 +42,7 @@ public class JointShoppingGroupDomainService {
     }
 
     /* 도메인 객체를 수정하는 로직 */
-    public void updateGroup(Long jointShoppingGroupNum, jointShoppingGroupUpdateRequest productRequest, MultipartFile productImg) {
+    public void updateGroup(Long jointShoppingGroupNum, jointShoppingGroupUpdateRequest groupRequest, MultipartFile productImg) {
 
         JointShoppingGroup jointShoppingGroup = jointShoppingGroupRepository.findById(jointShoppingGroupNum)
                 .orElseThrow(() -> new NotFoundException("해당 코드에 맞는 상품이 없습니다. code : " + jointShoppingGroupNum));
@@ -52,15 +56,15 @@ public class JointShoppingGroupDomainService {
 
         /* 수정을 위해 엔터티 정보 변경 */
         jointShoppingGroup.update(
-                productRequest.getJointShoppingGroupName(),
-                productRequest.getJointShoppingProducts(),
-                productRequest.getJointShoppingInfo(),
-                productRequest.getJointShoppingCost(),
-                productRequest.getJointShoppingGroupMaximumCount(),
-                productRequest.getJointShoppingParticipationMaximumCount(),
-                productRequest.getHostInvoiceNum(),
-                productRequest.getJointShoppingCategoryNum(),
-                productRequest.getUserId()
+                groupRequest.getJointShoppingGroupName(),
+                groupRequest.getJointShoppingProducts(),
+                groupRequest.getJointShoppingInfo(),
+                groupRequest.getJointShoppingCost(),
+                groupRequest.getJointShoppingGroupMaximumCount(),
+                groupRequest.getJointShoppingParticipationMaximumCount(),
+                groupRequest.getHostInvoiceNum(),
+                groupRequest.getJointShoppingCategoryNum(),
+                groupRequest.getUserId()
         );
     }
 

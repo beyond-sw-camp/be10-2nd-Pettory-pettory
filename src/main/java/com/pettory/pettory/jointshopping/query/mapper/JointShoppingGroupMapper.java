@@ -8,9 +8,9 @@ import java.util.List;
 
 @Mapper
 public interface JointShoppingGroupMapper {
-    List<JointShoppingGroupDTO> selectGroups(@Param("offset") int offset, @Param("limit") int limit, @Param("categoryNum") Long categoryNum, @Param("groupName") String groupName);
+    List<JointShoppingGroupDTO> selectGroups(@Param("offset") int offset, @Param("limit") int limit, @Param("categoryNum") Long categoryNum, @Param("groupName") String groupName, @Param("products") String products);
 
-    long countGroups(@Param("categoryNum") Long categoryNum, @Param("groupName") String groupName);
+    long countGroups(@Param("categoryNum") Long categoryNum, @Param("groupName") String groupName, @Param("products") String products);
 
     JointShoppingGroupDTO selectGroupByNum(@Param("groupNum") Long groupNum);
 }
