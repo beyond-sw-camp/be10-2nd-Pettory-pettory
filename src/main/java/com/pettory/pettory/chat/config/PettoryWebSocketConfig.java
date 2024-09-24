@@ -18,6 +18,6 @@ public class PettoryWebSocketConfig implements WebSocketConfigurer {
     /* Socket Handler 등록 */
     @Override
     public void registerWebSocketHandlers(@NonNull WebSocketHandlerRegistry registry) {
-
+        registry.addHandler(pettoryChatHandler, "wss/testChatting").setAllowedOrigins("*");
     }
 }
