@@ -43,7 +43,7 @@ public class JointShoppingGroup {
     private Long jointShoppingCategoryNum;
     private Long userId;
 
-    public JointShoppingGroup(String jointShoppingGroupName, String jointShoppingProducts, String jointShoppingProductsFileDirectory, String jointShoppingInfo, Integer jointShoppingCost, Integer jointShoppingGroupMaximumCount, Integer jointShoppingParticipationMaximumCount, String hostInvoiceNum, Long jointShoppingCategoryNum, Long userId) {
+    private JointShoppingGroup(String jointShoppingGroupName, String jointShoppingProducts, String jointShoppingProductsFileDirectory, String jointShoppingInfo, Integer jointShoppingCost, Integer jointShoppingGroupMaximumCount, Integer jointShoppingParticipationMaximumCount, String hostInvoiceNum, Long jointShoppingCategoryNum, Long userId) {
         this.jointShoppingGroupName = jointShoppingGroupName;
         this.jointShoppingProducts = jointShoppingProducts;
         this.jointShoppingProductsFileDirectory = jointShoppingProductsFileDirectory;

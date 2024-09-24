@@ -1,7 +1,7 @@
 package com.pettory.pettory.jointshopping.command.domain.service;
 
-import com.pettory.pettory.jointshopping.command.application.dto.jointShoppingGroupCreateRequest;
-import com.pettory.pettory.jointshopping.command.application.dto.jointShoppingGroupUpdateRequest;
+import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupCreateRequest;
+import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupUpdateRequest;
 import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingGroup;
 import com.pettory.pettory.jointshopping.command.domain.repository.JointShoppingGroupRepository;
 import com.pettory.pettory.jointshopping.command.mapper.JointShoppingGroupMapper;
@@ -21,7 +21,7 @@ public class JointShoppingGroupDomainService {
     private final JointShoppingGroupRepository jointShoppingGroupRepository;
 
     /* 도메인 객체를 생성하는 로직 */
-    public JointShoppingGroup createGroup(jointShoppingGroupCreateRequest groupRequest, MultipartFile productImg) {
+    public JointShoppingGroup createGroup(JointShoppingGroupCreateRequest groupRequest, MultipartFile productImg) {
 
         /* 전달 된 파일을 서버의 지정 경로에 저장
         * 파일이 없으면 저장 안함 */
@@ -42,10 +42,10 @@ public class JointShoppingGroupDomainService {
     }
 
     /* 도메인 객체를 수정하는 로직 */
-    public void updateGroup(Long jointShoppingGroupNum, jointShoppingGroupUpdateRequest groupRequest, MultipartFile productImg) {
+    public void updateGroup(Long jointShoppingGroupNum, JointShoppingGroupUpdateRequest groupRequest, MultipartFile productImg) {
 
         JointShoppingGroup jointShoppingGroup = jointShoppingGroupRepository.findById(jointShoppingGroupNum)
-                .orElseThrow(() -> new NotFoundException("해당 코드에 맞는 상품이 없습니다. code : " + jointShoppingGroupNum));
+                .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 모임이 없습니다. code : " + jointShoppingGroupNum));
 
         /* 이미지 수정이 필요할 경우 새로운 이미지 저장 후 기존 이미지 삭제 */
         if(productImg != null) {

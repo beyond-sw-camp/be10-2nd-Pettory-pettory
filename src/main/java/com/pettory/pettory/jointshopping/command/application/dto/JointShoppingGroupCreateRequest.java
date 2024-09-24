@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor    // 모든 값을 전달받은 생성자 생성
-public class jointShoppingGroupCreateRequest {
+public class JointShoppingGroupCreateRequest {
 
     @NotBlank
     private final String jointShoppingGroupName;
