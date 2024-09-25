@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "UPDATE walking_group SET walking_group_state = 'DELETE' WHERE walking_group_id = ?")
+@SQLDelete(sql = "UPDATE walking_group SET walking_group_state = 'DELETE', walkingGroupDeleteDatetime = now() WHERE walking_group_id = ?")
 public class WalkingGroup {
 
     @Id
@@ -29,6 +29,7 @@ public class WalkingGroup {
     private WalkingGroupState walkingGroupState = WalkingGroupState.APPLICATION;
     @CreatedDate
     private LocalDateTime walkingGroupInsertDatetime;
+    @Column(insertable = false)
     @LastModifiedDate
     private LocalDateTime walkingGroupUpdateDatetime;
     private LocalDateTime walkingGroupDeleteDatetime;
