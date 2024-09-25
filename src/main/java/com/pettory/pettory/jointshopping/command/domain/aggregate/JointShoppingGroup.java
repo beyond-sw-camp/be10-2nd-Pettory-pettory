@@ -16,7 +16,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)  // 엔티티 생성, 삭제 시점 체크를 위해 필요한 리스너
-@SQLDelete(sql = "UPDATE joint_shopping_group SET joint_shopping_group_state = 'DELETE', joint_shopping_group_delete_datetime = NOW() WHERE joint_shopping_group_num = ?")
+@SQLDelete(sql = "UPDATE joint_shopping_group " +
+        "SET joint_shopping_group_state = 'DELETE', joint_shopping_group_delete_datetime = NOW() " +
+        "WHERE joint_shopping_group_num = ?")
 public class JointShoppingGroup {
 
     @Id
@@ -35,11 +37,11 @@ public class JointShoppingGroup {
     @Enumerated(value = EnumType.STRING)
     private JointShoppingGroupState jointShoppingGroupState = JointShoppingGroupState.APPLICATION;
     @CreatedDate
-    private LocalDateTime joint_shopping_group_insert_datetime;
+    private LocalDateTime jointShoppingGroupInsertDatetime;
     @Column(insertable = false)
     @LastModifiedDate
-    private LocalDateTime joint_shopping_group_update_datetime;
-    private LocalDateTime joint_shopping_group_delete_datetime;
+    private LocalDateTime jointShoppingGroupUpdateDatetime;
+    private LocalDateTime jointShoppingGroupDeleteDatetime;
     private Long jointShoppingCategoryNum;
     private Long userId;
 
