@@ -21,8 +21,8 @@ public class JointShoppingCategory {
     }
 
     // JointShoppingCategory 생성 메서드
-    public static JointShoppingCategory create(String categoryTitle) {
-        return new JointShoppingCategory(categoryTitle);
+    public static JointShoppingCategory create(String jointShoppingCategoryTitle) {
+        return new JointShoppingCategory(jointShoppingCategoryTitle);
     }
 
     // 카테고리 변경하는 메소드

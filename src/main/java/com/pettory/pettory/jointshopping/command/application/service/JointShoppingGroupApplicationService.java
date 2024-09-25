@@ -36,6 +36,7 @@ public class JointShoppingGroupApplicationService {
     }
 
     /* 공동구매모임 삭제 */
+    @Transactional
     public void deleteGroup(Long jointShoppingGroupNum) {
         jointShoppingGroupDomainService.deleteGroup(jointShoppingGroupNum);
     }

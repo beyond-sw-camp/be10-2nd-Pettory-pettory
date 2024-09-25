@@ -7,6 +7,7 @@ import com.pettory.pettory.jointshopping.command.domain.service.JointShoppingCat
 import com.pettory.pettory.jointshopping.command.domain.service.JointShoppingGroupDomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +16,7 @@ public class JointShoppingCategoryApplicationService {
     private final JointShoppingCategoryDomainService jointShoppingCategoryDomainService;
 
     /* 카테고리 등록 */
+    @Transactional
     public Long createCateogory(JointShoppingCategoryRequest categoryRequest) {
 
         /* jointshoppingcategory 도메인 로직 실행, entity 반환 */
@@ -28,11 +30,13 @@ public class JointShoppingCategoryApplicationService {
     }
 
     /* 카테고리 수정 */
+    @Transactional
     public void updateCategory(Long jointShoppingCategoryNum, JointShoppingCategoryRequest categoryRequest) {
         jointShoppingCategoryDomainService.updateCategory(jointShoppingCategoryNum, categoryRequest);
     }
 
     /* 카테고리 삭제 */
+    @Transactional
     public void deleteCategory(Long jointShoppingCategoryNum) {
         jointShoppingCategoryDomainService.deleteCategory(jointShoppingCategoryNum);
     }

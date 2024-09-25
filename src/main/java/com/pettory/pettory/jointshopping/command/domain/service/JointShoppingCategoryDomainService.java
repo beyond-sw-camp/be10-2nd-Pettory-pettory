@@ -42,5 +42,6 @@ public class JointShoppingCategoryDomainService {
     /* 도메인 객체를 삭제하는 로직 */
     public void deleteCategory(Long jointShoppingCategoryNum) {
         jointShoppingCategoryRepository.deleteById(jointShoppingCategoryNum);
+
     }
 }
