@@ -2,9 +2,7 @@ package com.pettory.pettory.jointshopping.command.application.service;
 
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingCategoryRequest;
 import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingCategory;
-import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingGroup;
 import com.pettory.pettory.jointshopping.command.domain.service.JointShoppingCategoryDomainService;
-import com.pettory.pettory.jointshopping.command.domain.service.JointShoppingGroupDomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

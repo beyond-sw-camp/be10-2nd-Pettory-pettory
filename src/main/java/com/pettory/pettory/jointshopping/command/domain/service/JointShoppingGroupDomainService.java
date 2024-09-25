@@ -1,12 +1,12 @@
 package com.pettory.pettory.jointshopping.command.domain.service;
 
-import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupCreateRequest;
-import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupUpdateRequest;
+import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupRequest;
 import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingGroup;
 import com.pettory.pettory.jointshopping.command.domain.repository.JointShoppingGroupRepository;
 import com.pettory.pettory.jointshopping.command.mapper.JointShoppingGroupMapper;
 import com.pettory.pettory.jointshopping.exception.NotFoundException;
 import com.pettory.pettory.jointshopping.util.FileUploadUtils;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +21,7 @@ public class JointShoppingGroupDomainService {
     private final JointShoppingGroupRepository jointShoppingGroupRepository;
 
     /* 도메인 객체를 생성하는 로직 */
-    public JointShoppingGroup createGroup(JointShoppingGroupCreateRequest groupRequest, MultipartFile productImg) {
+    public JointShoppingGroup createGroup(JointShoppingGroupRequest groupRequest, MultipartFile productImg) {
 
         /* 전달 된 파일을 서버의 지정 경로에 저장
         * 파일이 없으면 저장 안함 */
@@ -42,7 +42,7 @@ public class JointShoppingGroupDomainService {
     }
 
     /* 도메인 객체를 수정하는 로직 */
-    public void updateGroup(Long jointShoppingGroupNum, JointShoppingGroupUpdateRequest groupRequest, MultipartFile productImg) {
+    public void updateGroup(Long jointShoppingGroupNum, @Valid JointShoppingGroupRequest groupRequest, MultipartFile productImg) {
 
         JointShoppingGroup jointShoppingGroup = jointShoppingGroupRepository.findById(jointShoppingGroupNum)
                 .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 모임이 없습니다. code : " + jointShoppingGroupNum));

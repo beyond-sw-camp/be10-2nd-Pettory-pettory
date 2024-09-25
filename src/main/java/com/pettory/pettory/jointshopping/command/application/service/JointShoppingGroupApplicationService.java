@@ -1,9 +1,9 @@
 package com.pettory.pettory.jointshopping.command.application.service;
 
-import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupCreateRequest;
-import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupUpdateRequest;
+import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupRequest;
 import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingGroup;
 import com.pettory.pettory.jointshopping.command.domain.service.JointShoppingGroupDomainService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +17,7 @@ public class JointShoppingGroupApplicationService {
 
     /* 공동구매모임 등록 */
     @Transactional
-    public Long createGroup(JointShoppingGroupCreateRequest groupRequest, MultipartFile productImg) {
+    public Long createGroup(@Valid JointShoppingGroupRequest groupRequest, MultipartFile productImg) {
 
         /* jointshoppinggroup 도메인 로직 실행, entity 반환 */
         JointShoppingGroup newJointShoppingGroup = jointShoppingGroupDomainService.createGroup(groupRequest, productImg);
@@ -31,7 +31,7 @@ public class JointShoppingGroupApplicationService {
 
     /* 공동구매모임 수정 */
     @Transactional
-    public void updateGroup(Long jointShoppingGroupNum, JointShoppingGroupUpdateRequest productRequest, MultipartFile productImg) {
+    public void updateGroup(Long jointShoppingGroupNum, @Valid JointShoppingGroupRequest productRequest, MultipartFile productImg) {
         jointShoppingGroupDomainService.updateGroup(jointShoppingGroupNum, productRequest, productImg);
     }
 

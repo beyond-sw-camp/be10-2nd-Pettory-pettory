@@ -1,7 +1,6 @@
 package com.pettory.pettory.jointshopping.command.application.controller;
 
-import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupCreateRequest;
-import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupUpdateRequest;
+import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupRequest;
 import com.pettory.pettory.jointshopping.command.application.service.JointShoppingGroupApplicationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,7 @@ public class JointShoppingGroupCommandController {
     /* 공동구매모임 등록 */
     @PostMapping("/group")
     public ResponseEntity<Void> createGroup(
-            @RequestPart @Valid JointShoppingGroupCreateRequest groupRequest,
+            @RequestPart @Valid JointShoppingGroupRequest groupRequest,
             @RequestPart(required = false) MultipartFile productImg
     ) {
 
@@ -36,7 +35,7 @@ public class JointShoppingGroupCommandController {
     @PutMapping("/group/{jointShoppingGroupNum}")
     public ResponseEntity<Void> updateGroup(
             @PathVariable Long jointShoppingGroupNum,
-            @RequestPart @Valid JointShoppingGroupUpdateRequest groupRequest,
+            @RequestPart @Valid JointShoppingGroupRequest groupRequest,
             @RequestPart(required = false) MultipartFile productImg
     ) {
 

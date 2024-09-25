@@ -44,4 +44,20 @@ public class JointShoppingGroupQueryService {
 
         return new JointShoppingGroupDetailResponse(group);
     }
+
+    /* 즐겨찾기된 목록 조회 */
+    @Transactional(readOnly = true)
+    public JointShoppingGroupListResponse getBookmarks(Integer page, Integer size, Long userId) {
+        int offset = (page - 1) * size;
+        List<JointShoppingGroupDTO> groups = jointShoppingGroupMapper.selectBookmarks(offset, size, userId);
+
+        long totalItems = jointShoppingGroupMapper.countBookmarks(userId);
+
+        return JointShoppingGroupListResponse.builder()    // 이 클래스가 가지고 있는 필드값들이 메서드에 자동완성, 세팅을 여기서 함
+                .groupList(groups)
+                .currentPage(page)
+                .totalPages((int) Math.ceil((double) totalItems / size))
+                .totalItems(totalItems)
+                .build();
+    }
 }

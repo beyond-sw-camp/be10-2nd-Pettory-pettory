@@ -2,10 +2,8 @@ package com.pettory.pettory.jointshopping.command.domain.service;
 
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingCategoryRequest;
 import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingCategory;
-import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingGroup;
 import com.pettory.pettory.jointshopping.command.domain.repository.JointShoppingCategoryRepository;
 import com.pettory.pettory.jointshopping.exception.NotFoundException;
-import com.pettory.pettory.jointshopping.util.FileUploadUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -13,4 +13,8 @@ public interface JointShoppingGroupMapper {
     long countGroups(@Param("categoryNum") Long categoryNum, @Param("groupName") String groupName, @Param("products") String products);
 
     JointShoppingGroupDTO selectGroupByNum(@Param("groupNum") Long groupNum);
+
+    List<JointShoppingGroupDTO> selectBookmarks(@Param("offset") int offset, @Param("limit") int limit, @Param("userId") Long userId);
+
+    long countBookmarks(@Param("userId") Long userId);
 }

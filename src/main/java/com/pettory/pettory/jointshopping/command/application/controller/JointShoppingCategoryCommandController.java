@@ -1,9 +1,7 @@
 package com.pettory.pettory.jointshopping.command.application.controller;
 
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingCategoryRequest;
-import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupCreateRequest;
 import com.pettory.pettory.jointshopping.command.application.service.JointShoppingCategoryApplicationService;
-import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingCategory;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +18,7 @@ public class JointShoppingCategoryCommandController {
 
     /* 카테고리 등록 */
     @PostMapping("/category")
-    public ResponseEntity<Void> createGroup(
+    public ResponseEntity<Void> createCategory(
             @RequestBody @Valid JointShoppingCategoryRequest categoryRequest
     ) {
         Long jointShoppingCategoryNum = jointShoppingCategoryApplicationService.createCateogory(categoryRequest);
@@ -43,7 +41,7 @@ public class JointShoppingCategoryCommandController {
 
     }
 
-    /* 상품 삭제 */
+    /* 카테고리 삭제 */
     @DeleteMapping("/category/{jointShoppingCategoryNum}")
     public ResponseEntity<Void> deleteCategory(@PathVariable final Long jointShoppingCategoryNum) {
 

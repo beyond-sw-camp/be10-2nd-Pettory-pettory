@@ -14,6 +14,7 @@ public class JointShoppingGroupQueryController {
 
     private final JointShoppingGroupQueryService jointShoppingGroupQueryService;
 
+    /* 공동구매모임 전체 조회 */
     @GetMapping("/group")
     public ResponseEntity<JointShoppingGroupListResponse> getGroups(
             @RequestParam(defaultValue = "1") Integer page,
@@ -28,6 +29,7 @@ public class JointShoppingGroupQueryController {
         return ResponseEntity.ok(response);
     }
 
+    /* 공동구매모임 상세 조회 */
     @GetMapping("/group/{groupNum}")
     public ResponseEntity<JointShoppingGroupDetailResponse> getGroup(@PathVariable Long groupNum) {
 
@@ -35,5 +37,19 @@ public class JointShoppingGroupQueryController {
 
         return ResponseEntity.ok(response);
     }
+
+    /* 즐겨찾기된 모임 조회 */
+    @GetMapping("/bookmark")
+    public ResponseEntity<JointShoppingGroupListResponse> getBookmarks(
+            @RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "10") Integer size,
+            @RequestParam Long userId
+    ) {
+
+        JointShoppingGroupListResponse response = jointShoppingGroupQueryService.getBookmarks(page, size, userId);
+
+        return ResponseEntity.ok(response);
+    }
+
 
 }

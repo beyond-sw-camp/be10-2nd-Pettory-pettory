@@ -78,4 +78,36 @@
         </if>
     </select>
 
+    <select id="selectBookmarks" resultType="com.pettory.pettory.jointshopping.query.dto.JointShoppingGroupDTO">
+        SELECT
+        g.joint_shopping_group_num,
+        g.joint_shopping_group_name,
+        g.joint_shopping_products,
+        g.joint_shopping_products_state,
+        g.joint_shopping_products_file_directory,
+        g.joint_shopping_info,
+        g.joint_shopping_cost,
+        g.joint_shopping_group_maximum_count,
+        g.joint_shopping_participation_maximum_count,
+        g.host_invoice_num,
+        c.joint_shopping_category_num as "category.joint_shopping_category_num",
+        c.joint_shopping_category_title as "category.joint_shopping_category_title",
+        g.user_id
+        FROM joint_shopping_group g
+        JOIN joint_shopping_category c ON (g.joint_shopping_category_num = c.joint_shopping_category_num)
+        JOIN bookmark b ON (g.joint_shopping_group_num = b.joint_shopping_group_num)
+        WHERE b.user_id = #{userId}
+        AND (g.joint_shopping_group_state = 'APPLICATION' OR g.joint_shopping_group_state = 'CLOSE')
+        ORDER BY g.joint_shopping_group_num
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countBookmarks" resultType="long">
+        SELECT COUNT(*)
+        FROM joint_shopping_group g
+        JOIN bookmark b ON (g.joint_shopping_group_num = b.joint_shopping_group_num)
+        WHERE b.user_id = #{userId}
+        AND (joint_shopping_group_state = 'APPLICATION' OR joint_shopping_group_state = 'CLOSE')
+    </select>
+
 </mapper>
