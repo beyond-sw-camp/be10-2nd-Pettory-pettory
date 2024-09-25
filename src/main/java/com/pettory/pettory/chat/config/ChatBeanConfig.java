@@ -8,7 +8,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ChatBeanConfig {
 
-//    @Bean
-//    public ModelMapper modelmapper = new ModelMapper();
-//    /*  */
+    @Bean
+    public ModelMapper modelmapper() {
+        ModelMapper modelMapper = new ModelMapper();
+        /* setter 메소드 미사용시 ModelMapper 가 private 필드에 접근 가능하도록 설정 */
+        modelMapper.getConfiguration().setFieldAccessLevel(
+                org.modelmapper.config.Configuration.AccessLevel.PRIVATE
+        ).setFieldMatchingEnabled(true);
+        return modelMapper;
+    }
+
 }
