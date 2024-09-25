@@ -1,7 +1,9 @@
 package com.pettory.pettory.chat.service;
 
 import com.pettory.pettory.chat.dto.ChatRoomDTO;
+import com.pettory.pettory.chat.dto.ChattingDTO;
 import com.pettory.pettory.chat.entity.ChatRoom;
+import com.pettory.pettory.chat.entity.Chatting;
 import com.pettory.pettory.chat.enums.ChatRoomStateEnum;
 import com.pettory.pettory.chat.repository.*;
 import jakarta.transaction.Transactional;
@@ -49,5 +51,9 @@ public class ChatService {
         chatRoom.modifyChatRoomState(chatRoomDTO.getChatRoomState());
         chatRoom.modifyChatRoomUpdateTime(chatRoomDTO.getChatRoomUpdateTime());
         chatRoom.modifyChatRoomDeleteTime(chatRoomDTO.getChatRoomDeleteTime());
+    }
+
+    public void registerChatting(ChattingDTO chattingDTO) {
+        chattingRepository.save(chatModelMapper.map(chattingDTO, Chatting.class));
     }
 }

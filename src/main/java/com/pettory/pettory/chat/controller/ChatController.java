@@ -1,10 +1,12 @@
 package com.pettory.pettory.chat.controller;
 
+import com.pettory.pettory.chat.dto.ChattingDTO;
+import com.pettory.pettory.chat.entity.Chatting;
 import com.pettory.pettory.chat.enums.ChatRoomStateEnum;
 import com.pettory.pettory.chat.dto.ChatRoomDTO;
 import com.pettory.pettory.chat.enums.ChatRoomTypeEnum;
+import com.pettory.pettory.chat.enums.ChattingStateEnum;
 import com.pettory.pettory.chat.service.ChatService;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,22 +38,20 @@ public class ChatController {
 
     /* 채팅방 생성 */
     @PostMapping("/chatroom")
-    public String insertChatRoom(@ModelAttribute ChatRoomDTO chatRoomDTO, Model model) {
+    public String registerChatRoom(@ModelAttribute ChatRoomDTO chatRoomDTO,
+                                   @ModelAttribute ChattingDTO chattingDTO, Model model) {
         /* 산책 모임방, 공동 구매 모임방 생성시 chatRoomDTO setting
         - 프론트 단에서 dto 생성해서 넘겨 받을 예정, 임시작업 */
         LocalDateTime localDateTime = LocalDateTime.now();
         chatRoomDTO.setChatRoomInsertTime(localDateTime);
         chatRoomDTO.setChatRoomState(String.valueOf(ChatRoomStateEnum.ACTIVE));
         chatRoomDTO.setChatRoomType(String.valueOf(ChatRoomTypeEnum.WALKING));
-        chatRoomDTO.setChatRoomTypeNum(1);
+        chatRoomDTO.setChatRoomTypeNum(3);
 
         /* 채팅방 DB 등록*/
         chatService.registerChatRoom(chatRoomDTO);
 
-        /* 등록된 채팅방에 첫 메시지 등록 */
-        //model.addAttribute(chatRoomDTO);
-
-        return "testChatting";
+        return "forward:/chatting";
     }
 
     /* 채팅방 상태 수정
@@ -74,8 +74,19 @@ public class ChatController {
 
     /* 채팅방의 채팅 내용을 저장 */
     @PostMapping("/chatting")
-    public void insertChatting() {
+    public String registerChatting(@ModelAttribute ChattingDTO chattingDTO, Model model) {
+       /* 산책 모임방, 공동 구매 모임방 생성시 chattingDTO setting
+        - 프론트 단에서 dto 생성해서 넘겨 받을 예정, 임시작업, 프론트에서 chatRoomDTO 에서 DELETE 요청 가정 */
+        LocalDateTime localDateTime = LocalDateTime.now();
+        chattingDTO.setChattingChatRoomUniqueNum(2);
+        chattingDTO.setChattingContent("Test Chatting");
+        chattingDTO.setChattingInsertTime(localDateTime);
+        chattingDTO.setChattingState(String.valueOf(ChattingStateEnum.ACTIVE));
+        chattingDTO.setUserId(1);
 
+        chatService.registerChatting(chattingDTO);
+
+        return "testChatting";
     }
 
     /* 채팅방의 채팅 내용을 수정 */
