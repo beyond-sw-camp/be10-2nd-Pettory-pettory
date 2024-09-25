@@ -24,7 +24,15 @@ public class ChatRoom {
     private String chatroomType;
     private int chatroomTypeNum;
 
-//    public void modifyChatRoomState(String chatRoomState) {
-//        this.chatroomState = chatroomState;
-//    }
+    public void modifyChatRoomState(String chatRoomState) {
+        this.chatroomState = chatRoomState;
+    }
+
+    public void modifyChatRoomUpdateTime(LocalDateTime chatRoomUpdateTime) {
+        this.chatroomUpdateTime = chatRoomUpdateTime;
+    }
+
+    public void modifyChatRoomDeleteTime(LocalDateTime chatRoomDeleteTime) {
+        this.chatroomDeleteTime = chatRoomDeleteTime;
+    }
 }

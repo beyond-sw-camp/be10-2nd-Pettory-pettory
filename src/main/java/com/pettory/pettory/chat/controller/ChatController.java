@@ -54,19 +54,23 @@ public class ChatController {
         return "testChatting";
     }
 
-    /* 채팅방 수정 */
-//    @PutMapping("/chatroom")
-//    public String modifyChatRoom(@ModelAttribute ChatRoomDTO chatRoomDTO, Model model) {
-//        /* 산책 모임방, 공동 구매 모임방 생성시 chatRoomDTO setting
-//        - 프론트 단에서 dto 생성해서 넘겨 받을 예정, 임시작업 */
-//        LocalDateTime localDateTime = LocalDateTime.now();
-//        chatRoomDTO.setChatRoomUpdateTime(localDateTime);
-//        chatRoomDTO.setChatRoomState(String.valueOf(ChatRoomStateEnum.DELETE));
-//
-//        chatService.modifyChatRoom(chatRoomDTO);
-//
-//        return "testChatting";
-//    }
+    /* 채팅방 상태 수정
+    * 이슈 : Update 와 delete 기능이 같음. delete 기능은 구현하지 않을 예정
+    * */
+    @PutMapping("/chatroom")
+    public String modifyChatRoomState(@ModelAttribute ChatRoomDTO chatRoomDTO) {
+        /* 산책 모임방, 공동 구매 모임방 생성시 chatRoomDTO setting
+        - 프론트 단에서 dto 생성해서 넘겨 받을 예정, 임시작업, 프론트에서 chatRoomDTO 에서 DELETE 요청 가정 */
+        LocalDateTime localDateTime = LocalDateTime.now();
+        chatRoomDTO.setChatRoomUpdateTime(localDateTime);
+        chatRoomDTO.setChatRoomDeleteTime(localDateTime);
+        chatRoomDTO.setChatRoomState(String.valueOf(ChatRoomStateEnum.DELETE));
+        chatRoomDTO.setChatRoomUniqueNum(2);
+
+        chatService.modifyChatRoom(chatRoomDTO);
+
+        return "testChatting";
+    }
 
     /* 채팅방의 채팅 내용을 저장 */
     @PostMapping("/chatting")
