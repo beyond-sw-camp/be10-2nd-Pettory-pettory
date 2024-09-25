@@ -1,8 +1,13 @@
 package com.pettory.pettory.chat.service;
 
+import com.pettory.pettory.chat.dto.ChatRoomDTO;
+import com.pettory.pettory.chat.entity.ChatRoom;
 import com.pettory.pettory.chat.repository.*;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.awt.*;
 
 @Service
 public class ChatService {
@@ -29,4 +34,17 @@ public class ChatService {
         this.voteChooseResultRepository = voteChooseResultRepository;
         this.voteRepository = voteRepository;
     }
+
+    /* 1. 채팅방 추가 */
+    @Transactional
+    public void registerChatRoom(ChatRoomDTO chatRoomDTO) {
+        chatRoomRepository.save(chatModelMapper.map(chatRoomDTO, ChatRoom.class));
+    }
+
+    /* 2. 채팅방 수정 */
+//    @Transactional
+//    public void modifyChatRoom(ChatRoomDTO chatRoomDTO) {
+//        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomDTO.getChatRoomUniqueNum()).orElseThrow(IllegalArgumentException::new);
+//
+//    }
 }

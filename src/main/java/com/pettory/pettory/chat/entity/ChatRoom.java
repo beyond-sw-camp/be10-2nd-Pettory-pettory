@@ -23,4 +23,8 @@ public class ChatRoom {
     private String chatroomState;
     private String chatroomType;
     private int chatroomTypeNum;
+
+//    public void modifyChatRoomState(String chatRoomState) {
+//        this.chatroomState = chatroomState;
+//    }
 }
