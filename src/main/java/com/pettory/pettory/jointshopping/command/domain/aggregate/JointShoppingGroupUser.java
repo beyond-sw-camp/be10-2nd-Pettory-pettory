@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @SQLDelete(sql = "UPDATE joint_shopping_group_user_list " +
         "SET joint_shopping_user_delete_datetime = NOW() " +
         "WHERE joint_shopping_group_user_list_num = ?")
-public class JointShoppingGroupUserList {
+public class JointShoppingGroupUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +29,8 @@ public class JointShoppingGroupUserList {
     private LocalDateTime jointShoppingUserDeleteDatetime;
     private Long jointShoppingGroupNum;
     private Long userId;
+
+    public void changeResignYn() {
+        this.resignYn = Boolean.TRUE;
+    }
 }

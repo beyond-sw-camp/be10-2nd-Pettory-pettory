@@ -17,4 +17,8 @@ public interface JointShoppingGroupMapper {
     List<JointShoppingGroupDTO> selectBookmarks(@Param("offset") int offset, @Param("limit") int limit, @Param("userId") Long userId);
 
     long countBookmarks(@Param("userId") Long userId);
+
+    List<JointShoppingGroupDTO> selectUserGroups(@Param("offset")int offset, @Param("limit") int limit, @Param("userId") Long userId);
+
+    long countUserGroups(@Param("userId") Long userId);
 }

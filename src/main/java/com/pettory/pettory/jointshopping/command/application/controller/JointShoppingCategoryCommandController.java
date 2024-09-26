@@ -17,19 +17,19 @@ public class JointShoppingCategoryCommandController {
     private final JointShoppingCategoryApplicationService jointShoppingCategoryApplicationService;
 
     /* 카테고리 등록 */
-    @PostMapping("/category")
+    @PostMapping("/categories")
     public ResponseEntity<Void> createCategory(
             @RequestBody @Valid JointShoppingCategoryRequest categoryRequest
     ) {
         Long jointShoppingCategoryNum = jointShoppingCategoryApplicationService.createCateogory(categoryRequest);
 
         return ResponseEntity
-                .created(URI.create("/jointshopping/category/" + jointShoppingCategoryNum))
+                .created(URI.create("/jointshopping/categories/" + jointShoppingCategoryNum))
                 .build();
     }
 
     /* 카테고리 수정 */
-    @PutMapping("/category/{jointShoppingCategoryNum}")
+    @PutMapping("/categories/{jointShoppingCategoryNum}")
     public ResponseEntity<Void> updateCategory(
             @PathVariable Long jointShoppingCategoryNum,
             @RequestBody @Valid JointShoppingCategoryRequest categoryRequest
@@ -37,12 +37,12 @@ public class JointShoppingCategoryCommandController {
 
         jointShoppingCategoryApplicationService.updateCategory(jointShoppingCategoryNum, categoryRequest);
 
-        return ResponseEntity.created(URI.create("/jointshopping/category/" + jointShoppingCategoryNum)).build();
+        return ResponseEntity.created(URI.create("/jointshopping/categories/" + jointShoppingCategoryNum)).build();
 
     }
 
     /* 카테고리 삭제 */
-    @DeleteMapping("/category/{jointShoppingCategoryNum}")
+    @DeleteMapping("/categories/{jointShoppingCategoryNum}")
     public ResponseEntity<Void> deleteCategory(@PathVariable final Long jointShoppingCategoryNum) {
 
         jointShoppingCategoryApplicationService.deleteCategory(jointShoppingCategoryNum);

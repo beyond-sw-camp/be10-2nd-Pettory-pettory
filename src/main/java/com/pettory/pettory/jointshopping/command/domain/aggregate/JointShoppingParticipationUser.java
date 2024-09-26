@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @SQLDelete(sql = "UPDATE joint_shopping_participation_user_list " +
         "SET participation_state = 'DELETE', joint_shopping_participation_delete_datetime = NOW() " +
         "WHERE joint_shopping_participation_user_list_num = ?")
-public class JointShoppingParticipationUserList {
+public class JointShoppingParticipationUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -13,7 +13,7 @@ public class JointShoppingCategoryQueryController {
 
     private final JointShoppingCategoryQueryService jointShoppingCategoryQueryService;
 
-    @GetMapping("/category")
+    @GetMapping("/categories")
     public ResponseEntity<JointShoppingCategoryListResponse> getCategorys(
             @RequestParam(required = false) String categoryTitle
     ) {

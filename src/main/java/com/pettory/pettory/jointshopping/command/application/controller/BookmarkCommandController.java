@@ -17,19 +17,19 @@ public class BookmarkCommandController {
     private final BookmarkApplicationService bookmarkApplicationService;
 
     /* 즐겨찾기 등록 */
-    @PostMapping("/bookmark")
+    @PostMapping("/bookmarks")
     public ResponseEntity<Void> createBookmark(
             @RequestBody @Valid BookmarkRequest bookmarkRequest
     ) {
         Long bookmarkNum = bookmarkApplicationService.createBookmark(bookmarkRequest);
 
         return ResponseEntity
-                .created(URI.create("/jointshopping/bookmark/" + bookmarkNum))
+                .created(URI.create("/jointshopping/bookmarks/" + bookmarkNum))
                 .build();
     }
 
     /* 카테고리 삭제 */
-    @DeleteMapping("/bookmark/{bookmarkNum}")
+    @DeleteMapping("/bookmarks/{bookmarkNum}")
     public ResponseEntity<Void> deleteBookmark(@PathVariable final Long bookmarkNum) {
 
         bookmarkApplicationService.deleteCategory(bookmarkNum);
