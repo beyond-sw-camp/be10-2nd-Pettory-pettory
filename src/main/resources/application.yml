@@ -15,6 +15,11 @@ mybatis:
   mapper-locations: mappers/**/*.xml
   # type-aliases-package: com.ohgiraffers.cqrs.product.query.dto
 
+## 서명에 사용할 비밀 키, 유효시간 설정
+token:
+  secret: 6j0vaISPbw3yGE3wwP2Ld5HMOoOU+IGpuhh9craggDtjqicgpgHfkftXH6q2Hcy5dNhZhZfhjfdFPkxuFcEwRg==
+  expiration_time : 43200000
+
 # image:
   # image-url: http://localhost:8080/productimgs/
   # image-dir: src/main/resources/static/productimgs
