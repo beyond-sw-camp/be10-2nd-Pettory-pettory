@@ -40,6 +40,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> {
                     authz.requestMatchers(new AntPathRequestMatcher("/login", "POST")).permitAll()
                             .requestMatchers(new AntPathRequestMatcher("/users/**", "POST")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/family/**", "GET")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/invitations/**", "GET")).hasAuthority("ROLE_USER")
                             .anyRequest().authenticated();
                 })
                 .sessionManagement(

@@ -1,5 +1,6 @@
 package com.pettory.pettory.family.query.service;
 
+import com.pettory.pettory.exception.EmptyResultException;
 import com.pettory.pettory.exception.NotFoundException;
 import com.pettory.pettory.family.query.dto.JoinedFamilyResponse;
 import com.pettory.pettory.family.query.mapper.FamilyMapper;
@@ -26,6 +27,12 @@ public class FamilyQueryService {
         UserSecurity.validateCurrentUser(userEmail);
         log.info("getFamilyInfo - userEmail: " + userEmail);
 
-        return familyMapper.selectJoinedFamilyInfo(userEmail);
+        // 가족 정보 조회
+        JoinedFamilyResponse familyInfo = familyMapper.selectJoinedFamilyInfo(userEmail);
+
+        if (familyInfo == null) {
+            throw new EmptyResultException("가족 정보가 없습니다.");
+        }
+        return familyInfo;
     }
 }
