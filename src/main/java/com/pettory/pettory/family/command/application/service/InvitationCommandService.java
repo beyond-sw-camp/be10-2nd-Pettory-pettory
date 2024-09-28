@@ -8,8 +8,10 @@ import com.pettory.pettory.family.command.domain.aggregate.Invitation;
 import com.pettory.pettory.family.command.domain.aggregate.InvitationState;
 import com.pettory.pettory.family.command.domain.repository.FamilyRepository;
 import com.pettory.pettory.family.command.domain.repository.InvitationRepository;
+import com.pettory.pettory.security.util.UserSecurity;
 import com.pettory.pettory.user.command.domain.aggregate.User;
 import com.pettory.pettory.user.command.domain.repository.UserRepository;
+import com.pettory.pettory.user.query.dto.UserEmailResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,10 +28,12 @@ public class InvitationCommandService {
 
     // 다른 사용자를 가족으로 초대
     @Transactional
-    public void inviteUserToFamily(Long invitationSendUserId, InviteToFamilyRequest inviteToFamilyRequest) {
+    public void inviteUserToFamily(String invitationSenderEmail, InviteToFamilyRequest inviteToFamilyRequest) {
+
+        UserSecurity.validateCurrentUser(invitationSenderEmail);
 
         // 1. 초대하는 회원 조회
-        User sender = userRepository.findById(invitationSendUserId)
+        User sender = userRepository.findByUserEmail(invitationSenderEmail)
                 .orElseThrow(() -> new NotFoundException("회원을 찾을 수 없습니다."));
 
         // 2. 초대받는 회원 조회

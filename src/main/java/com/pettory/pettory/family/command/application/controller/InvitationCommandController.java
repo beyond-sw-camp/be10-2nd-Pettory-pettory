@@ -4,6 +4,7 @@ import com.pettory.pettory.common.CommonResponseDTO;
 import com.pettory.pettory.family.command.application.dto.InviteToFamilyRequest;
 import com.pettory.pettory.family.command.application.dto.KickMemberRequest;
 import com.pettory.pettory.family.command.application.service.InvitationCommandService;
+import com.pettory.pettory.security.util.UserSecurity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,20 +12,19 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/family")
+@RequestMapping("/invitations")
 public class InvitationCommandController {
-    // TODO: RESTful 메소드 이름으로 고치기!!
 
     private final InvitationCommandService invitationCommandService;
-    ;
 
     // 다른 회원을 가족으로 초대
-    @PostMapping("/invite")
+    @PostMapping
     public ResponseEntity<CommonResponseDTO> inviteToFamily(@RequestBody InviteToFamilyRequest inviteToFamilyRequest) {
 
-        // TODO : 로그인 구현 후 현재 로그인 한 유저id 가져와야 함
-        Long invitationSenderUserId = 19L;
-        invitationCommandService.inviteUserToFamily(invitationSenderUserId, inviteToFamilyRequest);
+        String currentUserEmail = UserSecurity.getCurrentUserEmail();
+
+
+        invitationCommandService.inviteUserToFamily(currentUserEmail, inviteToFamilyRequest);
 
         CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "초대 전송 성공", null);
         return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
