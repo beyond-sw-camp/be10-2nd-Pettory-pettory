@@ -31,6 +31,7 @@ public class FamilyQueryController {
         log.info("currentUserEmail: " + currentUserEmail);
         // 가족 정보 조회
         JoinedFamilyResponse family = familyQueryService.getFamilyInfo(currentUserEmail);
+        log.info("family: " + family);
         CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "가족 조회 성공", family);
         return ResponseEntity.ok(successResponse);
     }

@@ -52,7 +52,7 @@ public class JwtUtil {
     public Authentication getAuthentication(String token) {
 
         /* 토큰을 들고 왔던 들고 오지 않았던(로그인 시) 동일하게 security가 관리 할 UserDetails 타입을 정의 */
-        UserDetails userDetails = userCommandService.loadUserByUsername(this.getUserEmail(token));
+        UserDetails userDetails = userCommandService.loadUserByUsername(this.getUserId(token));
 
         /* 토큰에서 claim들 추출 */
 /*        Claims claims = parseClaims(token);
@@ -75,20 +75,15 @@ public class JwtUtil {
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    // Token에서 사용자의 Email(subject 클레임) 추출
-    private String getUserEmail(String token) {
-        return parseClaims(token).getSubject();
-    }
-
     /* Token에서 Claims 추출 */
     public Claims parseClaims(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
-//    /* Token에서 사용자의 id(subject 클레임) 추출 */
-//    public String getUserId(String token) {
-//        return parseClaims(token).getSubject();
-//    }
+    /* Token에서 사용자의 id(subject 클레임) 추출 */
+    public String getUserId(String token) {
+        return parseClaims(token).getSubject();
+    }
 
 
 }
