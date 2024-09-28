@@ -39,15 +39,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> {
                     authz.requestMatchers(new AntPathRequestMatcher("/login", "POST")).permitAll()
-                            .requestMatchers(new AntPathRequestMatcher("/user/**", "POST")).permitAll()
-                            .requestMatchers(new AntPathRequestMatcher("/family/**", "POST")).permitAll()
-                            .requestMatchers(new AntPathRequestMatcher("/user/**", "GET")).permitAll()
-                            .requestMatchers(new AntPathRequestMatcher("/user/**", "PUT")).permitAll()
-                            .requestMatchers(new AntPathRequestMatcher("/family/**", "GET")).hasAuthority("ROLE_USER")
-                            .requestMatchers(new AntPathRequestMatcher("/family/**", "PUT")).permitAll()
-                            .requestMatchers(new AntPathRequestMatcher("/pet/**", "GET")).permitAll()
-                            .requestMatchers(new AntPathRequestMatcher("/invitation/**", "GET")).permitAll()
-                            .requestMatchers(new AntPathRequestMatcher("/members/**", "POST")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/users/**", "POST")).permitAll()
                             .anyRequest().authenticated();
                 })
                 .sessionManagement(
