@@ -2,6 +2,8 @@ package com.pettory.pettory.user.command.domain.aggregate;
 
 import com.pettory.pettory.exception.AlreadyInFamilyException;
 import com.pettory.pettory.family.command.domain.aggregate.Family;
+import com.pettory.pettory.pet.command.domain.aggregate.Pet;
+import com.pettory.pettory.pet.command.domain.aggregate.PetAccess;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -52,6 +54,12 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "family_id")
     private Family family;
+
+    @OneToMany(mappedBy = "user")
+    List<Pet> pets = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    List<PetAccess> petAccesses = new ArrayList<>();
 
 
     // 생성자는 private으로 설정하여 외부에서의 호출 방지
