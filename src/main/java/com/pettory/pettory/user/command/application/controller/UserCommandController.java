@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserCommandController {
     // TODO: RESTful 메소드 이름으로 고치기!!
 
     private final UserCommandService userCommandService;
 
     // 회원가입
-    @PostMapping("/register")
+    @PostMapping
     public ResponseEntity<CommonResponseDTO> registerUser(@Valid @RequestBody UserRegisterRequest userRegisterRequest) {
 
 

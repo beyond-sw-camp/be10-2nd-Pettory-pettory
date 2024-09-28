@@ -52,37 +52,19 @@ public class JwtUtil {
     public Authentication getAuthentication(String token) {
 
         /* 토큰을 들고 왔던 들고 오지 않았던(로그인 시) 동일하게 security가 관리 할 UserDetails 타입을 정의 */
-        UserDetails userDetails = userCommandService.loadUserByUsername(this.getUserId(token));
-
-        /* 토큰에서 claim들 추출 */
-/*        Claims claims = parseClaims(token);
-        log.info("넘어온 AccessToken claims 확인: {}", claims);
-
-        Collection<? extends GrantedAuthority> authorities = null;
-        if(claims.get("auth") == null) {
-            throw new RuntimeException("권한 정보가 없는 토큰입니다.");
-        } else {
-            *//* 클레임에서 권한 정보 가져오기 *//*
-             authorities =
-                     Arrays.stream(claims.get("auth").toString()
-                                     .replace("[", "")
-                                     .replace("]", "")
-                                     .split(", "))
-                             .map(SimpleGrantedAuthority::new)
-                             .collect(Collectors.toList());
-        }*/
+        UserDetails userDetails = userCommandService.loadUserByUsername(this.getUserEmail(token));
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
+    // Token에서 사용자의 Email(subject 클레임) 추출
+    private String getUserEmail(String token) {
+        return parseClaims(token).getSubject();
     }
 
     /* Token에서 Claims 추출 */
     public Claims parseClaims(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
-    }
-
-    /* Token에서 사용자의 id(subject 클레임) 추출 */
-    public String getUserId(String token) {
-        return parseClaims(token).getSubject();
     }
 
 
