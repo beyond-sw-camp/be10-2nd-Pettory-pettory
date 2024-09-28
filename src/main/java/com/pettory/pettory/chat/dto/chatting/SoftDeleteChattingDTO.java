@@ -1,4 +1,4 @@
-package com.pettory.pettory.chat.dto;
+package com.pettory.pettory.chat.dto.chatting;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,13 +11,9 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @AllArgsConstructor
-public class ChattingDTO {
+public class SoftDeleteChattingDTO {
     private int chattingUniqueNum;
     private int chattingChatRoomUniqueNum;
-    private String chattingContent;
-    private LocalDateTime chattingInsertTime;
-    private LocalDateTime chattingUpdateTime;
     private LocalDateTime chattingDeleteTime;
     private String chattingState;
-    private int userId;
 }
