@@ -48,11 +48,14 @@ public class Invitation {
         return new Invitation(invitationSendUserId, invitationReceiveUserId, family);
     }
 
-    public void acceptInvitation() {
+    // 초대 상태를 ACCEPTED로 변경하는 메소드
+    public void changeInvitationStateAccepted() {
         this.invitationState = InvitationState.ACCEPTED;
+        this.invitationUpdatedAt = LocalDateTime.now();
     }
 
-    public void rejectInvitation() {
+    // 초대 상태를 REJECTED로 변경하는 메소드
+    public void changeInvitationStateRejected() {
         this.invitationState = InvitationState.REJECTED;
         this.invitationUpdatedAt = LocalDateTime.now();
     }

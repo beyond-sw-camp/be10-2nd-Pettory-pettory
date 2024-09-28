@@ -23,7 +23,6 @@ public class InvitationCommandController {
 
         String currentUserEmail = UserSecurity.getCurrentUserEmail();
 
-
         invitationCommandService.inviteUserToFamily(currentUserEmail, inviteToFamilyRequest);
 
         CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "초대 전송 성공", null);
@@ -32,35 +31,28 @@ public class InvitationCommandController {
     }
 
     // 가족 초대 거절
-    @PutMapping("/rejection")
-    // TODO : 로그인 구현 후 수정?
-    public ResponseEntity<CommonResponseDTO> rejectInvitation(@RequestParam Long invitationId) {
-        invitationCommandService.rejectInvitation(invitationId);
+    @PutMapping("/{invitationId}/rejection")
+    public ResponseEntity<CommonResponseDTO> rejectInvitation(@PathVariable Long invitationId) {
 
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "초대 거절 성공", null);
+        String currentUserEmail = UserSecurity.getCurrentUserEmail();
+
+        invitationCommandService.rejectInvitation(invitationId, currentUserEmail);
+
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "초대 거절 성공", invitationId);
         return ResponseEntity.ok(successResponse);
     }
-
 
     // 가족 초대 수락
-    @PutMapping("/acceptance")
-    // TODO : 로그인 구현 후 수정?
-    public ResponseEntity<CommonResponseDTO> acceptInvitation(@RequestParam Long invitationId) {
-        invitationCommandService.acceptInvitation(invitationId);
+    @PutMapping("/{invitationId}/acceptance")
+    public ResponseEntity<CommonResponseDTO> acceptInvitation(@PathVariable Long invitationId) {
 
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "초대 수락 성공", null);
+        String currentUseremail = UserSecurity.getCurrentUserEmail();
+
+        invitationCommandService.acceptInvitation(invitationId, currentUseremail);
+
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "초대 수락 성공", invitationId);
         return ResponseEntity.ok(successResponse);
     }
 
-    // 가족구성원을 가족에서 삭제
-    @PutMapping("/kick")
-    // TODO: 로그인 구현 후 수정?
-    public ResponseEntity<CommonResponseDTO> kickFromFamily(@RequestBody KickMemberRequest kickMemberRequest) {
-        Long familyOwnerId = 19L;
 
-        invitationCommandService.kickFromFamily(familyOwnerId, kickMemberRequest.getMemberId());
-
-        CommonResponseDTO commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(), "가족구성원 삭제 성공", null);
-        return ResponseEntity.ok(commonResponseDTO);
-    }
 }

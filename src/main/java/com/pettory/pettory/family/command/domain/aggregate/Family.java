@@ -61,7 +61,7 @@ public class Family {
     }
 
     // 가족에서 회원 수를 감소시키는 메소드
-    public void removeFamilyMember() {
+    public void reduceFamilyNumber() {
         this.familyNumber--;
     }
 

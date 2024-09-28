@@ -8,10 +8,12 @@ import com.pettory.pettory.family.command.domain.aggregate.Invitation;
 import com.pettory.pettory.family.command.domain.aggregate.InvitationState;
 import com.pettory.pettory.family.command.domain.repository.FamilyRepository;
 import com.pettory.pettory.family.command.domain.repository.InvitationRepository;
+import com.pettory.pettory.family.query.mapper.InvitationMapper;
 import com.pettory.pettory.security.util.UserSecurity;
 import com.pettory.pettory.user.command.domain.aggregate.User;
 import com.pettory.pettory.user.command.domain.repository.UserRepository;
 import com.pettory.pettory.user.query.dto.UserEmailResponse;
+import com.pettory.pettory.user.query.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ public class InvitationCommandService {
     private final InvitationRepository invitationRepository;
     private final UserRepository userRepository;
     private final FamilyRepository familyRepository;
+    private final UserMapper userMapper;
 
     // 다른 사용자를 가족으로 초대
     @Transactional
@@ -91,28 +94,45 @@ public class InvitationCommandService {
 
     // 가족 초대를 거절
     @Transactional
-    public void rejectInvitation(Long invitationId) {
+    public void rejectInvitation(Long invitationId, String userEmail) {
+
+        // 로그인한 회원 id 조회
+        Long userId = userMapper.findUserIdByEmail(userEmail).getUserId();
+
         // 초대 조회
-        Invitation invitation = invitationRepository.findById(invitationId)
+        Invitation invitation = invitationRepository.findByInvitationIdAndInvitationState(invitationId, InvitationState.PENDING)
                 .orElseThrow(() -> new NotFoundException("초대를 찾을 수 없습니다."));
 
-        invitation.rejectInvitation();
+        if (invitation.getInvitationReceiveUserId() != userId) {
+            throw new UnauthorizedException("해당 초대에 접근할 권한이 없습니다.");
+        }
 
-//        invitationRepository.save(invitation);
+        // 초대 상태를 REJECTED 로 변경
+        invitation.changeInvitationStateRejected();
+
     }
 
     // 가족 초대 수락
     @Transactional
-    public void acceptInvitation(Long invitationId) {
+    public void acceptInvitation(Long invitationId, String userEmail) {
+
+        // 로그인한 회원 id 조회
+        Long userId = userMapper.findUserIdByEmail(userEmail).getUserId();
+
         // 초대 조회
-        Invitation invitation = invitationRepository.findById(invitationId)
+        Invitation invitation = invitationRepository.findByInvitationIdAndInvitationState(invitationId, InvitationState.PENDING)
                 .orElseThrow(() -> new NotFoundException("초대를 찾을 수 없습니다."));
+
+        if (invitation.getInvitationReceiveUserId() != userId) {
+            throw new UnauthorizedException("해당 초대에 접근할 권한이 없습니다.");
+        }
 
         if (invitation.getInvitationState() == InvitationState.ACCEPTED) {
             throw new IllegalArgumentException("이미 수락된 초대입니다.");
         }
 
-        invitation.acceptInvitation();
+        // 초대 상태를 ACCEPTED 로 변경
+        invitation.changeInvitationStateAccepted();
         invitationRepository.save(invitation);
 
         User receiver = userRepository.findById(invitation.getInvitationReceiveUserId())
@@ -122,51 +142,6 @@ public class InvitationCommandService {
                 .orElseThrow(() -> new NotFoundException("가족이 존재하지 않습니다."));
 
         receiver.joinFamily(family);
-//        userRepository.save(receiver);
     }
 
-    // 가족 구성원을 가족에서 삭제
-    @Transactional
-    public void kickFromFamily(Long familyOwnerId, Long memberId) {
-
-        // 1. 삭제하는 회원 조회
-        User owner = userRepository.findById(familyOwnerId)
-                .orElseThrow(() -> new NotFoundException("회원을 찾을 수 없습니다."));
-
-        // 2. 가족 조회
-        Family family = owner.getFamily();
-        if (family == null) {
-            throw new NotFoundException("가족을 찾을 수 없습니다");
-        }
-
-        // 3. 삭제하는 회원이 가족의 주인인지 확인
-        if (!family.isOwner(familyOwnerId)) {
-            throw new UnauthorizedException("가족의 주인만 가족구성원을 삭제할 수 있습니다.");
-        }
-
-        // 4. 삭제 당하는 회원 조회
-        User member = userRepository.findById(memberId)
-                .orElseThrow(() -> new NotFoundException("삭제하려는 회원을 찾을 수 없습니다."));
-
-        // 5. 삭제 당하는 회원이 삭제하는 회원과 같은지 확인
-        if (member.getUserId() == owner.getUserId()) {
-            throw new SelfException("자기 자신을 삭제할 수 없습니다.");
-        }
-
-        // 6. 삭제 당하는 회원이 삭제하는 회원과 같은 가족인지 확인
-        if (member.getFamily() != owner.getFamily()) {
-            throw new UnauthorizedException("해당 회원은 같은 가족이 아닙니다.");
-        }
-
-        // 7. 가족에서 회원 삭제
-        member.updateFamilyIdAsNull();
-
-        // 8. 회원을 삭제한 가족의 가족구성원이 1명 남은 경우 해당 가족 삭제
-        if (family.getFamilyNumber() == 1) {
-            family.updateFamilyStateAsDeleted();
-        } else {
-            // 가족 구성원 수 감소
-            family.removeFamilyMember();
-        }
-    }
 }

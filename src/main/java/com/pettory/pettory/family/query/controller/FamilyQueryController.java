@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("family/")
+@RequestMapping("/families")
 @Slf4j
 public class FamilyQueryController {
 

@@ -3,6 +3,7 @@ package com.pettory.pettory.family.command.domain.repository;
 import com.pettory.pettory.family.command.domain.aggregate.Invitation;
 import com.pettory.pettory.family.command.domain.aggregate.InvitationState;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 public interface InvitationRepository {
@@ -12,5 +13,6 @@ public interface InvitationRepository {
     Optional<Invitation> findById(Long invitationId);
 
     boolean existsByInvitationSendUserIdAndInvitationReceiveUserIdAndInvitationState(Long userId, Long userId1, InvitationState invitationState);
-    // 초대를 보낸 회원의 id와 초대를 받은 회원의 id가 일치하는 레코드가 있는지 확인하는 메소드
+
+    Optional<Invitation> findByInvitationIdAndInvitationState(Long invitationId, InvitationState invitationState);
 }
