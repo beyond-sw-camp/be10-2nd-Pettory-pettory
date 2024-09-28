@@ -1,22 +1,22 @@
 package com.pettory.pettory.chat.controller;
 
-import com.pettory.pettory.chat.dto.ChattingDTO;
-import com.pettory.pettory.chat.entity.Chatting;
-import com.pettory.pettory.chat.enums.ChatRoomStateEnum;
+import com.pettory.pettory.chat.dto.chatting.InsertChattingDTO;
+import com.pettory.pettory.chat.dto.chatting.ModifyChattingDTO;
+import com.pettory.pettory.chat.dto.chatting.SoftDeleteChattingDTO;
+import com.pettory.pettory.chat.entity.ChatRoom;
 import com.pettory.pettory.chat.dto.ChatRoomDTO;
-import com.pettory.pettory.chat.enums.ChatRoomTypeEnum;
-import com.pettory.pettory.chat.enums.ChattingStateEnum;
 import com.pettory.pettory.chat.service.ChatService;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/chat")
 public class ChatController {
 
-    private ChatService chatService;
+    private final ChatService chatService;
 
     public ChatController (ChatService chatService) {
         this.chatService = chatService;
@@ -28,82 +28,83 @@ public class ChatController {
         return "testChatting";
     }
 
-    /* [Test] 채팅방 생성 후 그 채팅방으로 이동함. */
-//    @GetMapping("/testChat")
-//    public String testChat(@ModelAttribute ChatRoomDTO chatRoomDTO, Model model) {
-//
-//
-//        return "testChat";
-//    }
-
-    /* 채팅방 생성 */
+    /* 1. 채팅방 생성 */
     @PostMapping("/chatroom")
-    public String registerChatRoom(@ModelAttribute ChatRoomDTO chatRoomDTO,
-                                   @ModelAttribute ChattingDTO chattingDTO, Model model) {
-        /* 산책 모임방, 공동 구매 모임방 생성시 chatRoomDTO setting
-        - 프론트 단에서 dto 생성해서 넘겨 받을 예정, 임시작업 */
+    public ResponseEntity<?> registerChatRoom(@RequestBody ChatRoomDTO chatRoomDTO) {
         LocalDateTime localDateTime = LocalDateTime.now();
         chatRoomDTO.setChatRoomInsertTime(localDateTime);
-        chatRoomDTO.setChatRoomState(String.valueOf(ChatRoomStateEnum.ACTIVE));
-        chatRoomDTO.setChatRoomType(String.valueOf(ChatRoomTypeEnum.WALKING));
-        chatRoomDTO.setChatRoomTypeNum(3);
 
         /* 채팅방 DB 등록*/
-        chatService.registerChatRoom(chatRoomDTO);
+        ChatRoom chatroom = chatService.registerChatRoom(chatRoomDTO);
 
-        return "forward:/chatting";
+        return ResponseEntity.created(
+                URI.create("/chat/chatroom/" + chatroom.getChatroomUniqueNum())
+        ).build();
     }
 
-    /* 채팅방 상태 수정
-    * 이슈 : Update 와 delete 기능이 같음. delete 기능은 구현하지 않을 예정
-    * */
-    @PutMapping("/chatroom")
-    public String modifyChatRoomState(@ModelAttribute ChatRoomDTO chatRoomDTO) {
-        /* 산책 모임방, 공동 구매 모임방 생성시 chatRoomDTO setting
-        - 프론트 단에서 dto 생성해서 넘겨 받을 예정, 임시작업, 프론트에서 chatRoomDTO 에서 DELETE 요청 가정 */
+    /* 2. 채팅방 상태 수정 */
+    @PutMapping("/chatroom/{chatRoomUniqueNum}")
+    public ResponseEntity<?> modifyChatRoomState(@PathVariable Integer chatRoomUniqueNum,
+                                                 @RequestBody ChatRoomDTO chatRoomDTO) {
         LocalDateTime localDateTime = LocalDateTime.now();
+        chatRoomDTO.setChatRoomUniqueNum(chatRoomUniqueNum);
         chatRoomDTO.setChatRoomUpdateTime(localDateTime);
-        chatRoomDTO.setChatRoomDeleteTime(localDateTime);
-        chatRoomDTO.setChatRoomState(String.valueOf(ChatRoomStateEnum.DELETE));
-        chatRoomDTO.setChatRoomUniqueNum(2);
 
+        /* 채팅방 상태 DB 수정 */
         chatService.modifyChatRoom(chatRoomDTO);
 
-        return "testChatting";
+        return ResponseEntity.created(
+                URI.create("/chat/chatroom-state/" + chatRoomDTO.getChatRoomUniqueNum())
+        ).build();
     }
 
-    /* 채팅방의 채팅 내용을 저장 */
+    /* 3. 채팅방의 채팅 내용을 저장 */
     @PostMapping("/chatting")
-    public String registerChatting(@ModelAttribute ChattingDTO chattingDTO, Model model) {
-       /* 산책 모임방, 공동 구매 모임방 생성시 chattingDTO setting
-        - 프론트 단에서 dto 생성해서 넘겨 받을 예정, 임시작업, 프론트에서 chatRoomDTO 에서 DELETE 요청 가정 */
+    public ResponseEntity<?> registerChatting(@RequestBody InsertChattingDTO insertChattingDTO) {
+
+        chatService.registerChatting(insertChattingDTO);
+
+        return ResponseEntity.created(
+                URI.create("/chat/chatting/" + insertChattingDTO.getChattingUniqueNum())
+        ).build();
+    }
+
+    /* 4. 채팅방의 채팅 내용을 수정 */
+    @PutMapping("/chatting/{chattingUniqueNum}")
+    public ResponseEntity<?> modifyChatting(@PathVariable Integer chattingUniqueNum,
+                                            @RequestBody ModifyChattingDTO modifyChattingDTO) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        chattingDTO.setChattingChatRoomUniqueNum(2);
-        chattingDTO.setChattingContent("Test Chatting");
-        chattingDTO.setChattingInsertTime(localDateTime);
-        chattingDTO.setChattingState(String.valueOf(ChattingStateEnum.ACTIVE));
-        chattingDTO.setUserId(1);
 
-        chatService.registerChatting(chattingDTO);
+        modifyChattingDTO.setChattingUniqueNum(chattingUniqueNum);
+        modifyChattingDTO.setChattingUpdateTime(localDateTime);
 
-        return "testChatting";
+        chatService.modifyChatting(modifyChattingDTO);
+
+        return ResponseEntity.created(
+                URI.create("/chat/chatting/" + modifyChattingDTO.getChattingUniqueNum())
+        ).build();
     }
 
-    /* 채팅방의 채팅 내용을 수정 */
-    @PostMapping("/")
-    public void modifyChatting() {
+    /* 채팅방의 채팅 내용을 soft Delete */
+    @DeleteMapping("/chatting-soft/{chattingUniqueNum}")
+    public ResponseEntity<?> softDeleteChatting(@PathVariable Integer chattingUniqueNum,
+                                                SoftDeleteChattingDTO softDeleteChattingDTO) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        softDeleteChattingDTO.setChattingUniqueNum(chattingUniqueNum);
+        softDeleteChattingDTO.setChattingDeleteTime(localDateTime);
 
+        chatService.softDeleteChatting(softDeleteChattingDTO);
+
+        return ResponseEntity.created(
+                URI.create("/chat/chatting-soft/" + softDeleteChattingDTO.getChattingUniqueNum())
+        ).build();
     }
 
-    /* 채팅방의 채팅 내용을 삭제 */
-    @PostMapping("/Chatting")
-    public void deleteChatting() {
+    /* 채팅방의 채팅 내용을 Hard Delete */
+    @DeleteMapping("/chatting-hard/{chattingUniqueNum}")
+    public ResponseEntity<?> hardDeleteChatting(@PathVariable Integer chattingUniqueNum) {
+        chatService.hardDeleteChatting(chattingUniqueNum);
 
-    }
-
-    /* 채팅방의 채팅 상태 변경 */
-    @PostMapping("/chattingStateChange")
-    public void chattingStateChange() {
-
+        return ResponseEntity.noContent().build();
     }
 }
