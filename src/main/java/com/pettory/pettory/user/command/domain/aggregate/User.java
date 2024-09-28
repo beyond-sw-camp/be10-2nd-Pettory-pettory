@@ -1,5 +1,7 @@
 package com.pettory.pettory.user.command.domain.aggregate;
 
+import com.pettory.pettory.exception.AlreadyInFamilyException;
+import com.pettory.pettory.family.command.domain.aggregate.Family;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -47,6 +49,11 @@ public class User {
     private Long userSuspensionCount = 0L;   // 회원계정정지횟수
     private LocalDateTime userSuspensionEndDatetime; // 회원계정정지종료일시
 
+    @ManyToOne
+    @JoinColumn(name = "family_id")
+    private Family family;
+
+
     // 생성자는 private으로 설정하여 외부에서의 호출 방지
     private User(String userEmail, String userPassword, String userNickname, String userName, LocalDate userBirth) {
         this.userEmail = userEmail;
@@ -64,5 +71,18 @@ public class User {
         this.userPassword = encodedPwd;
     }
 
+    // 회원을 가족에 포함시키는 메소드
+    public void joinFamily(Family family) {
+        if (this.family != null) {
+            throw new AlreadyInFamilyException("이미 가족에 속해 있습니다.");
+        }
+        this.family = family;
+        family.addFamilyMember();
+    }
+
+    // 초대받는 회원의 가족id를 삭제하는 메소드
+    public void updateFamilyIdAsNull() {
+        this.family = null;
+    }
 
 }

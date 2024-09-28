@@ -33,15 +33,19 @@ public class JwtFilter extends OncePerRequestFilter {
             String token = authorizationHeader.substring(7);
             log.info("Token: {}", token);
             if (jwtUtil.validateToken(token)) {
+                log.info("유효한 토큰임.");
                 // 토큰이 유효시간 내이고, pettory가 서명했으며, 양식에 맞는 경우
                 Authentication authentication = jwtUtil.getAuthentication(token);
                 // 인증 완료 됨, 이후 인증 필터는 건너뛴다.
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else {
+                log.info("유효한 토큰이 아님!!");
             }
         }
 
         // 위 if문에 걸리지 않아 Authentication 객체가 설정되지 않으면 다음 필터(인증 필터)가 실행 된다.
         filterChain.doFilter(request, response);
+        log.info("authentication 객체 설정 안 됨. 인증 필터 실행.");
     }
 }
 
