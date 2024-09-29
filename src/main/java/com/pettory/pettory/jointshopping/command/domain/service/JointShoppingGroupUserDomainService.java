@@ -28,7 +28,6 @@ public class JointShoppingGroupUserDomainService {
         return newJointShoppingGroupUser;
     }
 
-
     /* 도메인 객체를 저장하는 로직 */
     @Transactional
     public JointShoppingGroupUser saveGroupUser(JointShoppingGroupUser newJointShoppingGroupUser) {

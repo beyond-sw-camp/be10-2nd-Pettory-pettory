@@ -20,11 +20,11 @@ public interface JointShoppingGroupMapper {
 
     long countBookmarks(@Param("userId") Long userId);
 
-    List<UserInfoResponse> selectGroupUsers(@Param("offset")int offset, @Param("limit") int limit, @Param("groupNum") Long groupNum);
+    List<UserInfoResponse> selectGroupUsers(@Param("offset") int offset, @Param("limit") int limit, @Param("groupNum") Long groupNum);
 
     long countGroupUsers(@Param("groupNum") Long groupNum);
 
-    List<JointShoppingGroupDTO> selectUserGroups(@Param("offset")int offset, @Param("limit") int limit, @Param("userId") Long userId);
+    List<JointShoppingGroupDTO> selectUserGroups(@Param("offset") int offset, @Param("limit") int limit, @Param("userId") Long userId);
 
     long countUserGroups(@Param("userId") Long userId);
 
