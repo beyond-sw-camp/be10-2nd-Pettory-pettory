@@ -1,5 +1,6 @@
 package com.pettory.pettory.family.command.domain.aggregate;
 
+import com.pettory.pettory.pet.command.domain.aggregate.Pet;
 import com.pettory.pettory.user.command.domain.aggregate.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -28,6 +29,9 @@ public class Family {
 
     @OneToMany(mappedBy = "family")
     private List<User> users = new ArrayList<>();
+
+    @OneToMany(mappedBy = "family")
+    private List<Pet> pets = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private FamilyState familyState = FamilyState.ACTIVE;    // 가족상태
