@@ -24,28 +24,33 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'//
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'//
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'//
+    implementation 'org.springframework.boot:spring-boot-starter-web'//
+    testImplementation 'org.springframework.security:spring-security-test'//
+    compileOnly 'org.projectlombok:lombok'//
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'//
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'//
+    annotationProcessor 'org.projectlombok:lombok'//
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'//
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'//
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'//
 
     // 2024.09.20 황희순 - websocket 추가
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     // 09.22 지훈 - vaild, swagger 추가
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
-    // 09.23 지훈 - 파일 입출력 io 추가
-    implementation 'commons-io:commons-io:2.11.0'
-    // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
-    implementation 'org.modelmapper:modelmapper:3.2.1'
+    // 2024.09.27 이은서 - jwt token, spring security 추가
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+
 }
 
 tasks.named('test') {
