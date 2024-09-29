@@ -50,6 +50,10 @@ public class SecurityConfig {
                             .requestMatchers(new AntPathRequestMatcher("/pets/**", "POST")).hasAuthority("ROLE_USER")
                             .requestMatchers(new AntPathRequestMatcher("/pets/**", "PUT")).hasAuthority("ROLE_USER")
                             .requestMatchers(new AntPathRequestMatcher("/pets/**", "DELETE")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/walking-records/**", "GET")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/walking-records/**", "POST")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/walking-records/**", "PUT")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/walking-records/**", "DELETE")).hasAuthority("ROLE_USER")
                             .anyRequest().authenticated();
                 })
                 .sessionManagement(

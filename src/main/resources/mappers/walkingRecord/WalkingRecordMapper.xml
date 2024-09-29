@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.pettory.walkingRecord.query.mapper.WalkingRecordMapper">
+
+    <!-- 1-1. 현재 회원의 반려동물 산책 기록 조회-->
+    <select id="findWalkingRecordsByUserIdForPetAndMonth" resultType="com.pettory.pettory.walkingRecord.query.dto.WalkingRecordSummaryResponse">
+    SELECT
+              walking_record_date AS walkingRecordDate
+            , SUM(walking_record_duration) AS walkingRecordDuration
+      FROM walking_record
+     WHERE user_id = #{userId}
+       AND pet_id = #{petId}
+       AND YEAR(walking_record_date) = #{year}
+      AND MONTH(walking_record_date) = #{month}
+    GROUP BY walking_record_date
+    </select>
+
+    <!-- 1-2. 가족 구성원 중 현재 회원을 제외한 다른 구성원들이 해당 반려동물에 대해 기록한 산책 기록 조회-->
+    <select id="findWalkingRecordsByFamilyExcludeUserAndMonth" resultType="com.pettory.pettory.walkingRecord.query.dto.WalkingRecordSummaryResponse">
+        SELECT
+                  walking_record_date AS walkingRecordDate
+                , SUM(walking_record_duration) AS walkingRecordDuration
+          FROM walking_record
+         WHERE user_id IN (
+                SELECT user_id
+                  FROM user
+                 WHERE family_id = #{familyId}
+                   AND user_id != #{userId}
+                )
+                AND pet_id = #{petId}
+                AND YEAR(walking_record_date) = #{year}
+                AND MONTH(walking_record_date) = #{month}
+        GROUP BY walking_record_date
+    </select>
+
+    <!-- 1-3. 가족 전체의 해당 반려동물에 대한 모든 산책 기록 조회 -->
+    <select id="findAllWalkingRecordsByFamilyAndPetAndMonth" resultType="com.pettory.pettory.walkingRecord.query.dto.WalkingRecordSummaryResponse">
+        SELECT
+                  walking_record_date AS walkingRecordDate
+                , SUM(walking_record_duration) AS walkingRecordDuration
+          FROM walking_record
+         WHERE user_id IN (
+                        SELECT user_id
+                          FROM user
+                         WHERE family_id = #{familyId}
+                        )
+                    AND pet_id = #{petId}
+                    AND YEAR(walking_record_date) = #{year}
+                    AND MONTH(walking_record_date) = #{month}
+        GROUP BY walking_record_date
+    </select>
+
+    <!-- 2-1. 특정 날짜의 본인 산책 기록 조회(가족이 없는 경우) -->
+    <select id="findWalkingRecordsByDateAndUserId" resultType="com.pettory.pettory.walkingRecord.query.dto.WalkingRecordDailyResponse">
+        SELECT
+                  wr.walking_record_id AS walkingRecordId
+                , wr.walking_record_date AS walkingRecordDate
+                , wr.walking_record_duration AS walkingRecordDuration
+                , u.user_nickname AS userName
+          FROM walking_record wr
+          JOIN user u ON wr.user_id = u.user_id
+         WHERE wr.walking_record_date = #{date}
+           AND wr.user_id = #{userId}
+           AND wr.walking_record_state = 'ACTIVE'
+    </select>
+
+    <!-- 2-2. 특정 날짜의 가족 구성원의 산책 기록까지 모두 조회(가족이 있는 경우) -->
+    <select id="findWalkingRecordsByDateAndFamily" resultType="com.pettory.pettory.walkingRecord.query.dto.WalkingRecordDailyResponse">
+        SELECT
+                  wr.walking_record_id AS walkingRecordId
+                , wr.walking_record_date AS walkingRecordDate
+                , wr.walking_record_duration AS walkingRecordDuration
+                , u.user_nickname AS userName
+          FROM walking_record wr
+          JOIN user u ON wr.user_id = u.user_id
+         WHERE wr.walking_record_date = #{date}
+           AND u.family_id = #{familyId}
+        AND wr.walking_record_state = 'ACTIVE'
+    </select>
+
+    <!-- 3-1. 특정 산책 기록의 상세 정보 조회: 가족 구성원의 산책 기록 조회 -->
+    <select id="findWalkingRecordDetailByIdAndFamily" resultType="com.pettory.pettory.walkingRecord.query.dto.WalkingRecordDetailResponse">
+        SELECT
+                  wr.walking_record_id AS walkingRecordId
+                , wr.walking_record_date AS walkingRecordDate
+                , wr.walking_record_duration AS walkingRecordDuration
+                , wr.walking_record_poop_count AS walkingRecordPoopCount
+                , wr.walking_record_water_amount AS walkingRecordWaterAmount
+                , wr.walking_record_memo AS walkingRecordMemo
+                , u.user_nickname AS userNickname
+          FROM walking_record wr
+          JOIN user u ON wr.user_id = u.user_id
+         WHERE wr.walking_record_id = #{walkingRecordId}
+           AND u.family_id = #{familyId}
+    </select>
+
+    <!-- 3-2. 특정 산책 기록의 상세 정보 조회: 현재 회원의 산책 기록 조회 -->
+    <select id="findWalkingRecordDetailByIdAndUserId" resultType="com.pettory.pettory.walkingRecord.query.dto.WalkingRecordDetailResponse">
+        SELECT
+                  wr.walking_record_id AS walkingRecordId
+                , wr.walking_record_date AS walkingRecordDate
+                , wr.walking_record_duration AS walkingRecordDuration
+                , wr.walking_record_poop_count AS walkingRecordPoopCount
+                , wr.walking_record_water_amount AS walkingRecordWaterAmount
+                , wr.walking_record_memo AS walkingRecordMemo
+                , u.user_nickname AS userNickname
+          FROM walking_record wr
+          JOIN user u ON wr.user_id = u.user_id
+         WHERE wr.walking_record_id = #{walkingRecordId}
+           AND wr.user_id = #{userId}
+    </select>
+
+
+
+
+</mapper>

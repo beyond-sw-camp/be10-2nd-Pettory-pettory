@@ -3,6 +3,7 @@ package com.pettory.pettory.pet.command.domain.aggregate;
 import com.pettory.pettory.exception.NotFoundException;
 import com.pettory.pettory.family.command.domain.aggregate.Family;
 import com.pettory.pettory.user.command.domain.aggregate.User;
+import com.pettory.pettory.walkingRecord.command.domain.aggregate.WalkingRecord;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -61,6 +62,9 @@ public class Pet {
 
     @OneToMany(mappedBy = "pet")
     List<PetAccess> petAccesses = new ArrayList<>();
+
+    @OneToMany(mappedBy = "pet")
+    private List<WalkingRecord> walkingRecords = new ArrayList<>();
 
 
     public Pet(PetType petType, String petName, String petBreed, LocalDate petBirth, PetGender petGender, Boolean petNeuteringYn, Long petWeight, String petMemo) {
