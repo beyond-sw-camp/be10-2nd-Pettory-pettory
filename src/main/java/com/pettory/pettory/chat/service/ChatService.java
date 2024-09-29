@@ -83,28 +83,39 @@ public class ChatService {
         chattingRepository.deleteById(chattingUniqueNum);
     }
 
-    /* 6. 채팅 이미지 업로드 */
+    /* 6. 채팅 조회 */
+    public void selectChatting() {
+
+    }
+
+    /* 7. 채팅 이미지 업로드 */
     public void registerImageUpload() {
 
     }
 
-    /* 7. 채팅 동영상 업로드 */
+    /* 8. 채팅 동영상 업로드 */
     public void registerVideoUpload() {
 
     }
 
-    /* 8. 투표 등록 */
+    /* 9. 채팅 파일 조회  */
+
+
+    /* 10. 투표 등록 */
     public void registerVote() {
 
     }
 
-    /* 9. 투표 수정 */
+    /* 11. 투표 수정 */
     public void modifyVote() {
 
     }
 
-    /* 10. 투표 삭제 */
+    /* 12. 투표 삭제 */
     public void deleteVote() {
 
     }
+
+    /* 13. 투표 조회 */
+
 }
