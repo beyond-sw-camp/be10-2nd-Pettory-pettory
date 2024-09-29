@@ -1,10 +1,10 @@
 package com.pettory.pettory.jointshopping.command.domain.service;
 
+import com.pettory.pettory.exception.NotFoundException;
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupRequest;
 import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingGroup;
 import com.pettory.pettory.jointshopping.command.domain.repository.JointShoppingGroupRepository;
 import com.pettory.pettory.jointshopping.command.mapper.JointShoppingGroupMapper;
-import com.pettory.pettory.jointshopping.exception.NotFoundException;
 import com.pettory.pettory.jointshopping.util.FileUploadUtils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -72,5 +72,32 @@ public class JointShoppingGroupDomainService {
     public void deleteGroup(Long jointShoppingGroupNum) {
         /* soft delete 될 수 있도록 entity에 설정함 */
         jointShoppingGroupRepository.deleteById(jointShoppingGroupNum);
+    }
+
+    /* 최대 사용자 수를 반환하는 로직 */
+    public Integer findGroupMaximumCount(Long jointShoppingGroupNum) {
+
+        JointShoppingGroup jointShoppingGroup = jointShoppingGroupRepository.findById(jointShoppingGroupNum)
+                .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 모임이 없습니다. code : " + jointShoppingGroupNum));
+
+        return jointShoppingGroup.getJointShoppingGroupMaximumCount();
+    }
+
+    /* 인원수가 가득 찼을 때 마감 상태로 변경하는 로직 */
+    public void updateClosing(Long jointShoppingGroupNum) {
+        JointShoppingGroup jointShoppingGroup = jointShoppingGroupRepository.findById(jointShoppingGroupNum)
+                .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 모임이 없습니다. code : " + jointShoppingGroupNum));
+
+        /* 수정을 위해 엔터티 정보 변경 */
+        jointShoppingGroup.changeClosing();
+    }
+
+    /* 나가거나 강퇴됬을 때 신청가능 상태로 변경하는 로직 */
+    public void updateApplication(Long jointShoppingGroupNum) {
+        JointShoppingGroup jointShoppingGroup = jointShoppingGroupRepository.findById(jointShoppingGroupNum)
+                .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 모임이 없습니다. code : " + jointShoppingGroupNum));
+
+        /* 수정을 위해 엔터티 정보 변경 */
+        jointShoppingGroup.changeApplication();
     }
 }

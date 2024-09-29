@@ -32,7 +32,7 @@ public class BookmarkCommandController {
     @DeleteMapping("/bookmarks/{bookmarkNum}")
     public ResponseEntity<Void> deleteBookmark(@PathVariable final Long bookmarkNum) {
 
-        bookmarkApplicationService.deleteCategory(bookmarkNum);
+        bookmarkApplicationService.deleteBookmark(bookmarkNum);
 
         return ResponseEntity.noContent().build();
     }

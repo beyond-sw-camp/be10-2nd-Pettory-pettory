@@ -2,8 +2,6 @@ package com.pettory.pettory.jointshopping.query.service;
 
 import com.pettory.pettory.jointshopping.query.dto.JointShoppingCategoryDTO;
 import com.pettory.pettory.jointshopping.query.dto.JointShoppingCategoryListResponse;
-import com.pettory.pettory.jointshopping.query.dto.JointShoppingGroupDTO;
-import com.pettory.pettory.jointshopping.query.dto.JointShoppingGroupListResponse;
 import com.pettory.pettory.jointshopping.query.mapper.JointShoppingCategoryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

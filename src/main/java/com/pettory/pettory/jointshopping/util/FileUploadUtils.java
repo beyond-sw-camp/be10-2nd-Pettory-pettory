@@ -1,6 +1,6 @@
 package com.pettory.pettory.jointshopping.util;
 
-import com.pettory.pettory.jointshopping.exception.ServerInternalException;
+import com.pettory.pettory.exception.ServerInternalException;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 

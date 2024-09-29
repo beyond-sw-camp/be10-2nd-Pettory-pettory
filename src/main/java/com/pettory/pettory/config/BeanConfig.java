@@ -1,4 +1,4 @@
-package com.pettory.pettory.jointshopping.config;
+package com.pettory.pettory.config;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

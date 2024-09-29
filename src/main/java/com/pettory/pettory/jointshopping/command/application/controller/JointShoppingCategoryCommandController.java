@@ -21,7 +21,7 @@ public class JointShoppingCategoryCommandController {
     public ResponseEntity<Void> createCategory(
             @RequestBody @Valid JointShoppingCategoryRequest categoryRequest
     ) {
-        Long jointShoppingCategoryNum = jointShoppingCategoryApplicationService.createCateogory(categoryRequest);
+        Long jointShoppingCategoryNum = jointShoppingCategoryApplicationService.createCategory(categoryRequest);
 
         return ResponseEntity
                 .created(URI.create("/jointshopping/categories/" + jointShoppingCategoryNum))

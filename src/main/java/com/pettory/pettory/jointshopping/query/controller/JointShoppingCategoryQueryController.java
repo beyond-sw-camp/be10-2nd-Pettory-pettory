@@ -13,6 +13,7 @@ public class JointShoppingCategoryQueryController {
 
     private final JointShoppingCategoryQueryService jointShoppingCategoryQueryService;
 
+    /* 카테고리 목록 조회 */
     @GetMapping("/categories")
     public ResponseEntity<JointShoppingCategoryListResponse> getCategorys(
             @RequestParam(required = false) String categoryTitle

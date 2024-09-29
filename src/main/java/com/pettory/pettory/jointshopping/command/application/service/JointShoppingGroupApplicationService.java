@@ -6,7 +6,6 @@ import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingG
 import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingGroupUser;
 import com.pettory.pettory.jointshopping.command.domain.service.JointShoppingGroupDomainService;
 import com.pettory.pettory.jointshopping.command.domain.service.JointShoppingGroupUserDomainService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +47,8 @@ public class JointShoppingGroupApplicationService {
     /* 공동구매모임 참가(모임 사용자 등록) */
     @Transactional
     public Long insertGroupUser(JointShoppingGroupUserRequest groupUserRequest) {
+        /* 해당 방에서 강퇴당한 적이 있는지 체크 */
+        jointShoppingGroupUserDomainService.checkResignYn(groupUserRequest);
 
         /* JointShoppingGroupUser 도메인 생성 로직 실행, entity 반환 */
         JointShoppingGroupUser newJointShoppingGroupUser = jointShoppingGroupUserDomainService.createGroupUser(groupUserRequest);
@@ -76,5 +77,25 @@ public class JointShoppingGroupApplicationService {
 
         /* soft delete */
         jointShoppingGroupUserDomainService.deleteGroupUser(jointShoppingGroupUserNum);
+    }
+
+    /* 공동구매모임 자동마감 */
+    @Transactional
+    public void closeGroup(Long jointShoppingGroupNum) {
+        // 최대 사용자 수를 불러옴
+        int max = jointShoppingGroupDomainService.findGroupMaximumCount(jointShoppingGroupNum);
+
+        // 현재 사용자 수를 불러옴
+        int now = jointShoppingGroupUserDomainService.findUserCount(jointShoppingGroupNum);
+
+        if (now >= max) {jointShoppingGroupDomainService.updateClosing(jointShoppingGroupNum);}
+    }
+
+    /* 공동구매모임 자동신청가능 */
+    @Transactional
+    public void applyGroup(Long jointShoppingGroupUserNum) {
+        Long jointShoppingGroupNum = jointShoppingGroupUserDomainService.findGroup(jointShoppingGroupUserNum);
+
+        jointShoppingGroupDomainService.updateApplication(jointShoppingGroupNum);
     }
 }

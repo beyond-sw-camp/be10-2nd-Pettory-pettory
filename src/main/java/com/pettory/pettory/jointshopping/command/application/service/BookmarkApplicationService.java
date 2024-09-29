@@ -30,7 +30,7 @@ public class BookmarkApplicationService {
 
     /* 즐겨찾기 삭제 */
     @Transactional
-    public void deleteCategory(Long bookmarkNum) {
+    public void deleteBookmark(Long bookmarkNum) {
         bookmarkDomainService.deleteBookmark(bookmarkNum);
     }
 }

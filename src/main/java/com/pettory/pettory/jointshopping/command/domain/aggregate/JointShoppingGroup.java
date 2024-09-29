@@ -68,6 +68,15 @@ public class JointShoppingGroup {
         this.jointShoppingProductsFileDirectory = jointShoppingProductsFileDirectory;
     }
 
+    // jointShoppingGroupState 변경 메소드
+    public void changeClosing() {
+        this.jointShoppingGroupState = JointShoppingGroupState.CLOSE;
+    }
+
+    public void changeApplication() {
+        this.jointShoppingGroupState = JointShoppingGroupState.APPLICATION;
+    }
+
     // 다른 필드를 변경하는 메소드
     public void update(String jointShoppingGroupName, String jointShoppingProducts, String jointShoppingInfo, Integer jointShoppingCost, Integer jointShoppingGroupMaximumCount, Integer jointShoppingParticipationMaximumCount, String hostInvoiceNum, Long jointShoppingCategoryNum, Long userId) {
         this.jointShoppingGroupName = jointShoppingGroupName;
@@ -80,4 +89,7 @@ public class JointShoppingGroup {
         this.jointShoppingCategoryNum = jointShoppingCategoryNum;
         this.userId = userId;
     }
+
+
+
 }

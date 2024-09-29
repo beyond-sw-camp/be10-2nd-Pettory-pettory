@@ -15,7 +15,7 @@ public class JointShoppingCategoryApplicationService {
 
     /* 카테고리 등록 */
     @Transactional
-    public Long createCateogory(JointShoppingCategoryRequest categoryRequest) {
+    public Long createCategory(JointShoppingCategoryRequest categoryRequest) {
 
         /* jointshoppingcategory 도메인 로직 실행, entity 반환 */
         JointShoppingCategory newJointShoppingCategory = jointShoppingCategoryDomainService.createCategory(categoryRequest);
