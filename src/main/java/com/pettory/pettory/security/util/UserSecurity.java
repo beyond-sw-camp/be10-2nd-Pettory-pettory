@@ -31,11 +31,10 @@ public class UserSecurity {
 
             return userDetails.getUsername(); // userEmail 의미
         }
-        log.warn("인증 객체 못 받음");
         throw new IllegalStateException("로그인 정보가 없습니다.");
     }
 
-    // 현재 로그인한 사용자의 userEmail 과 넘겨받은 userEmail 을 검증하는 메소드
+    // 현재 로그인한 사용자의 userEmail과 입력받은 userEmail을 검증하는 메소드
     public static void validateCurrentUser(String userEmail) throws AccessDeniedException {
         String currentUserEmail = getCurrentUserEmail();
         if (!currentUserEmail.equals(userEmail)) {

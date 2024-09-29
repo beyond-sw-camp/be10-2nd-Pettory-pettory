@@ -1,5 +1,6 @@
 package com.pettory.pettory.exception;
 
+import com.pettory.pettory.common.CommonResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -95,5 +96,11 @@ public class GlobalExceptionHandler {
                 .build();
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
 
+    }
+
+    @ExceptionHandler(EmptyResultException.class)
+    public ResponseEntity<CommonResponseDTO> handleEmptyResultException(EmptyResultException ex) {
+        CommonResponseDTO response = new CommonResponseDTO(HttpStatus.OK.value(), ex.getMessage(), null);
+        return ResponseEntity.ok(response);
     }
 }
