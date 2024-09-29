@@ -105,8 +105,6 @@ public class PetCommandService {
         User user = userRepository.findByUserEmail(userEmail)
                 .orElseThrow(() -> new NotFoundException("회원을 찾을 수 없습니다."));
 
-        Long userId = user.getUserId();
-
 
         // 반려동물 조회
         Pet pet = petRepository.findById(petId)
