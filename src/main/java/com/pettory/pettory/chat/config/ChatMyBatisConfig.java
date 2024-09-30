@@ -4,7 +4,12 @@ import com.pettory.pettory.chat.dto.chatting.InsertChattingDTO;
 import com.pettory.pettory.chat.dto.chatting.ModifyChattingDTO;
 import com.pettory.pettory.chat.dto.chatting.SelectChattingDTO;
 import com.pettory.pettory.chat.dto.chatting.SoftDeleteChattingDTO;
+import com.pettory.pettory.chat.dto.vote.InsertVoteDTO;
+import com.pettory.pettory.chat.dto.vote.ModifyVoteDTO;
+import com.pettory.pettory.chat.dto.vote.SelectVoteDTO;
+import com.pettory.pettory.chat.dto.vote.SoftDeleteVoteDTO;
 import com.pettory.pettory.chat.mapper.ChattingMapper;
+import com.pettory.pettory.chat.mapper.VoteMapper;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -54,10 +59,10 @@ public class ChatMyBatisConfig {
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
         configuration.getTypeAliasRegistry().registerAlias("SelectChattingDTO", SelectChattingDTO.class);
-        configuration.getTypeAliasRegistry().registerAlias("InsertChattingDTO", InsertChattingDTO.class);
-        configuration.getTypeAliasRegistry().registerAlias("ModifyChattingDTO", ModifyChattingDTO.class);
-        configuration.getTypeAliasRegistry().registerAlias("SoftDeleteChattingDTO", SoftDeleteChattingDTO.class);
         configuration.addMapper(ChattingMapper.class);
+
+        configuration.getTypeAliasRegistry().registerAlias("SelectVoteDTO", SelectVoteDTO.class);
+        configuration.addMapper(VoteMapper.class);
         configuration.setMapUnderscoreToCamelCase(true);
 
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
