@@ -1,5 +1,6 @@
 package com.pettory.pettory.exception;
 
+import com.pettory.pettory.common.CommonResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
