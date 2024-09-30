@@ -2,6 +2,7 @@ package com.pettory.pettory.chat.config;
 
 import com.pettory.pettory.chat.dto.chatting.InsertChattingDTO;
 import com.pettory.pettory.chat.dto.chatting.ModifyChattingDTO;
+import com.pettory.pettory.chat.dto.chatting.SelectChattingDTO;
 import com.pettory.pettory.chat.dto.chatting.SoftDeleteChattingDTO;
 import com.pettory.pettory.chat.mapper.ChattingMapper;
 import com.zaxxer.hikari.HikariDataSource;
@@ -10,12 +11,14 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class ChatMyBatisConfig {
     @Value("${spring.datasource.driver-class-name}")
     private String driverClassName;
 
-    @Value("${spring.datasource.jdbc-url}")
+    @Value("${spring.datasource.url}")
     private String jdbcUrl;
 
     @Value("${spring.datasource.username}")
@@ -50,6 +53,7 @@ public class ChatMyBatisConfig {
     @Bean
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
+        configuration.getTypeAliasRegistry().registerAlias("SelectChattingDTO", SelectChattingDTO.class);
         configuration.getTypeAliasRegistry().registerAlias("InsertChattingDTO", InsertChattingDTO.class);
         configuration.getTypeAliasRegistry().registerAlias("ModifyChattingDTO", ModifyChattingDTO.class);
         configuration.getTypeAliasRegistry().registerAlias("SoftDeleteChattingDTO", SoftDeleteChattingDTO.class);
