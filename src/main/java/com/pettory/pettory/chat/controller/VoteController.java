@@ -51,6 +51,7 @@ public class VoteController {
     @PostMapping("/survey")
     public ResponseEntity<Void> insertVote(@RequestBody InsertVoteDTO insertVoteDTO) {
         insertVoteDTO.setVoteInsertTime(LocalDateTime.now());
+        insertVoteDTO.setVoteState(String.valueOf(VoteStateEnum.ACTIVE));
 
         /* DB 등록 */
         Vote vote = voteService.insertVote(insertVoteDTO);
