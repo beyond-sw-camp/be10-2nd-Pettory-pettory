@@ -23,9 +23,6 @@ public class ChatService {
     private final ChatRoomRepository chatRoomRepository;
     private final ChattingFileRepository chattingFileRepository;
     private final ChattingRepository chattingRepository;
-    private final VoteChooseRepository voteChooseRepository;
-    private final VoteChooseResultRepository voteChooseResultRepository;
-    private final VoteRepository voteRepository;
 
     public ChatService(ChatRoomRepository chatRoomRepository,
                        ChattingFileRepository chattingFileRepository,
@@ -39,9 +36,6 @@ public class ChatService {
         this.chatRoomRepository = chatRoomRepository;
         this.chattingFileRepository = chattingFileRepository;
         this.chattingRepository = chattingRepository;
-        this.voteChooseRepository = voteChooseRepository;
-        this.voteChooseResultRepository = voteChooseResultRepository;
-        this.voteRepository = voteRepository;
         this.sqlSession = sqlSession;
     }
 
