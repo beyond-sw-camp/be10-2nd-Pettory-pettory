@@ -3,16 +3,22 @@ package com.pettory.pettory.chat.service;
 import com.pettory.pettory.chat.dto.ChatRoomDTO;
 import com.pettory.pettory.chat.dto.chatting.InsertChattingDTO;
 import com.pettory.pettory.chat.dto.chatting.ModifyChattingDTO;
+import com.pettory.pettory.chat.dto.chatting.SelectChattingDTO;
 import com.pettory.pettory.chat.dto.chatting.SoftDeleteChattingDTO;
 import com.pettory.pettory.chat.entity.ChatRoom;
 import com.pettory.pettory.chat.entity.Chatting;
+import com.pettory.pettory.chat.mapper.ChattingMapper;
 import com.pettory.pettory.chat.repository.*;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ChatService {
+    private final SqlSessionTemplate sqlSession;
     private final ModelMapper chatModelMapper;
     private final ChatRoomRepository chatRoomRepository;
     private final ChattingFileRepository chattingFileRepository;
@@ -27,7 +33,8 @@ public class ChatService {
                        VoteChooseRepository voteChooseRepository,
                        VoteChooseResultRepository voteChooseResultRepository,
                        VoteRepository voteRepository,
-                       ModelMapper chatModelMapper) {
+                       ModelMapper chatModelMapper,
+                       SqlSessionTemplate sqlSession) {
         this.chatModelMapper = chatModelMapper;
         this.chatRoomRepository = chatRoomRepository;
         this.chattingFileRepository = chattingFileRepository;
@@ -35,6 +42,7 @@ public class ChatService {
         this.voteChooseRepository = voteChooseRepository;
         this.voteChooseResultRepository = voteChooseResultRepository;
         this.voteRepository = voteRepository;
+        this.sqlSession = sqlSession;
     }
 
     /* 1. 채팅방 추가 */
@@ -84,8 +92,8 @@ public class ChatService {
     }
 
     /* 6. 채팅 조회 */
-    public void selectChatting() {
-
+    public List<SelectChattingDTO> selectChatRoomChatting(Integer chatRoomUniqueNum) {
+        return sqlSession.getMapper(ChattingMapper.class).selectChatRoomChatting(chatRoomUniqueNum);
     }
 
     /* 7. 채팅 이미지 업로드 */
