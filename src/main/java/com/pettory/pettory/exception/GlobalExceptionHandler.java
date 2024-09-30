@@ -103,4 +103,13 @@ public class GlobalExceptionHandler {
         CommonResponseDTO response = new CommonResponseDTO(HttpStatus.OK.value(), ex.getMessage(), null);
         return ResponseEntity.ok(response);
     }
+
+    @ExceptionHandler(AlreadyResignException.class)
+    public ResponseEntity<ErrorResponse> handleAlreadyResignException(AlreadyResignException ex) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .message(ex.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
 }
