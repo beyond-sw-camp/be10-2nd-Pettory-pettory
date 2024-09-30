@@ -40,8 +40,16 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> {
                     authz.requestMatchers(new AntPathRequestMatcher("/login", "POST")).permitAll()
                             .requestMatchers(new AntPathRequestMatcher("/users/**", "POST")).permitAll()
-                            .requestMatchers(new AntPathRequestMatcher("/jointshopping/**", "GET")).permitAll()
-                            .requestMatchers(new AntPathRequestMatcher("/jointshopping/**", "PUT")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/users/**", "GET")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/families/**", "GET")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/families/**", "POST")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/families/**", "PUT")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/invitations/**", "GET")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/invitations/**", "PUT")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/pets/**", "GET")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/pets/**", "POST")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/pets/**", "PUT")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/pets/**", "DELETE")).hasAuthority("ROLE_USER")
                             .anyRequest().authenticated();
                 })
                 .sessionManagement(

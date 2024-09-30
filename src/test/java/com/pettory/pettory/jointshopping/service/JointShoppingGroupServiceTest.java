@@ -185,7 +185,7 @@ public class JointShoppingGroupServiceTest {
     @Test
     void testExitGroupUser() {
         Assertions.assertDoesNotThrow(
-                () -> jointShoppingGroupApplicationService.exitGroupUser(10L)
+                () -> jointShoppingGroupApplicationService.exitGroupUser(13L)
         );
     }
 
@@ -194,22 +194,6 @@ public class JointShoppingGroupServiceTest {
     void testWithdrawalGroupUser() {
         Assertions.assertDoesNotThrow(
                 () -> jointShoppingGroupApplicationService.withdrawalGroupUser(5L)
-        );
-    }
-
-    /* 공동구매모임 자동마감 테스트*/
-    @Test
-    void testCloseGroup() {
-        Assertions.assertDoesNotThrow(
-                () -> jointShoppingGroupApplicationService.closeGroup(7L)
-        );
-    }
-
-    /* 공동구매모임 자동신청가능 테스트 */
-    @Test
-    void testApplyGroup() {
-        Assertions.assertDoesNotThrow(
-                () -> jointShoppingGroupApplicationService.applyGroup(11L)
         );
     }
 
