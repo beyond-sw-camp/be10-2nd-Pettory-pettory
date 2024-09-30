@@ -58,7 +58,7 @@
                   wr.walking_record_id AS walkingRecordId
                 , wr.walking_record_date AS walkingRecordDate
                 , wr.walking_record_duration AS walkingRecordDuration
-                , u.user_nickname AS userName
+                , u.user_nickname AS userNickname
           FROM walking_record wr
           JOIN user u ON wr.user_id = u.user_id
          WHERE wr.walking_record_date = #{date}
@@ -72,12 +72,12 @@
                   wr.walking_record_id AS walkingRecordId
                 , wr.walking_record_date AS walkingRecordDate
                 , wr.walking_record_duration AS walkingRecordDuration
-                , u.user_nickname AS userName
+                , u.user_nickname AS userNickname
           FROM walking_record wr
           JOIN user u ON wr.user_id = u.user_id
          WHERE wr.walking_record_date = #{date}
            AND u.family_id = #{familyId}
-        AND wr.walking_record_state = 'ACTIVE'
+           AND wr.walking_record_state = 'ACTIVE'
     </select>
 
     <!-- 3-1. 특정 산책 기록의 상세 정보 조회: 가족 구성원의 산책 기록 조회 -->
@@ -94,6 +94,7 @@
           JOIN user u ON wr.user_id = u.user_id
          WHERE wr.walking_record_id = #{walkingRecordId}
            AND u.family_id = #{familyId}
+           AND wr.walking_record_state = 'ACTIVE'
     </select>
 
     <!-- 3-2. 특정 산책 기록의 상세 정보 조회: 현재 회원의 산책 기록 조회 -->
@@ -110,6 +111,7 @@
           JOIN user u ON wr.user_id = u.user_id
          WHERE wr.walking_record_id = #{walkingRecordId}
            AND wr.user_id = #{userId}
+           AND wr.walking_record_state = 'ACTIVE'
     </select>
 
 

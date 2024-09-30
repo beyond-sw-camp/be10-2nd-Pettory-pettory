@@ -2,6 +2,7 @@ package com.pettory.pettory.pet.command.domain.aggregate;
 
 import com.pettory.pettory.exception.NotFoundException;
 import com.pettory.pettory.family.command.domain.aggregate.Family;
+import com.pettory.pettory.feedingRecord.command.domain.aggregate.FeedingRecord;
 import com.pettory.pettory.user.command.domain.aggregate.User;
 import com.pettory.pettory.walkingRecord.command.domain.aggregate.WalkingRecord;
 import jakarta.persistence.*;
@@ -66,6 +67,8 @@ public class Pet {
     @OneToMany(mappedBy = "pet")
     private List<WalkingRecord> walkingRecords = new ArrayList<>();
 
+    @OneToMany(mappedBy = "pet")
+    private List<FeedingRecord> feedingRecords = new ArrayList<>();
 
     public Pet(PetType petType, String petName, String petBreed, LocalDate petBirth, PetGender petGender, Boolean petNeuteringYn, Long petWeight, String petMemo) {
 

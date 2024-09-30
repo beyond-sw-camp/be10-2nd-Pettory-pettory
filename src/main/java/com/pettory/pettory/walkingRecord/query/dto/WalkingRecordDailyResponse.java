@@ -11,5 +11,5 @@ public class WalkingRecordDailyResponse {
     private Long walkingRecordId;
     private LocalDate walkingRecordDate;
     private Long walkingRecordDuration;
-    private String userName;
+    private String userNickname;
 }

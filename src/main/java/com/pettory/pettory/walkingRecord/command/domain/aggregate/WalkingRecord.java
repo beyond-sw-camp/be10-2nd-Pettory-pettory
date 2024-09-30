@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "UPDATE walking_record SET walking_record_state = 'DELETE' where walking_record_id = ?")
+@SQLDelete(sql = "UPDATE walking_record SET walking_record_state = 'DELETE', walking_record_delete_datetime = NOW() WHERE walking_record_id = ? AND walking_record_state != 'DELETE'")
 public class WalkingRecord {
 
     @Id
@@ -64,11 +64,13 @@ public class WalkingRecord {
     }
 
     public void update(LocalDate walkingRecordDate, Long walkingRecordDuration, Long walkingRecordPoopCount, String walkingRecordWaterAmount, String walkingRecordMemo) {
-        if(walkingRecordDate != null) this.walkingRecordDate = walkingRecordDate;
-        if(walkingRecordDuration != null) this.walkingRecordDuration = walkingRecordDuration;
-        if(walkingRecordPoopCount != null) this.walkingRecordPoopCount = walkingRecordPoopCount;
-        if(walkingRecordWaterAmount != null && !walkingRecordWaterAmount.trim().isEmpty()) this.walkingRecordWaterAmount = walkingRecordWaterAmount;
-        if(walkingRecordMemo != null && !walkingRecordMemo.trim().isEmpty()) this.walkingRecordMemo = walkingRecordMemo;
+        if (walkingRecordDate != null) this.walkingRecordDate = walkingRecordDate;
+        if (walkingRecordDuration != null) this.walkingRecordDuration = walkingRecordDuration;
+        if (walkingRecordPoopCount != null) this.walkingRecordPoopCount = walkingRecordPoopCount;
+        if (walkingRecordWaterAmount != null && !walkingRecordWaterAmount.trim().isEmpty())
+            this.walkingRecordWaterAmount = walkingRecordWaterAmount;
+        if (walkingRecordMemo != null && !walkingRecordMemo.trim().isEmpty())
+            this.walkingRecordMemo = walkingRecordMemo;
     }
 
 }

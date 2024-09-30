@@ -1,7 +1,9 @@
 package com.pettory.pettory.walkingRecord.command.application.service;
 
+import com.pettory.pettory.exception.AlreadyDeletedException;
 import com.pettory.pettory.exception.NotFoundException;
 import com.pettory.pettory.exception.UnauthorizedException;
+import com.pettory.pettory.feedingRecord.command.domain.aggregate.FeedingRecordState;
 import com.pettory.pettory.pet.command.domain.aggregate.Pet;
 import com.pettory.pettory.pet.command.domain.repository.PetRepository;
 import com.pettory.pettory.security.util.UserSecurity;
@@ -10,6 +12,7 @@ import com.pettory.pettory.user.command.domain.repository.UserRepository;
 import com.pettory.pettory.walkingRecord.command.application.dto.WalkingRecordCreateRequest;
 import com.pettory.pettory.walkingRecord.command.application.dto.WalkingRecordUpdateRequest;
 import com.pettory.pettory.walkingRecord.command.domain.aggregate.WalkingRecord;
+import com.pettory.pettory.walkingRecord.command.domain.aggregate.WalkingRecordState;
 import com.pettory.pettory.walkingRecord.command.domain.repository.WalkingRecordRepository;
 import com.pettory.pettory.walkingRecord.command.infrastructure.repository.JpaWalkingRecordRepository;
 import com.pettory.pettory.walkingRecord.command.mapper.WalkingRecordMapper;
@@ -69,16 +72,9 @@ public class WalkingRecordCommandService {
         WalkingRecord walkingRecord = walkingRecordRepository.findById(walkingRecordId)
                 .orElseThrow(() -> new NotFoundException("산책 기록을 찾을 수 없습니다."));
 
-        // 산책 기록을 현재 회원이 등록한 것이 아니라면
+        // 산책 기록을 현재 회원이 등록한 것이 아니라면 예외 발생
         if (!walkingRecord.getUser().getUserId().equals(user.getUserId())) {
-            // 해당 산책 기록을 가족 구성원이 등록한 것인지 확인
-            if (user.getFamily() != null
-                    && walkingRecord.getPet().getFamily() != null
-                    && user.getFamily().getFamilyId().equals(walkingRecord.getPet().getFamily().getFamilyId())) {
-                throw new UnauthorizedException("해당 산책 기록을 삭제할 권한이 없습니다.");
-            }
-            // 그 외의 경우, 산책 기록이 존재하지 않는 것으로 처리
-            throw new NotFoundException("산책 기록이 존재하지 않습니다.");
+            throw new UnauthorizedException("해당 급여 기록을 수정할 권한이 없습니다.");
         }
 
         // 산책 기록 수정
@@ -103,14 +99,12 @@ public class WalkingRecordCommandService {
 
         // 산책 기록을 현재 회원이 등록한 것이 아니라면
         if (!walkingRecord.getUser().getUserId().equals(user.getUserId())) {
-            // 해당 산책 기록을 가족 구성원이 등록한 것인지 확인
-            if (user.getFamily() != null
-                    && walkingRecord.getPet().getFamily() != null
-                    && user.getFamily().getFamilyId().equals(walkingRecord.getPet().getFamily().getFamilyId())) {
-                throw new UnauthorizedException("해당 산책 기록을 삭제할 권한이 없습니다.");
-            }
-            // 그 외의 경우, 산책 기록이 존재하지 않는 것으로 처리
-            throw new NotFoundException("산책 기록이 존재하지 않습니다.");
+            throw new UnauthorizedException("해당 산책 기록을 수정할 권한이 없습니다.");
+        }
+
+        // 이미 'DELETE' 상태인지 확인
+        if (walkingRecord.getWalkingRecordState() == WalkingRecordState.DELETE) {
+            throw new AlreadyDeletedException("이미 삭제된 급여 기록입니다.");
         }
 
         // 산책 기록 삭제
