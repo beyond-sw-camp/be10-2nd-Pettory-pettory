@@ -61,12 +61,14 @@ public class VoteController {
 
     /* 2. 투표 수정 */
     @PutMapping("/survey/{voteUniqueNum}")
-    public ResponseEntity<ResponseChatMessage> modifyVote(@RequestBody ModifyVoteDTO modifyVoteDTO) {
+    public ResponseEntity<ResponseChatMessage> modifyVote(@PathVariable Integer voteUniqueNum,
+                                                          @RequestBody ModifyVoteDTO modifyVoteDTO) {
         /* 응답헤더 설정 */
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
 
         /* 데이터 셋팅 */
+        modifyVoteDTO.setVoteUniqueNum(voteUniqueNum);
         modifyVoteDTO.setVoteUpdateTime(LocalDateTime.now());
         modifyVoteDTO.setVoteState(String.valueOf(VoteStateEnum.MODIFY));
 
@@ -83,8 +85,11 @@ public class VoteController {
 
     /* 3. 투표 얇은 삭제 */
     @DeleteMapping("/survey-soft/{voteUniqueNum}")
-    public ResponseEntity<Void> softDeleteVote(@RequestBody SoftDeleteVoteDTO softDeleteVoteDTO) {
+    public ResponseEntity<Void> softDeleteVote(@PathVariable Integer voteUniqueNum) {
+        SoftDeleteVoteDTO softDeleteVoteDTO = new SoftDeleteVoteDTO();
+        softDeleteVoteDTO.setVoteUniqueNum(voteUniqueNum);
         softDeleteVoteDTO.setVoteDeleteTime(LocalDateTime.now());
+        softDeleteVoteDTO.setVoteState(String.valueOf(VoteStateEnum.DELETE));
         voteService.softDeleteVote(softDeleteVoteDTO);
 
         return ResponseEntity.created(

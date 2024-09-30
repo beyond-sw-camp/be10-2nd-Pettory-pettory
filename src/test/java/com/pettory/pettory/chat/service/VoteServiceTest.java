@@ -50,7 +50,6 @@ class VoteServiceTest {
         return Stream.of(
                 Arguments.of(
                         1,
-                        3,
                         null,
                         "DELETE"
                 )
@@ -103,12 +102,10 @@ class VoteServiceTest {
 
     @ParameterizedTest
     @MethodSource("getSoftDeleteVote")
-    void testSoftDeleteVote(int voteUniqueNum, int voteChatroomUniqueNum,
-                        LocalDateTime deleteTime, String voteState) {
+    void testSoftDeleteVote(int voteUniqueNum, LocalDateTime deleteTime, String voteState) {
         deleteTime = LocalDateTime.now();
         SoftDeleteVoteDTO softDeleteVoteDTO = new SoftDeleteVoteDTO(
                 voteUniqueNum,
-                voteChatroomUniqueNum,
                 deleteTime,
                 voteState
         );

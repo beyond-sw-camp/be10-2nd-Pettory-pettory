@@ -49,8 +49,7 @@ public class VoteService {
     @Transactional
     public void softDeleteVote(SoftDeleteVoteDTO softDeleteVoteDTO) {
         Vote vote = voteRepository.findById(softDeleteVoteDTO.getVoteUniqueNum()).orElseThrow(IllegalArgumentException::new);
-        vote.softDeleteVote(softDeleteVoteDTO.getVoteDeleteTime(),
-                softDeleteVoteDTO.getVoteState());
+        vote.softDeleteVote(softDeleteVoteDTO.getVoteDeleteTime(), softDeleteVoteDTO.getVoteState());
     }
 
     @Transactional

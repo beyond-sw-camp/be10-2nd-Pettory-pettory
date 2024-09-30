@@ -13,7 +13,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class SoftDeleteVoteDTO {
     private int voteUniqueNum;
-    private int voteChatroomUniqueNum;
     private LocalDateTime voteDeleteTime;
     private String voteState;
+
+    public SoftDeleteVoteDTO() {}
 }
