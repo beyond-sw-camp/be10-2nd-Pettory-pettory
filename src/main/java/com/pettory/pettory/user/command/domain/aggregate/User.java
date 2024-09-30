@@ -25,7 +25,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)    // 엔터티 삽입, 수정 시간 기록 위함
-@SQLDelete(sql = "UPDATE user SET user_state = 'W' where user_id = ?")
+@SQLDelete(sql = "UPDATE user SET user_state = 'DELETE', user_delete_datetime = NOW(), WHERE user_id = ? AND user_state != 'DELETE'")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
@@ -95,9 +95,14 @@ public class User {
         family.addFamilyMember();
     }
 
-    // 초대받는 회원의 가족id를 삭제하는 메소드
+    // 회원의 가족id를 삭제하는 메소드
     public void updateFamilyIdAsNull() {
         this.family = null;
+    }
+
+    // 회원을 삭제하는 메소드
+    public void updateUserAsDelete() {
+        this.userState = UserState.DELETE;
     }
 
 

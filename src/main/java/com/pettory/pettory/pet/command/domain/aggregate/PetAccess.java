@@ -17,8 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "UPDATE pet_access SET pet_access_state = 'DELETE' where pet_access_id = ?")
-
+@SQLDelete(sql = "UPDATE pet_access SET pet_access_state = 'DELETE', pet_access_delete_datetime = NOW() where pet_access_id = ? AND pet_access_state != 'DELETE'")
 public class PetAccess {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +52,7 @@ public class PetAccess {
     }
 
     // petAccess의 상태를 삭제로 변경하는 메소드
-    public void deletePetAccess() {
+    public void updatePetAccessAsDelete() {
         this.petAccessState = PetAccessState.DELETE;
         this.petAccessDeleteDatetime = LocalDateTime.now();
     }
