@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.pettory.walkingGroupApplication.query.mapper.RegisterWalkingGroupMapper">
+    <select id="selectRegisterWalkingGroups" resultType="com.pettory.pettory.walkingGroupApplication.query.dto.RegisterWalkingGroupDTO">
+        SELECT
+            rwg.register_walking_group_id,
+            rwg.walking_group_id,
+            rwg.user_id,
+            u.user_name,
+            rwg.register_walking_group_state
+        FROM register_walking_group
+        JOIN u.user ON (rwg.user_id = u.user_id)
+        WHERE true
+        <if test="walking_group_id != null">
+            AND rwg.walking_group_id = #{walkingGroupId}
+        </if>
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countRegisterWalkingGroups" resultType="long">
+        SELECT COUNT(*)
+        FROM register_walking_group
+        WHERE true
+        <if test="walking_group_id != null">
+            AND walking_group_id = #{walkingGroupId}
+        </if>
+    </select>
+
+    <select id="selectRegisterWalkingGroupById" resultType="com.pettory.pettory.walkingGroupApplication.query.dto.RegisterWalkingGroupDTO">
+        SELECT
+            rwg.register_walking_group_id,
+            rwg.walking_group_id,
+            rwg.user_id,
+            u.user_name,
+            rwg.register_walking_group_state
+        FROM register_walking_group
+        JOIN u.user ON (rwg.user_id = u.user_id)
+        WHERE rwg.user_id = #{userId}
+    </select>
+</mapper>
