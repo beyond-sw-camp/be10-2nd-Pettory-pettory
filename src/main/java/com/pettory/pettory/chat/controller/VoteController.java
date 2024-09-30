@@ -3,7 +3,7 @@ package com.pettory.pettory.chat.controller;
 import com.pettory.pettory.chat.dto.vote.InsertVoteDTO;
 import com.pettory.pettory.chat.dto.vote.ModifyVoteDTO;
 import com.pettory.pettory.chat.dto.vote.SelectVoteDTO;
-import com.pettory.pettory.chat.dto.vote.softDeleteVoteDTO;
+import com.pettory.pettory.chat.dto.vote.SoftDeleteVoteDTO;
 import com.pettory.pettory.chat.entity.Vote;
 import com.pettory.pettory.chat.enums.VoteStateEnum;
 import com.pettory.pettory.chat.response.ResponseChatMessage;
@@ -82,7 +82,7 @@ public class VoteController {
 
     /* 3. 투표 얇은 삭제 */
     @DeleteMapping("/survey-soft/{voteUniqueNum}")
-    public ResponseEntity<Void> softDeleteVote(@RequestBody softDeleteVoteDTO softDeleteVoteDTO) {
+    public ResponseEntity<Void> softDeleteVote(@RequestBody SoftDeleteVoteDTO softDeleteVoteDTO) {
         softDeleteVoteDTO.setVoteDeleteTime(LocalDateTime.now());
         voteService.softDeleteVote(softDeleteVoteDTO);
 

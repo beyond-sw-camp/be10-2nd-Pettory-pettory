@@ -3,7 +3,7 @@ package com.pettory.pettory.chat.service;
 import com.pettory.pettory.chat.dto.vote.InsertVoteDTO;
 import com.pettory.pettory.chat.dto.vote.ModifyVoteDTO;
 import com.pettory.pettory.chat.dto.vote.SelectVoteDTO;
-import com.pettory.pettory.chat.dto.vote.softDeleteVoteDTO;
+import com.pettory.pettory.chat.dto.vote.SoftDeleteVoteDTO;
 import com.pettory.pettory.chat.entity.Vote;
 import com.pettory.pettory.chat.mapper.VoteMapper;
 import com.pettory.pettory.chat.repository.VoteRepository;
@@ -47,7 +47,7 @@ public class VoteService {
     }
 
     @Transactional
-    public void softDeleteVote(softDeleteVoteDTO softDeleteVoteDTO) {
+    public void softDeleteVote(SoftDeleteVoteDTO softDeleteVoteDTO) {
         Vote vote = voteRepository.findById(softDeleteVoteDTO.getVoteUniqueNum()).orElseThrow(IllegalArgumentException::new);
         vote.softDeleteVote(softDeleteVoteDTO.getVoteDeleteTime(),
                 softDeleteVoteDTO.getVoteState());

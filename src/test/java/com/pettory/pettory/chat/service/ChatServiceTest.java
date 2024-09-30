@@ -52,7 +52,7 @@ class ChatServiceTest {
     private static Stream<Arguments> getRegisterChatting() {
         return Stream.of(
                 Arguments.of(
-                        3,
+                        4,
                         3,
                         "안녕하세요",
                         null,
