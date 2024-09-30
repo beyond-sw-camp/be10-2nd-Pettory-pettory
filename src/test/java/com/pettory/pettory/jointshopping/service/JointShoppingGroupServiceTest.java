@@ -67,6 +67,7 @@ public class JointShoppingGroupServiceTest {
                         1000,
                         10,
                         null,
+                        null,
                         2L,
                         4L,
                         new MockMultipartFile("files", "file2.txt", MediaType.TEXT_PLAIN_VALUE, "파일 내용 2".getBytes())
@@ -84,6 +85,7 @@ public class JointShoppingGroupServiceTest {
                         100000,
                         1000,
                         10,
+                        null,
                         null,
                         2L,
                         4L,
@@ -107,7 +109,7 @@ public class JointShoppingGroupServiceTest {
     void testCreateGroup(
             String jointShoppingGroupName, String jointShoppingProducts, String jointShoppingInfo,
             Integer jointShoppingCost, Integer jointShoppingGroupMaximumCount,
-            Integer jointShoppingParticipationMaximumCount, String hostInvoiceNum,
+            Integer jointShoppingParticipationMaximumCount, String hostCourierCode, String hostInvoiceNum,
             Long jointShoppingCategoryNum, Long userId, MultipartFile productImg
     ) {
 
@@ -118,6 +120,7 @@ public class JointShoppingGroupServiceTest {
                 jointShoppingCost,
                 jointShoppingGroupMaximumCount,
                 jointShoppingParticipationMaximumCount,
+                hostCourierCode,
                 hostInvoiceNum,
                 jointShoppingCategoryNum,
                 userId
@@ -135,7 +138,7 @@ public class JointShoppingGroupServiceTest {
             Long jointShoppingGroupNum,
             String jointShoppingGroupName, String jointShoppingProducts, String jointShoppingInfo,
             Integer jointShoppingCost, Integer jointShoppingGroupMaximumCount,
-            Integer jointShoppingParticipationMaximumCount, String hostInvoiceNum,
+            Integer jointShoppingParticipationMaximumCount, String hostCourierCode, String hostInvoiceNum,
             Long jointShoppingCategoryNum, Long userId, MultipartFile productImg
     ) {
 
@@ -146,6 +149,7 @@ public class JointShoppingGroupServiceTest {
                 jointShoppingCost,
                 jointShoppingGroupMaximumCount,
                 jointShoppingParticipationMaximumCount,
+                hostCourierCode,
                 hostInvoiceNum,
                 jointShoppingCategoryNum,
                 userId

@@ -34,4 +34,14 @@
         AND p.joint_shopping_user_delete_datetime = NULL
     </select>
 
+<!--    공동구매 물품 배송 정보 조회(참가자)-->
+    <select id="selectParticipantByNum" resultType="com.pettory.pettory.user.query.dto.jointShoppingParticipationDeliveryInfoResponse">
+        SELECT
+        user_courier_code
+        , user_invoice_num
+        , products_receipt_yn
+        FROM joint_shopping_participation_user_list
+        WHERE joint_shopping_participation_user_list_num = #{participationNum}
+    </select>
+
 </mapper>

@@ -1,5 +1,7 @@
 package com.pettory.pettory.jointshopping.query.controller;
 
+import com.pettory.pettory.jointshopping.query.dto.JointShoppingGroupDeliveryInfoResponse;
+import com.pettory.pettory.jointshopping.query.dto.JointShoppingParticipationDeliveryInfoResponse;
 import com.pettory.pettory.jointshopping.query.dto.JointShoppingUserListResponse;
 import com.pettory.pettory.jointshopping.query.service.JointShoppingGroupQueryService;
 import com.pettory.pettory.jointshopping.query.service.JointShoppingParticipationQueryService;
@@ -23,6 +25,15 @@ public class JointShoppingParticipationQueryController {
     ) {
 
         JointShoppingUserListResponse response = jointShoppingParticipationQueryService.getParticipants(page, size, groupNum);
+
+        return ResponseEntity.ok(response);
+    }
+
+    /*  공동구매 물품 배송 정보 조회(참가자) */
+    @GetMapping("/participation/delivery-info/{participationNum}")
+    public ResponseEntity<JointShoppingParticipationDeliveryInfoResponse> getDeliveryInfo(@PathVariable Long participationNum) {
+
+        JointShoppingParticipationDeliveryInfoResponse response = jointShoppingParticipationQueryService.getDeliveryInfo(participationNum);
 
         return ResponseEntity.ok(response);
     }

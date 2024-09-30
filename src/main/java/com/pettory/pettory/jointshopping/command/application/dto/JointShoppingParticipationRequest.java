@@ -11,6 +11,8 @@ public class JointShoppingParticipationRequest {
 
     @NotNull
     private final Integer paymentCost;
+    private final String userCourierCode;
+    private final String userInvoiceNum;
     @NotNull
     private final Long jointShoppingGroupNum;
     @NotNull

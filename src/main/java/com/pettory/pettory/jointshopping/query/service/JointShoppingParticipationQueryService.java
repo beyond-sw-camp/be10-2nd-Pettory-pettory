@@ -1,5 +1,9 @@
 package com.pettory.pettory.jointshopping.query.service;
 
+import com.pettory.pettory.exception.NotFoundException;
+import com.pettory.pettory.jointshopping.query.dto.JointShoppingGroupDTO;
+import com.pettory.pettory.jointshopping.query.dto.JointShoppingGroupDeliveryInfoResponse;
+import com.pettory.pettory.jointshopping.query.dto.JointShoppingParticipationDeliveryInfoResponse;
 import com.pettory.pettory.jointshopping.query.dto.JointShoppingUserListResponse;
 import com.pettory.pettory.jointshopping.query.mapper.JointShoppingGroupMapper;
 import com.pettory.pettory.jointshopping.query.mapper.JointShoppingParticipationMapper;
@@ -31,4 +35,23 @@ public class JointShoppingParticipationQueryService {
                 .totalItems(totalItems)
                 .build();
     }
+
+    /*  공동구매 물품 배송 정보 조회(참가자) */
+    @Transactional(readOnly = true)
+    public JointShoppingParticipationDeliveryInfoResponse getDeliveryInfo(Long participationNum) {
+        JointShoppingParticipationDeliveryInfoResponse jointShoppingParticipationDeliveryInfoResponse
+                = jointShoppingParticipationMapper.selectParticipantByNum(participationNum);
+
+        if (jointShoppingParticipationDeliveryInfoResponse == null) {
+            throw new NotFoundException(
+                    "해당 코드를 가진 참가자을 찾지 못했습니다. 참가자 코드 : " + participationNum);
+        }
+
+        return JointShoppingParticipationDeliveryInfoResponse.builder()
+                .userCourierCode(jointShoppingParticipationDeliveryInfoResponse.getUserCourierCode())
+                .userInvoiceNum(jointShoppingParticipationDeliveryInfoResponse.getUserInvoiceNum())
+                .productsReceiptYn(jointShoppingParticipationDeliveryInfoResponse.getProductsReceiptYn())
+                .build();
+    }
+
 }

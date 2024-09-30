@@ -15,6 +15,7 @@ public class JointShoppingGroupDTO {
     private Integer jointShoppingCost;
     private Integer jointShoppingGroupMaximumCount;
     private Integer jointShoppingParticipationMaximumCount;
+    private String hostCourierCode;
     private String hostInvoiceNum;
     private JointShoppingCategoryDTO category;
     private Long userId;

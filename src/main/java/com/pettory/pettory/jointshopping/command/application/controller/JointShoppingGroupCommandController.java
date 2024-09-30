@@ -1,5 +1,6 @@
 package com.pettory.pettory.jointshopping.command.application.controller;
 
+import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingDeliveryInfoRequest;
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupRequest;
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupUserRequest;
 import com.pettory.pettory.jointshopping.command.application.service.JointShoppingGroupApplicationService;
@@ -35,7 +36,7 @@ public class JointShoppingGroupCommandController {
     /* 공동구매모임 수정 */
     @PutMapping("/groups/{jointShoppingGroupNum}")
     public ResponseEntity<Void> updateGroup(
-            @PathVariable Long jointShoppingGroupNum,
+            @PathVariable final Long jointShoppingGroupNum,
             @RequestPart @Valid JointShoppingGroupRequest groupRequest,
             @RequestPart(required = false) MultipartFile productImg
     ) {
@@ -85,4 +86,17 @@ public class JointShoppingGroupCommandController {
 
         return ResponseEntity.noContent().build();
     }
+
+    /* 공동구매 방장 물품 배송 정보 등록(수정) */
+    @PutMapping("/groups/delivery-info/{jointShoppingGroupNum}")
+    public ResponseEntity<Void> updateDeliveryInfo(
+            @PathVariable final Long jointShoppingGroupNum,
+            @RequestBody @Valid JointShoppingDeliveryInfoRequest jointShoppingDeliveryInfoRequest
+    ) {
+
+        jointShoppingGroupApplicationService.updateDeliveryInfo(jointShoppingGroupNum, jointShoppingDeliveryInfoRequest);
+
+        return ResponseEntity.created(URI.create("/jointshopping/groups/delivery-info/" + jointShoppingGroupNum)).build();
+    }
+
 }

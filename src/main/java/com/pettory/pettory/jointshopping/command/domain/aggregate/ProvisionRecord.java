@@ -23,11 +23,26 @@ public class ProvisionRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long provisionRecordNum;
-    private Long provisionCost;
+    private Integer provisionCost;
     @Enumerated(value = EnumType.STRING)
     private ProvisionState provisionState = ProvisionState.Waiting;
     @CreatedDate
     private LocalDateTime provisionRecordInsertDatetime;
     private LocalDateTime provisionCompleteDatetime;
     private Long jointShoppingGroupNum;
+
+    private ProvisionRecord(Integer provisionCost, Long jointShoppingGroupNum){
+        this.provisionCost = provisionCost;
+        this.jointShoppingGroupNum = jointShoppingGroupNum;
+    }
+
+    public static ProvisionRecord create(Integer provisionCost, Long jointShoppingGroupNum) {
+        return new ProvisionRecord(provisionCost, jointShoppingGroupNum);
+    }
+
+    /* 지급완료 상태로 변경하는 메소드 */
+    public void changeProvisionState() {
+        this.provisionState = ProvisionState.Completion;
+        this.provisionCompleteDatetime = LocalDateTime.now();
+    }
 }
