@@ -20,4 +20,8 @@ public class SelectChattingDTO {
     private LocalDateTime chattingDeleteTime;
     private String chattingState;
     private int userId;
+
+    public SelectChattingDTO() {
+        
+    }
 }
