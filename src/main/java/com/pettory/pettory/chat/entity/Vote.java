@@ -21,4 +21,18 @@ public class Vote {
     private LocalDateTime voteUpdateTime;
     private LocalDateTime voteDeleteTime;
     private String voteState;
+
+    /* 투표 제목, 내용 동시 수정 */
+    public void modifyVoteTitleContent(String voteTitle, String voteContent, LocalDateTime voteUpdateTime, String voteState) {
+        this.voteTitle = voteTitle;
+        this.voteContent = voteContent;
+        this.voteUpdateTime = voteUpdateTime;
+        this.voteState = voteState;
+    }
+
+    /* 투표 얇은 삭제 */
+    public void softDeleteVote(LocalDateTime voteDeleteTime, String voteState) {
+        this.voteDeleteTime = voteDeleteTime;
+        this.voteState = voteState;
+    }
 }
