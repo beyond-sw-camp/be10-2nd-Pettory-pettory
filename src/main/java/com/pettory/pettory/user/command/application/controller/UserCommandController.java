@@ -2,8 +2,7 @@ package com.pettory.pettory.user.command.application.controller;
 
 import com.pettory.pettory.common.CommonResponseDTO;
 import com.pettory.pettory.security.util.UserSecurity;
-import com.pettory.pettory.user.command.application.dto.UserDeleteRequest;
-import com.pettory.pettory.user.command.application.dto.UserRegisterRequest;
+import com.pettory.pettory.user.command.application.dto.*;
 import com.pettory.pettory.user.command.application.service.UserCommandService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +41,47 @@ public class UserCommandController {
         // 회원 탈퇴 성공 시 응답
         CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "회원 탈퇴 성공", null);
         return ResponseEntity.status(HttpStatus.OK).body(successResponse);
+    }
+
+    // 비밀번호 찾기
+    @PostMapping("/passwords")
+    public ResponseEntity<CommonResponseDTO> findPasswords(@RequestBody FindPasswordRequest findPasswordRequest) {
+
+        userCommandService.getNewPasswords(findPasswordRequest);
+
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "새로운 비밀번호 발송 성공", null);
+        return ResponseEntity.status(HttpStatus.OK).body(successResponse);
+    }
+
+    // 비밀번호 변경
+    @PutMapping("/passwords")
+    public ResponseEntity<CommonResponseDTO> updatePasswords(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
+
+        String currentUserEmail = UserSecurity.getCurrentUserEmail();
+
+        userCommandService.changePasswords(currentUserEmail, changePasswordRequest);
+
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "비밀번호 변경 성공", null);
+        return ResponseEntity.status(HttpStatus.OK).body(successResponse);
+    }
+
+    // 이메일 찾기 - 인증 코드 전송
+    @PostMapping("/emails/nicknames")
+    public ResponseEntity<CommonResponseDTO> findEmails(@RequestBody FindEmailRequest findEmailRequest) {
+
+        userCommandService.sendVerifyCode(findEmailRequest.getUserNickname());
+
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "이메일 발송 성공", null);
+        return ResponseEntity.status(HttpStatus.OK).body(successResponse);
+    }
+
+    // 이메일 찾기 - 인증 코드 검증
+    @PostMapping("/emails/code")
+    public ResponseEntity<CommonResponseDTO> verifyCode(@RequestBody VerifyCodeRequest verifyCodeRequest) {
+
+        userCommandService.checkCode(verifyCodeRequest.getUserEmail(), verifyCodeRequest.getVerifyCode());
+
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "인증 코드 검증 성공", null);
+        return ResponseEntity.ok(successResponse);
     }
 }

@@ -9,6 +9,19 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: mypettory@gmail.com
+    password: zlhgdqvhhhalxynh
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    default-encoding: UTF-8
+
 mybatis:
   configuration:
     map-underscore-to-camel-case: true

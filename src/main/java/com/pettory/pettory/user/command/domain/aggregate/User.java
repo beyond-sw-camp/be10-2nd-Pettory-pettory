@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "user")
@@ -105,5 +106,9 @@ public class User {
         this.userState = UserState.DELETE;
     }
 
+    // 회원의 비밀번호를 수정하는 메소드
+    public void updatePassword(String encodedUserPassword) {
+        this.userPassword = encodedUserPassword;
+    }
 
 }
