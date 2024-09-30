@@ -97,6 +97,12 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(EmptyResultException.class)
+    public ResponseEntity<CommonResponseDTO> handleEmptyResultException(EmptyResultException ex) {
+        CommonResponseDTO response = new CommonResponseDTO(HttpStatus.OK.value(), ex.getMessage(), null);
+        return ResponseEntity.ok(response);
+    }
+
     @ExceptionHandler(AlreadyResignException.class)
     public ResponseEntity<ErrorResponse> handleAlreadyResignException(AlreadyResignException ex) {
         ErrorResponse errorResponse = ErrorResponse.builder()
@@ -105,6 +111,4 @@ public class GlobalExceptionHandler {
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
-
-
 }
