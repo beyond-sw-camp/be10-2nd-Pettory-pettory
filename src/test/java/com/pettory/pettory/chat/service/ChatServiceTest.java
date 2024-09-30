@@ -196,4 +196,11 @@ class ChatServiceTest {
                 () -> chatService.hardDeleteChatting(3)
         );
     }
+
+    @Test
+    void selectChatRoomChatting() {
+        Assertions.assertDoesNotThrow(
+                () -> chatService.selectChatRoomChatting(3)
+        );
+    }
 }
