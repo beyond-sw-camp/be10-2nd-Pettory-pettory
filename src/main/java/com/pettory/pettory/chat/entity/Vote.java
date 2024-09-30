@@ -14,7 +14,7 @@ public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int voteUniqueNum;
-    private int voteChatRoomUniqueNum;
+    private int voteChatroomUniqueNum;
     private String voteTitle;
     private String voteContent;
     private LocalDateTime voteInsertTime;
