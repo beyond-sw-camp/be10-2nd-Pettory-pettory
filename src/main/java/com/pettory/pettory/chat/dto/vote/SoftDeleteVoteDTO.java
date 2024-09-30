@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @AllArgsConstructor
-public class softDeleteVoteDTO {
+public class SoftDeleteVoteDTO {
     private int voteUniqueNum;
     private int voteChatroomUniqueNum;
     private LocalDateTime voteDeleteTime;
