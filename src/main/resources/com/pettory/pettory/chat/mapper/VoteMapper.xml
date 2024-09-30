@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pettory.pettory.chat.mapper.VoteMapper">
 
-    <select id="selectVote" parameterType="java.lang.Integer" resultType="SelectVoteDTO">
+    <select id="selectVoteList" parameterType="java.lang.Integer" resultType="SelectVoteDTO">
         SELECT
             vote_unique_num,
             vote_chatroom_unique_num,
