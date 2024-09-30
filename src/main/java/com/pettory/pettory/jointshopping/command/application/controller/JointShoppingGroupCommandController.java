@@ -63,8 +63,6 @@ public class JointShoppingGroupCommandController {
 
         Long jointShoppingGroupUserListNum = jointShoppingGroupApplicationService.insertGroupUser(groupUserRequest);
 
-        jointShoppingGroupApplicationService.closeGroup(groupUserRequest.getJointShoppingGroupNum());
-
         return ResponseEntity
                 .created(URI.create("/jointshopping/groups/users/" + jointShoppingGroupUserListNum))
                 .build();
@@ -74,8 +72,6 @@ public class JointShoppingGroupCommandController {
     @DeleteMapping("/groups/users/{jointShoppingGroupUserNum}")
     public ResponseEntity<Void> exitGroupUser(@PathVariable final Long jointShoppingGroupUserNum) {
 
-        jointShoppingGroupApplicationService.applyGroup(jointShoppingGroupUserNum);
-
         jointShoppingGroupApplicationService.exitGroupUser(jointShoppingGroupUserNum);
 
         return ResponseEntity.noContent().build();
@@ -84,8 +80,6 @@ public class JointShoppingGroupCommandController {
     /* 공동구매모임 강퇴 (모임 사용자 삭제, 재등록 불가 ) */
     @DeleteMapping("/groups/users/withdrawal/{jointShoppingGroupUserNum}")
     public ResponseEntity<Void> withdrawalGroupUser(@PathVariable final Long jointShoppingGroupUserNum){
-
-        jointShoppingGroupApplicationService.applyGroup(jointShoppingGroupUserNum);
 
         jointShoppingGroupApplicationService.withdrawalGroupUser(jointShoppingGroupUserNum);
 
