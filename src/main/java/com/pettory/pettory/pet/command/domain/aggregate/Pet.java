@@ -24,7 +24,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "UPDATE pet SET pet_state ='DELETE' where pet_id = ?")
+@SQLDelete(sql = "UPDATE pet SET pet_state ='DELETE', pet_delete_datetime = NOW() where pet_id = ? AND pet_state != 'DELETE'")
 public class Pet {
 
     @Id
@@ -111,5 +111,11 @@ public class Pet {
         if (petNeuteringYn != null) this.petNeuteringYn = petNeuteringYn;
         if (petWeight != null) this.petWeight = petWeight;
         if (petMemo != null && !petMemo.trim().isEmpty()) this.petMemo = petMemo;
+    }
+
+    // 반려동물의 상태를 삭제로 변경하는 메소드
+    public void updatePetAsDelete() {
+        this.petState = PetState.DELETE;
+        this.petDeleteDatetime = LocalDateTime.now();
     }
 }

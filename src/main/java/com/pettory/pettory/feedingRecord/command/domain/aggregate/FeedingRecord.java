@@ -2,6 +2,7 @@ package com.pettory.pettory.feedingRecord.command.domain.aggregate;
 
 import com.pettory.pettory.family.command.domain.aggregate.FamilyState;
 import com.pettory.pettory.pet.command.domain.aggregate.Pet;
+import com.pettory.pettory.pet.command.domain.aggregate.PetState;
 import com.pettory.pettory.user.command.domain.aggregate.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -83,9 +84,10 @@ public class FeedingRecord {
             this.feedingRecordMemo = feedingRecordMemo;
     }
 
-//    // feeding_record 삭제 시간을 update 하는 메소드
-//    public void updateFeedingRecordDeleteDatetime() {
-//        this.feedingRecordDeleteDatetime = LocalDateTime.now();
-//    }
 
+    // 급여 기록의 상태를 삭제로 변경하는 메소드
+    public void updateFeedingRecordAsDelete() {
+        this.feedingRecordState = FeedingRecordState.DELETE;
+        this.feedingRecordDeleteDatetime = LocalDateTime.now();
+    }
 }
