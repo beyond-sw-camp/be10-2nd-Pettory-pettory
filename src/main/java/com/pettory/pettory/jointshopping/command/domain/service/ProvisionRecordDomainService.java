@@ -28,12 +28,10 @@ public class ProvisionRecordDomainService {
         return provisionRecordRepository.save(provisionRecord);
     }
 
-    /* 지급상태를 완료로 변경하는 로직 */
-    public void updateProvisionState(Long jointShoppingGroupNum) {
-        ProvisionRecord provisionRecord = provisionRecordRepository.findByJointShoppingGroupNum(jointShoppingGroupNum);
-
-        /* 수정을 위해 엔터티 정보 변경 */
-        provisionRecord.changeProvisionState();
+    /* 도메인 객체를 삭제하는 로직 */
+    public void deleteProvisionRecord(Long jointShoppingGroupNum) {
+        /* soft delete 될 수 있도록 entity에 설정함 */
+        provisionRecordRepository.deleteByJointShoppingGroupNum(jointShoppingGroupNum);
     }
 
 }

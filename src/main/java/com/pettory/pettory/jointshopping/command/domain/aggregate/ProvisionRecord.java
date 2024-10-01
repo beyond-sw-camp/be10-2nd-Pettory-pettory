@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @EntityListeners(AuditingEntityListener.class)  // 엔티티 생성, 삭제 시점 체크를 위해 필요한 리스너
 @SQLDelete(sql = "UPDATE provision_record " +
-        "SET provision_complete_datetime = NOW() " +
+        "SET provision_state = 'Completion', provision_complete_datetime = NOW() " +
         "WHERE provision_record_num = ?")
 public class ProvisionRecord {
 

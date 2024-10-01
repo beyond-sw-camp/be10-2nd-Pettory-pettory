@@ -21,7 +21,7 @@
         FROM user u
         JOIN joint_shopping_participation_user_list p ON (u.user_id = p.user_id)
         WHERE p.joint_shopping_group_num = #{groupNum}
-        AND p.joint_shopping_user_delete_datetime = NULL
+        AND p.joint_shopping_participation_delete_datetime IS NULL
         ORDER BY u.user_nickname
         LIMIT #{limit} OFFSET #{offset}
     </select>
@@ -31,11 +31,11 @@
         FROM user u
         JOIN joint_shopping_participation_user_list p ON (u.user_id = p.user_id)
         WHERE p.joint_shopping_group_num = #{groupNum}
-        AND p.joint_shopping_user_delete_datetime = NULL
+        AND p.joint_shopping_participation_delete_datetime IS NULL
     </select>
 
 <!--    공동구매 물품 배송 정보 조회(참가자)-->
-    <select id="selectParticipantByNum" resultType="com.pettory.pettory.user.query.dto.jointShoppingParticipationDeliveryInfoResponse">
+    <select id="selectParticipantByNum" resultType="com.pettory.pettory.jointshopping.query.dto.JointShoppingParticipationDeliveryInfoResponse">
         SELECT
         user_courier_code
         , user_invoice_num

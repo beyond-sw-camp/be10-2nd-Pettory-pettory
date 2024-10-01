@@ -108,7 +108,5 @@ public class JointShoppingGroup {
             this.jointShoppingProductsState = JointShoppingProductsState.OrderCompleted;
         else if(jointShoppingProductsState.equals(JointShoppingProductsState.OrderCompleted))
             this.jointShoppingProductsState = JointShoppingProductsState.Arrival;
-        else
-            throw new BadJoinException("잘못된 상태입니다.");
     }
 }

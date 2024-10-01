@@ -133,7 +133,7 @@
         FROM user u
         JOIN joint_shopping_group_user_list g ON (u.user_id = g.user_id)
         WHERE g.joint_shopping_group_num = #{groupNum}
-        AND g.joint_shopping_user_delete_datetime = NULL
+        AND g.joint_shopping_user_delete_datetime IS NULL
         ORDER BY u.user_nickname
         LIMIT #{limit} OFFSET #{offset}
     </select>
@@ -180,7 +180,7 @@
         AND (joint_shopping_group_state = 'APPLICATION' OR joint_shopping_group_state = 'CLOSE')
     </select>
 
-    <!--    공동구매모임 전체 리스트 조회(검색, 정렬) -->
+    <!--  지급기록 전체 리스트 조회(검색) -->
     <select id="selectProvisionRecords" resultType="com.pettory.pettory.jointshopping.query.dto.ProvisionRecordDTO">
         SELECT
         provision_record_num

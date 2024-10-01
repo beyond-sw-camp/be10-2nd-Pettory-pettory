@@ -17,7 +17,7 @@
         joint_shopping_category_title
         FROM joint_shopping_category
         <if test="categoryTitle != null">
-            WHERE joint_shopping_category_title = #{categoryTitle}
+            WHERE joint_shopping_category_title like CONCAT('%',#{categoryTitle},'%')
         </if>
         ORDER BY joint_shopping_category_num
     </select>
@@ -26,7 +26,7 @@
         SELECT COUNT(*)
         FROM joint_shopping_category
         <if test="categoryTitle != null">
-            WHERE joint_shopping_category_title = #{categoryTitle}
+            WHERE joint_shopping_category_title like CONCAT('%',#{categoryTitle},'%')
         </if>
     </select>
 

@@ -6,4 +6,6 @@ public interface ProvisionRecordRepository {
     ProvisionRecord save(ProvisionRecord provisionRecord);
 
     ProvisionRecord findByJointShoppingGroupNum(Long jointShoppingGroupNum);
+
+    void deleteByJointShoppingGroupNum(Long jointShoppingGroupNum);
 }

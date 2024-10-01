@@ -50,7 +50,7 @@ public class JointShoppingParticipationApplicationService {
 
         /* 참가인원이 가득찰 시 */
         if (now + 1 == max) {
-            /* 모임 상품 상태 변경 */
+            /* 모임 상품 상태 변경(주문완료) */
             jointShoppingGroupDomainService.changeProductsState(jointShoppingGroupNum);
 
             /* 지급대기상태로 생성 */
@@ -94,8 +94,12 @@ public class JointShoppingParticipationApplicationService {
     public void updateProductsReceipt(Long participationNum) {
         jointShoppingParticipationDomainService.updateProductsReceipt(participationNum);
 
-        /* 공동구매 참가자 모두가 물품 수령으로 변경했는지 체크 */
         Long jointShoppingGroupNum = jointShoppingParticipationDomainService.findGroup(participationNum);
+
+        /* 수령시 자동으로 모임 상품 상태 변경(도착) */
+        jointShoppingGroupDomainService.changeProductsState(jointShoppingGroupNum);
+
+        /* 공동구매 참가자 모두가 물품 수령으로 변경했는지 체크 */
         int cnt = jointShoppingParticipationDomainService.findReceiptUserCount(jointShoppingGroupNum);
         int max = jointShoppingGroupDomainService.findParticipationMaximumCount(jointShoppingGroupNum);
 
@@ -103,8 +107,10 @@ public class JointShoppingParticipationApplicationService {
         if (cnt >= max) {
             /* 결제기능 추가 */
 
-            /* 지급완료 상태 변경 메소드 */
-            provisionRecordDomainService.updateProvisionState(jointShoppingGroupNum);
+            /* 지급완료 처리 후 soft delete */
+            provisionRecordDomainService.deleteProvisionRecord(jointShoppingGroupNum);
+            /* 공동구매모임 soft delete */
+            jointShoppingGroupDomainService.deleteGroup(jointShoppingGroupNum);
         }
     }
 }

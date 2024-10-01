@@ -82,7 +82,8 @@ public class JointShoppingGroupDomainService {
         JointShoppingGroup jointShoppingGroup = jointShoppingGroupRepository.findById(jointShoppingGroupNum)
                 .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 모임이 없습니다. code : " + jointShoppingGroupNum));
 
-        if(!jointShoppingGroup.getJointShoppingGroupState().equals("APPLICATION")){
+        String state = jointShoppingGroup.getJointShoppingGroupState().toString();
+        if(!state.equals("APPLICATION")){
             throw new BadJoinException("방에 참가하실 수 없습니다.");
         }
     }
@@ -146,7 +147,8 @@ public class JointShoppingGroupDomainService {
         JointShoppingGroup jointShoppingGroup = jointShoppingGroupRepository.findById(jointShoppingGroupNum)
                 .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 모임이 없습니다. code : " + jointShoppingGroupNum));
 
-        if(!jointShoppingGroup.getJointShoppingProductsState().equals("Recruitment")){
+        String state = jointShoppingGroup.getJointShoppingProductsState().toString();
+        if(!state.equals("Recruitment")){
             throw new BadJoinException("이미 배송이 시작되어 취소할 수 없습니다.");
         }
     }
@@ -156,7 +158,8 @@ public class JointShoppingGroupDomainService {
         JointShoppingGroup jointShoppingGroup = jointShoppingGroupRepository.findById(jointShoppingGroupNum)
                 .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 모임이 없습니다. code : " + jointShoppingGroupNum));
 
-        if(!jointShoppingGroup.getJointShoppingProductsState().equals("OrderCompleted")){
+        String state = jointShoppingGroup.getJointShoppingProductsState().toString();
+        if(!state.equals("OrderCompleted")){
             throw new BadJoinException("아직 택배 정보를 입력하실 수 없습니다.");
         }
     }

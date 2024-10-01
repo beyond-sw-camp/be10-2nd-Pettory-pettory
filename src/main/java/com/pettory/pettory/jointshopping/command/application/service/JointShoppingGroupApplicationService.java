@@ -114,7 +114,7 @@ public class JointShoppingGroupApplicationService {
 
         jointShoppingGroupDomainService.updateDeliveryInfo(jointShoppingGroupNum,jointShoppingDeliveryInfoRequest);
 
-        /* 등록시 모임 상품 상태 변경 */
+        /* 등록시 모임 상품 상태 변경(배송중) */
         jointShoppingGroupDomainService.changeProductsState(jointShoppingGroupNum);
     }
 

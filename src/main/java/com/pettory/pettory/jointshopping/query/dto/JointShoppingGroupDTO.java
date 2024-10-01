@@ -2,9 +2,11 @@ package com.pettory.pettory.jointshopping.query.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class JointShoppingGroupDTO {
     private Long jointShoppingGroupNum;
     private String jointShoppingGroupName;
