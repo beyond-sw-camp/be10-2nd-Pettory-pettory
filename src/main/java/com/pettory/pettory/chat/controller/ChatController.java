@@ -1,11 +1,12 @@
 package com.pettory.pettory.chat.controller;
 
-import com.pettory.pettory.chat.dto.chatting.InsertChattingDTO;
+import com.pettory.pettory.chat.dto.chatroom.InsertChatRoomDTO;
+import com.pettory.pettory.chat.dto.chatroom.DeleteChatRoomDTO;
 import com.pettory.pettory.chat.dto.chatting.ModifyChattingDTO;
 import com.pettory.pettory.chat.dto.chatting.SelectChattingDTO;
 import com.pettory.pettory.chat.dto.chatting.SoftDeleteChattingDTO;
 import com.pettory.pettory.chat.entity.ChatRoom;
-import com.pettory.pettory.chat.dto.ChatRoomDTO;
+import com.pettory.pettory.chat.enums.ChatRoomStateEnum;
 import com.pettory.pettory.chat.response.ResponseSelectChattingMessage;
 import com.pettory.pettory.chat.service.ChatService;
 import org.springframework.http.HttpHeaders;
@@ -38,31 +39,30 @@ public class ChatController {
 
     /* 1. 채팅방 생성 */
     @PostMapping("/chatroom")
-    public ResponseEntity<?> registerChatRoom(@RequestBody ChatRoomDTO chatRoomDTO) {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        chatRoomDTO.setChatRoomInsertTime(localDateTime);
+    public ResponseEntity<?> registerChatRoom(@RequestBody InsertChatRoomDTO insertChatRoomDTO) {
+        insertChatRoomDTO.setChatroomInsertTime(LocalDateTime.now());
 
         /* 채팅방 DB 등록*/
-        ChatRoom chatroom = chatService.registerChatRoom(chatRoomDTO);
+        ChatRoom chatroom = chatService.registerChatRoom(insertChatRoomDTO);
 
         return ResponseEntity.created(
                 URI.create("/chat/chatroom/" + chatroom.getChatroomUniqueNum())
         ).build();
     }
 
-    /* 2. 채팅방 상태 수정 */
-    @PutMapping("/chatroom/{chatRoomUniqueNum}")
-    public ResponseEntity<?> modifyChatRoomState(@PathVariable Integer chatRoomUniqueNum,
-                                                 @RequestBody ChatRoomDTO chatRoomDTO) {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        chatRoomDTO.setChatRoomUniqueNum(chatRoomUniqueNum);
-        chatRoomDTO.setChatRoomUpdateTime(localDateTime);
+    /* 2. 채팅방 삭제 */
+    @DeleteMapping("/chatroom/{chatroomUniqueNum}")
+    public ResponseEntity<?> deleteChatRoomState(@PathVariable Integer chatroomUniqueNum) {
+        DeleteChatRoomDTO deleteChatRoomDTO = new DeleteChatRoomDTO(chatroomUniqueNum);
+        deleteChatRoomDTO.setChatroomDeleteTime(LocalDateTime.now());
+        deleteChatRoomDTO.setChatroomUpdateTime(LocalDateTime.now());
+        deleteChatRoomDTO.setChatroomState(String.valueOf(ChatRoomStateEnum.DELETE));
 
-        /* 채팅방 상태 DB 수정 */
-        chatService.modifyChatRoom(chatRoomDTO);
+        /* 채팅방 상태 삭제 */
+        chatService.deleteChatRoom(deleteChatRoomDTO);
 
         return ResponseEntity.created(
-                URI.create("/chat/chatroom-state/" + chatRoomDTO.getChatRoomUniqueNum())
+                URI.create("/chat/chatroom-state/" + deleteChatRoomDTO.getChatroomUniqueNum())
         ).build();
     }
 
@@ -83,19 +83,8 @@ public class ChatController {
         return ResponseEntity.ok().headers(headers).body(responseMessage);
     }
 
-    /* 3. 채팅방의 채팅 내용을 저장 */
-    @PostMapping("/chatting")
-    public ResponseEntity<?> registerChatting(@RequestBody InsertChattingDTO insertChattingDTO) {
-
-        chatService.registerChatting(insertChattingDTO);
-
-        return ResponseEntity.created(
-                URI.create("/chat/chatting/" + insertChattingDTO.getChattingUniqueNum())
-        ).build();
-    }
-
     /* 4. 채팅방의 채팅 내용을 수정 */
-    @PutMapping("/chatting/{chattingUniqueNum}")
+    @PutMapping("/chatroom-chatting/{chattingUniqueNum}")
     public ResponseEntity<?> modifyChatting(@PathVariable Integer chattingUniqueNum,
                                             @RequestBody ModifyChattingDTO modifyChattingDTO) {
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -111,7 +100,7 @@ public class ChatController {
     }
 
     /* 채팅방의 채팅 내용을 soft Delete */
-    @DeleteMapping("/chatting-soft/{chattingUniqueNum}")
+    @DeleteMapping("/chatroom-chatting-fake/{chattingUniqueNum}")
     public ResponseEntity<?> softDeleteChatting(@PathVariable Integer chattingUniqueNum,
                                                 SoftDeleteChattingDTO softDeleteChattingDTO) {
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -126,7 +115,7 @@ public class ChatController {
     }
 
     /* 채팅방의 채팅 내용을 Hard Delete */
-    @DeleteMapping("/chatting-hard/{chattingUniqueNum}")
+    @DeleteMapping("/chatroom-chatting-real/{chattingUniqueNum}")
     public ResponseEntity<?> hardDeleteChatting(@PathVariable Integer chattingUniqueNum) {
         chatService.hardDeleteChatting(chattingUniqueNum);
 

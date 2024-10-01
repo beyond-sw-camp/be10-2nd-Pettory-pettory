@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class SoftDeleteChattingDTO {
     private int chattingUniqueNum;
-    private int chattingChatRoomUniqueNum;
+    private int chattingChatroomUniqueNum;
     private LocalDateTime chattingDeleteTime;
     private String chattingState;
 }
