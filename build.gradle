@@ -21,6 +21,8 @@ configurations {
 
 repositories {
     mavenCentral()
+    // 아임포트 관련
+    maven {url 'https://jitpack.io'}
 }
 
 dependencies {
@@ -57,6 +59,7 @@ dependencies {
     // 지훈 - modelmapper, 파일 io
     implementation 'org.modelmapper:modelmapper:3.2.1'
     implementation 'commons-io:commons-io:2.11.0'
+    implementation 'com.github.iamport:iamport-rest-client-java:0.2.21'
 }
 
 tasks.named('test') {

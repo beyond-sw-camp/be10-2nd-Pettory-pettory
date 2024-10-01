@@ -1,15 +1,13 @@
 package com.pettory.pettory.jointshopping.command.domain.service;
 
-import com.pettory.pettory.exception.AlreadyResignException;
+import com.pettory.pettory.exception.BadJoinException;
 import com.pettory.pettory.exception.NotFoundException;
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupUserRequest;
-import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingGroup;
 import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingGroupUser;
 import com.pettory.pettory.jointshopping.command.domain.repository.JointShoppingGroupUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,21 +26,17 @@ public class JointShoppingGroupUserDomainService {
         return newJointShoppingGroupUser;
     }
 
-
     /* 도메인 객체를 저장하는 로직 */
-    @Transactional
     public JointShoppingGroupUser saveGroupUser(JointShoppingGroupUser newJointShoppingGroupUser) {
         return jointShoppingGroupUserRepository.save(newJointShoppingGroupUser);
     }
 
     /* 도메인 객체를 즉시 저장하는 로직 */
-    @Transactional
     public JointShoppingGroupUser saveAndFlushGroupUser(JointShoppingGroupUser newJointShoppingGroupUser) {
         return jointShoppingGroupUserRepository.saveAndFlush(newJointShoppingGroupUser);
     }
 
     /* 도메인 객체를 삭제하는 로직 */
-    @Transactional
     public void deleteGroupUser(Long jointShoppingGroupUserNum) {
         jointShoppingGroupUserRepository.deleteById(jointShoppingGroupUserNum);
     }
@@ -60,7 +54,6 @@ public class JointShoppingGroupUserDomainService {
     }
 
     /* 도메인 객체의 그룹 강퇴여부를 확인하는 로직  */
-    @Transactional
     public void checkResignYn(JointShoppingGroupUserRequest groupUserRequest) {
         List<JointShoppingGroupUser> jointShoppingGroupUserList  = jointShoppingGroupUserRepository.findByJointShoppingGroupNumAndUserIdAndResignYnTrue(
                 groupUserRequest.getJointShoppingGroupNum(),
@@ -68,7 +61,7 @@ public class JointShoppingGroupUserDomainService {
         );
 
         if(!jointShoppingGroupUserList.isEmpty()){
-           throw new AlreadyResignException("이미 강퇴당한 적이 있는 방입니다. ");
+           throw new BadJoinException("이미 강퇴당한 적이 있는 방입니다. ");
         }
     }
 

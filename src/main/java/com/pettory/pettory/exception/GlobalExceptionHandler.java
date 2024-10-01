@@ -114,8 +114,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
 
-    @ExceptionHandler(AlreadyResignException.class)
-    public ResponseEntity<ErrorResponse> handleAlreadyResignException(AlreadyResignException ex) {
+    @ExceptionHandler(BadJoinException.class)
+    public ResponseEntity<ErrorResponse> handleAlreadyResignException(BadJoinException ex) {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .message(ex.getMessage())

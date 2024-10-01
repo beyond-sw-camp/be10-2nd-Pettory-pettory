@@ -1,8 +1,13 @@
 package com.pettory.pettory.jointshopping.command.domain.service;
 
+import com.pettory.pettory.exception.BadJoinException;
 import com.pettory.pettory.exception.NotFoundException;
+import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingDeliveryInfoRequest;
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupRequest;
+import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupUserRequest;
 import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingGroup;
+import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingGroupUser;
+import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingParticipationUser;
 import com.pettory.pettory.jointshopping.command.domain.repository.JointShoppingGroupRepository;
 import com.pettory.pettory.jointshopping.command.mapper.JointShoppingGroupMapper;
 import com.pettory.pettory.jointshopping.util.FileUploadUtils;
@@ -10,6 +15,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -62,10 +69,23 @@ public class JointShoppingGroupDomainService {
                 groupRequest.getJointShoppingCost(),
                 groupRequest.getJointShoppingGroupMaximumCount(),
                 groupRequest.getJointShoppingParticipationMaximumCount(),
+                groupRequest.getHostCourierCode(),
                 groupRequest.getHostInvoiceNum(),
                 groupRequest.getJointShoppingCategoryNum(),
                 groupRequest.getUserId()
         );
+    }
+
+    /* 방 상태를 체크하고 리턴하는 로직 */
+    public void checkGroupState(Long jointShoppingGroupNum){
+
+        JointShoppingGroup jointShoppingGroup = jointShoppingGroupRepository.findById(jointShoppingGroupNum)
+                .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 모임이 없습니다. code : " + jointShoppingGroupNum));
+
+        String state = jointShoppingGroup.getJointShoppingGroupState().toString();
+        if(!state.equals("APPLICATION")){
+            throw new BadJoinException("방에 참가하실 수 없습니다.");
+        }
     }
 
     /* 도메인 객체를 삭제하는 로직 */
@@ -81,6 +101,15 @@ public class JointShoppingGroupDomainService {
                 .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 모임이 없습니다. code : " + jointShoppingGroupNum));
 
         return jointShoppingGroup.getJointShoppingGroupMaximumCount();
+    }
+
+    /* 최대 참가자 수를 반환하는 로직 */
+    public int findParticipationMaximumCount(Long jointShoppingGroupNum) {
+
+        JointShoppingGroup jointShoppingGroup = jointShoppingGroupRepository.findById(jointShoppingGroupNum)
+                .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 모임이 없습니다. code : " + jointShoppingGroupNum));
+
+        return jointShoppingGroup.getJointShoppingParticipationMaximumCount();
     }
 
     /* 인원수가 가득 찼을 때 마감 상태로 변경하는 로직 */
@@ -100,4 +129,51 @@ public class JointShoppingGroupDomainService {
         /* 수정을 위해 엔터티 정보 변경 */
         jointShoppingGroup.changeApplication();
     }
+
+    /* 배송 정보를 수정하는 로직 */
+    public void updateDeliveryInfo(Long jointShoppingGroupNum, JointShoppingDeliveryInfoRequest jointShoppingDeliveryInfoRequest) {
+        JointShoppingGroup jointShoppingGroup = jointShoppingGroupRepository.findById(jointShoppingGroupNum)
+                .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 모임이 없습니다. code : " + jointShoppingGroupNum));
+
+        /* 수정을 위해 엔터티 정보 변경 */
+        jointShoppingGroup.updateDeliveryInfo(
+                jointShoppingDeliveryInfoRequest.getCourierCode(),
+                jointShoppingDeliveryInfoRequest.getInvoiceNum()
+        );
+    }
+
+    /* 상품 상태를 체크하고 모집중 상태가 아니라면 취소가 불가능하게 하는 로직 */
+    public void checkProductsStateRecruitment(Long jointShoppingGroupNum) {
+        JointShoppingGroup jointShoppingGroup = jointShoppingGroupRepository.findById(jointShoppingGroupNum)
+                .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 모임이 없습니다. code : " + jointShoppingGroupNum));
+
+        String state = jointShoppingGroup.getJointShoppingProductsState().toString();
+        if(!state.equals("Recruitment")){
+            throw new BadJoinException("이미 배송이 시작되어 취소할 수 없습니다.");
+        }
+    }
+
+    /* 상품 상태를 체크하고 주문완료 상태가 아니라면 택배 정보 등록이 불가능하게 하는 로직 */
+    public void checkProductsStateOrderCompleted(Long jointShoppingGroupNum) {
+        JointShoppingGroup jointShoppingGroup = jointShoppingGroupRepository.findById(jointShoppingGroupNum)
+                .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 모임이 없습니다. code : " + jointShoppingGroupNum));
+
+        String state = jointShoppingGroup.getJointShoppingProductsState().toString();
+        if(!state.equals("OrderCompleted")){
+            throw new BadJoinException("아직 택배 정보를 입력하실 수 없습니다.");
+        }
+    }
+
+    /* 상품 상태를 변경하는 로직 */
+    public void changeProductsState(Long jointShoppingGroupNum) {
+        JointShoppingGroup jointShoppingGroup = jointShoppingGroupRepository.findById(jointShoppingGroupNum)
+                .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 모임이 없습니다. code : " + jointShoppingGroupNum));
+
+        /* 수정을 위해 엔터티 정보 변경 */
+        jointShoppingGroup.changeProductsState(
+                jointShoppingGroup.getJointShoppingProductsState()
+        );
+    }
+
+
 }

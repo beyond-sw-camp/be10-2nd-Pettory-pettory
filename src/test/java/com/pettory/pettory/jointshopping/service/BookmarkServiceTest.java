@@ -2,6 +2,7 @@ package com.pettory.pettory.jointshopping.service;
 
 import com.pettory.pettory.jointshopping.command.application.dto.BookmarkRequest;
 import com.pettory.pettory.jointshopping.command.application.service.BookmarkApplicationService;
+import com.pettory.pettory.jointshopping.query.dto.JointShoppingGroupListResponse;
 import com.pettory.pettory.jointshopping.query.service.JointShoppingGroupQueryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @SpringBootTest
@@ -58,7 +60,7 @@ public class BookmarkServiceTest {
     @Test
     void testDeleteBookmark() {
         Assertions.assertDoesNotThrow(
-                () -> bookmarkApplicationService.deleteBookmark(6L)
+                () -> bookmarkApplicationService.deleteBookmark(7L)
         );
     }
 
@@ -66,9 +68,11 @@ public class BookmarkServiceTest {
     @ParameterizedTest
     @MethodSource("getBookmark")
     void testGetBookmarks(Integer page, Integer size, Long userId) {
-
         Assertions.assertDoesNotThrow(
-                () -> jointShoppingGroupQueryService.getBookmarks(page, size, userId)
+                () -> {
+                    JointShoppingGroupListResponse response = jointShoppingGroupQueryService.getBookmarks(page, size, userId);
+                    response.getGroupList().forEach(group -> System.out.println(group));
+                }
         );
     }
 
