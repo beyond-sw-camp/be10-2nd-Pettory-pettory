@@ -1,6 +1,7 @@
 package com.pettory.pettory.chat.service;
 
-import com.pettory.pettory.chat.dto.ChatRoomDTO;
+import com.pettory.pettory.chat.dto.chatroom.DeleteChatRoomDTO;
+import com.pettory.pettory.chat.dto.chatroom.InsertChatRoomDTO;
 import com.pettory.pettory.chat.dto.chatting.InsertChattingDTO;
 import com.pettory.pettory.chat.dto.chatting.ModifyChattingDTO;
 import com.pettory.pettory.chat.dto.chatting.SoftDeleteChattingDTO;
@@ -24,27 +25,24 @@ class ChatServiceTest {
     private static Stream<Arguments> getChatRoom() {
         return Stream.of(
                 Arguments.of(
-                        6,
-                        null,
-                        null,
+                        1,
                         null,
                         "ACTIVE",
                         "WALKING",
-                        5
+                        1
                 )
         );
     }
 
-    private static Stream<Arguments> getModifyChatRoom() {
+    private static Stream<Arguments> getDeleteChatRoom() {
         return Stream.of(
                 Arguments.of(
-                        6,
-                        null,
+                        1,
                         null,
                         null,
                         "DELETE",
                         "WALKING",
-                        5
+                        1
                 )
         );
     }
@@ -65,8 +63,8 @@ class ChatServiceTest {
     private static Stream<Arguments> getModifyChatting() {
         return Stream.of(
                 Arguments.of(
-                        2,
-                        3,
+                        12,
+                        1,
                         "안녕하세요 수정합니다!",
                         null,
                         "MODIFY",
@@ -78,8 +76,8 @@ class ChatServiceTest {
     private static Stream<Arguments> getSoftDeleteChatting() {
         return Stream.of(
                 Arguments.of(
-                        3,
-                        3,
+                        12,
+                        1,
                         null,
                         "DELETE"
                 )
@@ -88,46 +86,38 @@ class ChatServiceTest {
 
     @ParameterizedTest
     @MethodSource("getChatRoom")
-    void testRegisterChatRoom(int chatRoomUniqueNum, LocalDateTime insertTime, LocalDateTime updateTime,
-                              LocalDateTime deleteTime, String chatRoomState, String chatRoomType,
+    void testRegisterChatRoom(int chatRoomUniqueNum, LocalDateTime insertTime,
+                              String chatRoomState, String chatRoomType,
                               int chatRoomTypeNum) {
         insertTime = LocalDateTime.now();
-        updateTime = null;
-        deleteTime = null;
-        ChatRoomDTO newChatRoom = new ChatRoomDTO(
+        InsertChatRoomDTO insertChatRoomDTO = new InsertChatRoomDTO(
                 chatRoomUniqueNum,
                 insertTime,
-                updateTime,
-                deleteTime,
                 chatRoomState,
                 chatRoomType,
                 chatRoomTypeNum
         );
 
         Assertions.assertDoesNotThrow(
-                () -> chatService.registerChatRoom(newChatRoom)
+                () -> chatService.registerChatRoom(insertChatRoomDTO)
         );
     }
 
     @ParameterizedTest
-    @MethodSource("getModifyChatRoom")
-    void modifyChatRoom(int chatRoomUniqueNum, LocalDateTime insertTime, LocalDateTime updateTime,
-                        LocalDateTime deleteTime, String chatRoomState, String chatRoomType,
-                        int chatRoomTypeNum) {
+    @MethodSource("getDeleteChatRoom")
+    void deleteChatRoom(int chatRoomUniqueNum, LocalDateTime updateTime,
+                        LocalDateTime deleteTime, String chatRoomState) {
         updateTime = LocalDateTime.now();
         deleteTime = LocalDateTime.now();
-        ChatRoomDTO modifyChatRoom = new ChatRoomDTO(
+        DeleteChatRoomDTO deleteChatRoomDTO = new DeleteChatRoomDTO(
                 chatRoomUniqueNum,
-                insertTime,
                 updateTime,
                 deleteTime,
-                chatRoomState,
-                chatRoomType,
-                chatRoomTypeNum
+                chatRoomState
         );
 
         Assertions.assertDoesNotThrow(
-                () -> chatService.modifyChatRoom(modifyChatRoom)
+                () -> chatService.deleteChatRoom(deleteChatRoomDTO)
         );
     }
 
@@ -193,14 +183,14 @@ class ChatServiceTest {
     @Test
     void hardDeleteChatting() {
         Assertions.assertDoesNotThrow(
-                () -> chatService.hardDeleteChatting(3)
+                () -> chatService.hardDeleteChatting(12)
         );
     }
 
     @Test
     void selectChatRoomChatting() {
         Assertions.assertDoesNotThrow(
-                () -> chatService.selectChatRoomChatting(3)
+                () -> chatService.selectChatRoomChatting(1)
         );
     }
 }
