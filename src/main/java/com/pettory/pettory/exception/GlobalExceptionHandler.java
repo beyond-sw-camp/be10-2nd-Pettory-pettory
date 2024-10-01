@@ -104,6 +104,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.ok(response);
     }
 
+    @ExceptionHandler(AlreadyDeletedException.class)
+    public ResponseEntity<ErrorResponse> handleAlreadyDeletedException(AlreadyDeletedException ex) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .statusCode(HttpStatus.CONFLICT.value())
+                .message(ex.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+    }
+
     @ExceptionHandler(BadJoinException.class)
     public ResponseEntity<ErrorResponse> handleAlreadyResignException(BadJoinException ex) {
         ErrorResponse errorResponse = ErrorResponse.builder()

@@ -2,8 +2,10 @@ package com.pettory.pettory.user.command.domain.aggregate;
 
 import com.pettory.pettory.exception.AlreadyInFamilyException;
 import com.pettory.pettory.family.command.domain.aggregate.Family;
+import com.pettory.pettory.feedingRecord.command.domain.aggregate.FeedingRecord;
 import com.pettory.pettory.pet.command.domain.aggregate.Pet;
 import com.pettory.pettory.pet.command.domain.aggregate.PetAccess;
+import com.pettory.pettory.walkingRecord.command.domain.aggregate.WalkingRecord;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -61,6 +63,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     List<PetAccess> petAccesses = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<WalkingRecord> walkingRecords = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<FeedingRecord> feedingRecords = new ArrayList<>();
 
     // 생성자는 private으로 설정하여 외부에서의 호출 방지
     private User(String userEmail, String userPassword, String userNickname, String userName, LocalDate userBirth) {
@@ -92,5 +99,6 @@ public class User {
     public void updateFamilyIdAsNull() {
         this.family = null;
     }
+
 
 }
