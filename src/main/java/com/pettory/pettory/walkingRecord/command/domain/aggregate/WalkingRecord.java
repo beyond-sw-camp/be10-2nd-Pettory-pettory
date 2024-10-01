@@ -1,6 +1,7 @@
 package com.pettory.pettory.walkingRecord.command.domain.aggregate;
 
 import com.pettory.pettory.pet.command.domain.aggregate.Pet;
+import com.pettory.pettory.pet.command.domain.aggregate.PetState;
 import com.pettory.pettory.user.command.domain.aggregate.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -71,6 +72,12 @@ public class WalkingRecord {
             this.walkingRecordWaterAmount = walkingRecordWaterAmount;
         if (walkingRecordMemo != null && !walkingRecordMemo.trim().isEmpty())
             this.walkingRecordMemo = walkingRecordMemo;
+    }
+
+    // 산책 기록의 상태를 삭제로 변경하는 메소드
+    public void updateWalkingRecordAsDelete() {
+        this.walkingRecordState = WalkingRecordState.DELETE;
+        this.walkingRecordDeleteDatetime = LocalDateTime.now();
     }
 
 }

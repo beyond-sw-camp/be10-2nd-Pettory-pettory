@@ -52,7 +52,11 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
-    // 지훈 - modelmapper, 파일 io, 아임포트
+    // 2024.09.30 이은서 - email sender 추가
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+    implementation 'org.springframework.boot:spring-boot-starter-mail:3.3.2'
+
+    // 지훈 - modelmapper, 파일 io
     implementation 'org.modelmapper:modelmapper:3.2.1'
     implementation 'commons-io:commons-io:2.11.0'
     implementation 'com.github.iamport:iamport-rest-client-java:0.2.21'
