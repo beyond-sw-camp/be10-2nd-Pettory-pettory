@@ -18,6 +18,7 @@ public class PetCreateRequest {
     @NotBlank
     private String petBreed;
     private LocalDate petBirth;
+    @NotBlank
     private PetGender petGender;
     @NotBlank
     private Boolean petNeuteringYn;
