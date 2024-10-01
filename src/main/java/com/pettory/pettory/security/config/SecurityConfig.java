@@ -42,7 +42,6 @@ public class SecurityConfig {
                             .requestMatchers(new AntPathRequestMatcher("/users/**", "POST")).permitAll()
                             .requestMatchers(new AntPathRequestMatcher("/users/**", "GET")).hasAuthority("ROLE_USER")
                             .requestMatchers(new AntPathRequestMatcher("/users/**", "DELETE")).hasAuthority("ROLE_USER")
-                            .requestMatchers(new AntPathRequestMatcher("/users/**", "POST")).hasAuthority("ROLE_USER")
                             .requestMatchers(new AntPathRequestMatcher("/families/**", "GET")).hasAuthority("ROLE_USER")
                             .requestMatchers(new AntPathRequestMatcher("/families/**", "POST")).hasAuthority("ROLE_USER")
                             .requestMatchers(new AntPathRequestMatcher("/families/**", "PUT")).hasAuthority("ROLE_USER")

@@ -1,5 +1,6 @@
 package com.pettory.pettory.user.command.application.service;
 
+import com.pettory.pettory.exception.AlreadyRegisterException;
 import com.pettory.pettory.security.util.EmailService;
 import com.pettory.pettory.exception.AlreadyResignException;
 import com.pettory.pettory.exception.NotFoundException;
@@ -20,6 +21,8 @@ import com.pettory.pettory.user.command.domain.repository.UserRepository;
 import com.pettory.pettory.user.command.mapper.UserMapper;
 import com.pettory.pettory.walkingRecord.command.domain.aggregate.WalkingRecord;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.mail.MailException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,6 +38,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserCommandService implements UserDetailsService {
 
     private final UserRepository userRepository;
@@ -128,24 +132,41 @@ public class UserCommandService implements UserDetailsService {
     }
 
     // 새로운 비밀번호 전송
-    @Transactional
-    public void getNewPasswords(FindPasswordRequest findPasswordRequest) {
-
-        User user = userRepository.findByUserEmail(findPasswordRequest.getUserEmail())
-                .orElseThrow(() -> new NotFoundException("회원을 찾을 수 없습니다."));
-
-        // 임시 비밀번호 생성
-        String tempPassword = VerifyUtil.generateTempPassword();
-        user.updatePassword(passwordEncoder.encode(tempPassword));
-
-        // 이메일 발송
-        emailService.sendEmail(
-                user.getUserEmail(),
-                "펫토리 임시 비밀번호 안내",
-                user.getUserNickname() + " 님의 임시 비밀번호는.\n" + tempPassword + "\n입니다. 로그인 후 반드시 비밀번호를 변경하세요.");
-
-        userRepository.save(user);
-    }
+//    @Transactional
+//    public void getNewPasswords(FindPasswordRequest findPasswordRequest) {
+//
+//        try {
+//            User user = userRepository.findByUserEmail(findPasswordRequest.getUserEmail())
+//                    .orElseThrow(() -> new NotFoundException("회원을 찾을 수 없습니다."));
+//
+//            // 임시 비밀번호 생성
+//            String tempPassword = VerifyUtil.generateTempPassword();
+//            user.updatePassword(passwordEncoder.encode(tempPassword));
+//
+//            // 이메일 발송
+//            emailService.sendEmail(
+//                    user.getUserEmail(),
+//                    "펫토리 임시 비밀번호 안내",
+//                    user.getUserNickname() + " 님의 임시 비밀번호는.\n" + tempPassword + "\n입니다. 로그인 후 반드시 비밀번호를 변경하세요."
+//            );
+//
+//            // 변경된 비밀번호 저장
+//            userRepository.save(user);
+//        } catch (NotFoundException e) {
+//            // 사용자가 없는 경우 예외 처리
+//            // 필요에 따라 로깅을 추가하거나 사용자에게 적절한 메시지를 반환
+//            throw new NotFoundException("회원을 찾을 수 없습니다.");
+//        } catch (MailException e) {
+//            // 이메일 전송 실패 시 예외 처리
+//            // 예를 들어, 로그를 남기고 사용자에게 메시지를 반환할 수 있음
+//            log.error("이메일 전송 실패: " + e.getMessage());
+//            throw new com.pettory.pettory.exception.MailException("이메일 전송 중 오류가 발생했습니다. 다시 시도해 주세요.");
+//        } catch (Exception e) {
+//            // 그 외의 예외 처리
+//            log.error("예상치 못한 오류 발생: " + e.getMessage());
+//            throw new RuntimeException("시스템 오류가 발생했습니다. 관리자에게 문의하세요.");
+//        }
+//    }
 
     // 비밀번호 변경
     @Transactional
@@ -165,39 +186,15 @@ public class UserCommandService implements UserDetailsService {
         // 새 비밀번호 변경
         user.updatePassword(passwordEncoder.encode(changePasswordRequest.getNewUserPassword()));
 
-        // 비밀번호 변경 후 이메일 알림
-        emailService.sendEmail(
-                user.getUserEmail(),
-                "펫토리 비밀번호 변경 안내",
-                user.getUserNickname() + " 님의 비밀번호가 변경되었습니다.\n" +
-                        "본인이 비밀번호를 변경하지 않았다면 mypettory@gmail.com 으로 문의 바랍니다."
-        );
+//        // 비밀번호 변경 후 이메일 알림
+//        emailService.sendEmail(
+//                user.getUserEmail(),
+//                "펫토리 비밀번호 변경 안내",
+//                user.getUserNickname() + " 님의 비밀번호가 변경되었습니다.\n" +
+//                        "본인이 비밀번호를 변경하지 않았다면 mypettory@gmail.com 으로 문의 바랍니다."
+//        );
 
         userRepository.save(user);
     }
 
-    // 닉네임으로 이메일 찾기 - 인증 코드 전송
-    @Transactional
-    public void sendVerifyCode(String userNickname) {
-        User user = userRepository.findByUserNickname(userNickname)
-                .orElseThrow(() -> new NotFoundException("회원을 찾을 수 없습니다."));
-
-        String verifyCode = VerifyUtil.generateVerifyCode();
-
-        // 이메일로 인증 코드 전송
-        emailService.sendEmail(
-                user.getUserEmail(),
-                "펫토리 인증 코드 안내",
-                user.getUserNickname() + " 님의 이메일 찾기 인증 코드는 " +
-                        verifyCode +" 입니다."
-        );
-    }
-
-    public void checkCode(String userEmail, String verifyCode) {
-        if (!verificationService.(userEmail, verifyCode)) {
-            throw new UnauthorizedException("인증 코드가 일치하지 않습니다.");
-        }
-    }
-
-    // 닉네임으로 이메일 찾기 - 인증 코드 검증
 }
