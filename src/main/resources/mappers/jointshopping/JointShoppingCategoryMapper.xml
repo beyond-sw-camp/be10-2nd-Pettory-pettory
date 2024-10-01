@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.pettory.jointshopping.query.mapper.JointShoppingCategoryMapper">
+
+    <!--    <resultMap id="product" type="ProductDto" autoMapping="true">-->
+    <!--        <id property="productCode" column="product_code"/>-->
+    <!--        <association property="category" javaType="CategoryDto" autoMapping="true">-->
+    <!--            <id property="categoryCode" column="category_code"/>-->
+    <!--        </association>-->
+    <!--    </resultMap>-->
+
+    <select id="selectCategorys" resultType="com.pettory.pettory.jointshopping.query.dto.JointShoppingCategoryDTO">
+        SELECT
+        joint_shopping_category_num,
+        joint_shopping_category_title
+        FROM joint_shopping_category
+        <if test="categoryTitle != null">
+            WHERE joint_shopping_category_title = #{categoryTitle}
+        </if>
+        ORDER BY joint_shopping_category_num
+    </select>
+
+    <select id="countCategorys" resultType="long">
+        SELECT COUNT(*)
+        FROM joint_shopping_category
+        <if test="categoryTitle != null">
+            WHERE joint_shopping_category_title = #{categoryTitle}
+        </if>
+    </select>
+
+</mapper>
