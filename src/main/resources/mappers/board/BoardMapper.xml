@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohgiraffers.transactional.section01.annotation.OrderMapper">
+
+    <select id = "selectAllBoard" resultType="com.pettory.pettory.board.entity.BoardEntity">
+        SELECT * FROM board
+         WHERE post_state = 'ACTIVE'
+    </select>
+
+    <select id ="selectBoardById" parameterType="int" resultType ="com.pettory.pettory.board.entity.BoardEntity">
+        SELECT * FROM board
+         WHERE id = #{ id }
+            AND post_state = 'ACTIVE'
+    </select>
+
+    <select id="selectBoardsByPostWriterNum" parameterType="long" resultType="com.pettory.pettory.board.entity.BoardEntity">
+        SELECT * FROM board
+        WHERE post_writer_num = #{postWriterNum}
+    </select>
+
+
+</mapper>
