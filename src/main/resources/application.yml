@@ -12,7 +12,7 @@ spring:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
-  mapper-locations: mappers/**/*.xml
+  mapper-locations: mappers/*/.xml
   # type-aliases-package: com.ohgiraffers.cqrs.product.query.dto
 
 # image:
