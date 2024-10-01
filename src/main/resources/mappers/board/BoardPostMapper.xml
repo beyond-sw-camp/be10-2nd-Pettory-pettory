@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.pettory.board.query.mapper.BoardPostMapper">
+
+    <select id="selectPosts" resultType="com.pettory.pettory.board.dto.BoardPostDTO">
+        SELECT
+        post_num,
+        post_title
+        post_hits,
+        post_insert_datetime
+        FROM board
+        <if test="postTitle != null">
+            WHERE post_title like CONCAT('%',#{postTitle},'%')
+        </if>
+        ORDER BY post_num
+    </select>
+
+    <select id="countPosts" resultType="int">
+        SELECT COUNT(*)
+        FROM board
+        <if test="postTitle != null">
+            WHERE post_title like CONCAT('%',#{postTitle},'%')
+        </if>
+    </select>
+
+</mapper>
