@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ModifyChattingDTO {
     private int chattingUniqueNum;
-    private int chattingChatRoomUniqueNum;
+    private int chattingChatroomUniqueNum;
     private String chattingContent;
     private LocalDateTime chattingUpdateTime;
     private String chattingState;
