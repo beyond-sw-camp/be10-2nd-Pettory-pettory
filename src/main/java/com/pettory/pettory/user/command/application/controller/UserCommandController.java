@@ -6,8 +6,6 @@ import com.pettory.pettory.security.util.UserSecurity;
 import com.pettory.pettory.security.util.VerifyUtil;
 import com.pettory.pettory.user.command.application.dto.*;
 import com.pettory.pettory.user.command.application.service.UserCommandService;
-import com.pettory.pettory.user.command.application.service.VerifyCommandService;
-import com.pettory.pettory.user.command.domain.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
