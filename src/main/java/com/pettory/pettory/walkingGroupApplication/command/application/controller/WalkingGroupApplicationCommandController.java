@@ -12,7 +12,7 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/walkingGroupApplication")
+@RequestMapping("/api/walking-group-application")
 public class WalkingGroupApplicationCommandController {
 
     private final WalkingGroupApplicationCommandService walkingGroupApplicationCommandService;
@@ -25,7 +25,7 @@ public class WalkingGroupApplicationCommandController {
         int walkingGroupApplicationId = walkingGroupApplicationCommandService.createWalkingGroupApplication(walkingGroupApplicationRequest);
 
         return ResponseEntity
-                .created(URI.create("api/walkingGroupApplication/" + walkingGroupApplicationId))
+                .created(URI.create("api/walking-group-application/" + walkingGroupApplicationId))
                 .build();
     }
 
@@ -37,7 +37,7 @@ public class WalkingGroupApplicationCommandController {
 
         walkingGroupApplicationCommandService.updateWalkingGroupApplication(walkingGroupApplicationId, walkingGroupApplicationRequest);
 
-        return ResponseEntity.created(URI.create("/api/walkingGroupApplication/" + walkingGroupApplicationId)).build();
+        return ResponseEntity.created(URI.create("/api/walking-group-application/" + walkingGroupApplicationId)).build();
 
     }
 

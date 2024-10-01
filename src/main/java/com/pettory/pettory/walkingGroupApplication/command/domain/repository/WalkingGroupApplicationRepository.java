@@ -11,5 +11,4 @@ public interface WalkingGroupApplicationRepository {
     Optional<WalkingGroupApplication> findById(int walkingGroupApplicationId);
 
     void deleteById(int walkingGroupApplicationId);
-
 }

@@ -18,3 +18,8 @@ mybatis:
 # image:
   # image-url: http://localhost:8080/productimgs/
   # image-dir: src/main/resources/static/productimgs
+
+# TODO: 테스트를 위해 유효시간을 7일(2024/09/28 기준)으로 설정. 추후 변경 필요
+token:
+  secret: z9Hwd2bJp8hffAvC8HM8E7U13IgHEXldNH1JyG88hqXxvk05afj0CHFazkGqxq2ZPRpWNwqSBWp4TDHpLC7KNA==
+  expiration_time : 604800000
