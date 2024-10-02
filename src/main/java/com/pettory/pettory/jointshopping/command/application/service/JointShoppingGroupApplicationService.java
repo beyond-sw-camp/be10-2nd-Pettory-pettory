@@ -1,14 +1,11 @@
 package com.pettory.pettory.jointshopping.command.application.service;
 
-import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingDeliveryInfoRequest;
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupRequest;
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupUserRequest;
 import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingGroup;
 import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingGroupUser;
-import com.pettory.pettory.jointshopping.command.domain.aggregate.ProvisionRecord;
 import com.pettory.pettory.jointshopping.command.domain.service.JointShoppingGroupDomainService;
 import com.pettory.pettory.jointshopping.command.domain.service.JointShoppingGroupUserDomainService;
-import com.pettory.pettory.jointshopping.command.domain.service.ProvisionRecordDomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,9 +47,6 @@ public class JointShoppingGroupApplicationService {
     /* 공동구매모임 참가(모임 사용자 등록) */
     @Transactional
     public Long insertGroupUser(JointShoppingGroupUserRequest groupUserRequest) {
-
-        /* 모임이 신청 가능한 상태인지 체크*/
-        jointShoppingGroupDomainService.checkGroupState(groupUserRequest.getJointShoppingGroupNum());
 
         /* 해당 방에서 강퇴당한 적이 있는지 체크 */
         jointShoppingGroupUserDomainService.checkResignYn(groupUserRequest);
@@ -105,17 +99,4 @@ public class JointShoppingGroupApplicationService {
         /* soft delete */
         jointShoppingGroupUserDomainService.deleteGroupUser(jointShoppingGroupUserNum);
     }
-
-    /* 공동구매 방장 물품 배송 정보 등록(수정) */
-    @Transactional
-    public void updateDeliveryInfo(Long jointShoppingGroupNum, JointShoppingDeliveryInfoRequest jointShoppingDeliveryInfoRequest) {
-        /* 주문완료 상태에서만 동작 가능 */
-        jointShoppingGroupDomainService.checkProductsStateOrderCompleted(jointShoppingGroupNum);
-
-        jointShoppingGroupDomainService.updateDeliveryInfo(jointShoppingGroupNum,jointShoppingDeliveryInfoRequest);
-
-        /* 등록시 모임 상품 상태 변경(배송중) */
-        jointShoppingGroupDomainService.changeProductsState(jointShoppingGroupNum);
-    }
-
 }

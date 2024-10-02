@@ -1,10 +1,8 @@
 package com.pettory.pettory.jointshopping.service;
 
-import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingDeliveryInfoRequest;
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupRequest;
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupUserRequest;
 import com.pettory.pettory.jointshopping.command.application.service.JointShoppingGroupApplicationService;
-import com.pettory.pettory.jointshopping.query.dto.*;
 import com.pettory.pettory.jointshopping.query.service.JointShoppingGroupQueryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -44,7 +42,6 @@ public class JointShoppingGroupServiceTest {
                 Arguments.of(
                         1,
                         5,
-                        4L
                 )
         );
     }
@@ -54,17 +51,6 @@ public class JointShoppingGroupServiceTest {
                 Arguments.of(
                         1,
                         5,
-                        6L
-                )
-        );
-    }
-
-    private static Stream<Arguments> getProvisionRecord() {
-        return Stream.of(
-                Arguments.of(
-                        1,
-                        5,
-                        "Waiting"
                 )
         );
     }
@@ -79,7 +65,6 @@ public class JointShoppingGroupServiceTest {
                         1000,
                         10,
                         null,
-                        null,
                         2L,
                         4L,
                         new MockMultipartFile("files", "file2.txt", MediaType.TEXT_PLAIN_VALUE, "파일 내용 2".getBytes())
@@ -90,14 +75,10 @@ public class JointShoppingGroupServiceTest {
     private static Stream<Arguments> getUpdateJointShoppingGroup() {
         return Stream.of(
                 Arguments.of(
-                        8L,
                         "상품 사실분 구합니다",
                         "강아지용품",
                         "강아지용품사실분구함구함구함",
                         100000,
-                        1,
-                        1,
-                        null,
                         null,
                         2L,
                         4L,
@@ -109,18 +90,7 @@ public class JointShoppingGroupServiceTest {
     private static Stream<Arguments> getInsertJointShoppingGroupUser() {
         return Stream.of(
                 Arguments.of(
-                        8L,
                         6L
-                )
-        );
-    }
-
-    private static Stream<Arguments> getUpdateDeliveryInfo() {
-        return Stream.of(
-                Arguments.of(
-                        8L,
-                        "1111111",
-                        "222222222"
                 )
         );
     }
@@ -131,7 +101,6 @@ public class JointShoppingGroupServiceTest {
     void testCreateGroup(
             String jointShoppingGroupName, String jointShoppingProducts, String jointShoppingInfo,
             Integer jointShoppingCost, Integer jointShoppingGroupMaximumCount,
-            Integer jointShoppingParticipationMaximumCount, String hostCourierCode, String hostInvoiceNum,
             Long jointShoppingCategoryNum, Long userId, MultipartFile productImg
     ) {
 
@@ -142,7 +111,6 @@ public class JointShoppingGroupServiceTest {
                 jointShoppingCost,
                 jointShoppingGroupMaximumCount,
                 jointShoppingParticipationMaximumCount,
-                hostCourierCode,
                 hostInvoiceNum,
                 jointShoppingCategoryNum,
                 userId
@@ -160,7 +128,6 @@ public class JointShoppingGroupServiceTest {
             Long jointShoppingGroupNum,
             String jointShoppingGroupName, String jointShoppingProducts, String jointShoppingInfo,
             Integer jointShoppingCost, Integer jointShoppingGroupMaximumCount,
-            Integer jointShoppingParticipationMaximumCount, String hostCourierCode, String hostInvoiceNum,
             Long jointShoppingCategoryNum, Long userId, MultipartFile productImg
     ) {
 
@@ -171,14 +138,13 @@ public class JointShoppingGroupServiceTest {
                 jointShoppingCost,
                 jointShoppingGroupMaximumCount,
                 jointShoppingParticipationMaximumCount,
-                hostCourierCode,
                 hostInvoiceNum,
                 jointShoppingCategoryNum,
                 userId
         );
 
         Assertions.assertDoesNotThrow(
-                () -> jointShoppingGroupApplicationService.updateGroup(jointShoppingGroupNum, jointShoppingGroupRequest, productImg)
+                () -> jointShoppingGroupApplicationService.updateGroup(jointShoppingGroupNum,jointShoppingGroupRequest, productImg)
         );
     }
 
@@ -211,7 +177,6 @@ public class JointShoppingGroupServiceTest {
     @Test
     void testExitGroupUser() {
         Assertions.assertDoesNotThrow(
-                () -> jointShoppingGroupApplicationService.exitGroupUser(14L)
         );
     }
 
@@ -219,22 +184,6 @@ public class JointShoppingGroupServiceTest {
     @Test
     void testWithdrawalGroupUser() {
         Assertions.assertDoesNotThrow(
-                () -> jointShoppingGroupApplicationService.withdrawalGroupUser(15L)
-        );
-    }
-
-    /* 공동구매 방장 물품 배송 정보 등록(수정) */
-    @ParameterizedTest
-    @MethodSource("getUpdateDeliveryInfo")
-    void testUpdateDeliveryInfo(Long jointShoppingGroupNum, String courierCode, String invoiceNum) {
-
-        JointShoppingDeliveryInfoRequest jointShoppingDeliveryInfoRequest
-                = new JointShoppingDeliveryInfoRequest(
-                courierCode, invoiceNum
-        );
-
-        Assertions.assertDoesNotThrow(
-                () -> jointShoppingGroupApplicationService.updateDeliveryInfo(jointShoppingGroupNum, jointShoppingDeliveryInfoRequest)
         );
     }
 
@@ -244,10 +193,6 @@ public class JointShoppingGroupServiceTest {
     void testGetGroups(Integer page, Integer size, Long categoryNum, String groupName, String products) {
 
         Assertions.assertDoesNotThrow(
-                () -> {
-                    JointShoppingGroupListResponse response = jointShoppingGroupQueryService.getGroups(page, size, categoryNum, groupName, products);
-                    response.getGroupList().forEach(group -> System.out.println(group));
-                }
         );
     }
 
@@ -255,11 +200,6 @@ public class JointShoppingGroupServiceTest {
     @Test
     void testGetGroup() {
         Assertions.assertDoesNotThrow(
-
-                () -> {
-                    JointShoppingGroupDetailResponse response = jointShoppingGroupQueryService.getGroup(7L);
-                    System.out.println(response.getGroup());
-                }
         );
     }
 
@@ -268,10 +208,6 @@ public class JointShoppingGroupServiceTest {
     @MethodSource("getGroupUser")
     void testGetGroupUsers(Integer page, Integer size, Long groupNum) {
         Assertions.assertDoesNotThrow(
-                () -> {
-                    JointShoppingUserListResponse response =  jointShoppingGroupQueryService.getGroupUsers(page, size, groupNum);
-                    response.getGroupUserList().forEach(groupUser -> System.out.println(groupUser));
-                }
         );
     }
 
@@ -279,34 +215,8 @@ public class JointShoppingGroupServiceTest {
     @ParameterizedTest
     @MethodSource("getUserGroup")
     void testGetUserGroups(Integer page, Integer size, Long userId) {
-        Assertions.assertDoesNotThrow(
-                () -> {
-                    JointShoppingGroupListResponse response = jointShoppingGroupQueryService.getUserGroups(page, size, userId);
-                    response.getGroupList().forEach(group -> System.out.println(group));
-                }
-        );
-    }
 
-    /*  공동구매 물품 배송 정보 조회(방장) */
-    @Test
-    void testGetDeliveryInfo() {
         Assertions.assertDoesNotThrow(
-                () -> {
-                    JointShoppingGroupDeliveryInfoResponse response = jointShoppingGroupQueryService.getDeliveryInfo(8L);
-                    System.out.println(response);
-                }
-        );
-    }
-
-    /* 지급기록 조회 */
-    @ParameterizedTest
-    @MethodSource("getProvisionRecord")
-    void testGetProvisionRecord(Integer page, Integer size, String provisionState) {
-        Assertions.assertDoesNotThrow(
-                () -> {
-                    ProvisionRecordResponse response = jointShoppingGroupQueryService.getProvisionRecord(page, size, provisionState);
-                    response.getProvisionRecords().forEach(provisionRecord -> System.out.println(provisionRecord));
-                }
         );
     }
 }

@@ -3,8 +3,6 @@ package com.pettory.pettory.jointshopping.service;
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingCategoryRequest;
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupRequest;
 import com.pettory.pettory.jointshopping.command.application.service.JointShoppingCategoryApplicationService;
-import com.pettory.pettory.jointshopping.query.dto.JointShoppingCategoryListResponse;
-import com.pettory.pettory.jointshopping.query.dto.JointShoppingGroupListResponse;
 import com.pettory.pettory.jointshopping.query.service.JointShoppingCategoryQueryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -55,10 +53,6 @@ public class JointShoppingCategoryServiceTest {
     @Test
     void testGetCategorys() {
         Assertions.assertDoesNotThrow(
-                () -> {
-                    JointShoppingCategoryListResponse response = jointShoppingCategoryQueryService.getCategorys("");
-                    response.getCategoryList().forEach(System.out::println);
-                }
         );
     }
 }

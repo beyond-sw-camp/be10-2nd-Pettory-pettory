@@ -20,7 +20,6 @@ public class JointShoppingGroupRequest {
     private final Integer jointShoppingGroupMaximumCount;
     @NotNull
     private final Integer jointShoppingParticipationMaximumCount;
-    private final String hostCourierCode;
     private final String hostInvoiceNum;
     @NotNull
     private final Long jointShoppingCategoryNum;
