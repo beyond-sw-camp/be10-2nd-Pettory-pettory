@@ -31,6 +31,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
     private Long userId;    // 회원id
+    @Column(unique = true)
     private String userEmail;   // 회원이메일
     private String userPassword;    // 회원비밀번호
     private String userNickname;    // 회원닉네임
@@ -53,6 +54,7 @@ public class User {
     private LocalDateTime userWithdrawDatetime; // 회원탈퇴일시
     private Long userSuspensionCount = 0L;   // 회원계정정지횟수
     private LocalDateTime userSuspensionEndDatetime; // 회원계정정지종료일시
+    private String user_auth_provider = "LOCAL";
 
     @ManyToOne
     @JoinColumn(name = "family_id")
