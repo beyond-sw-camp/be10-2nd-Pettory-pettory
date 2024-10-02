@@ -1,4 +1,4 @@
-package com.pettory.pettory.chat.config;
+package com.pettory.pettory.config;
 
 import com.pettory.pettory.chat.handler.ChatHandler;
 import lombok.RequiredArgsConstructor;
