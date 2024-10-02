@@ -11,8 +11,8 @@ public class FeedingRecordMapper {
                 user, pet,
                 feedingRecordCreateRequest.getFeedingRecordFeedingType(),
                 feedingRecordCreateRequest.getFeedingRecordName(),
-                feedingRecordCreateRequest.getFeedingRecordAmount(),
                 feedingRecordCreateRequest.getFeedingRecordType(),
+                feedingRecordCreateRequest.getFeedingRecordAmount(),
                 feedingRecordCreateRequest.getFeedingRecordMemo(),
                 feedingRecordCreateRequest.getFeedingRecordUserInsertDatetime()
         );
