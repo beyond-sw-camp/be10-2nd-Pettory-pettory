@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Tag(name="Pettory 채팅 컨트롤러")
+@Tag(name="ChatController - 챗 컨트롤러")
 @RestController
 @RequestMapping("/chat")
 public class ChatController {
