@@ -18,7 +18,7 @@ public class RegisterWalkingGroupQueryController {
     public ResponseEntity<RegisterWalkingGroupListResponse> getRegisterWalkingGroups(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
-            @RequestParam(required = false) int walkingGroupId
+            @RequestParam(required = false) Integer walkingGroupId
     ) {
 
         RegisterWalkingGroupListResponse response = registerWalkingGroupQueryService.getRegisterWalkingGroups(

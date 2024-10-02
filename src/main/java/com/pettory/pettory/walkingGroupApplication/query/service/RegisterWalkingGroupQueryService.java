@@ -6,12 +6,14 @@ import com.pettory.pettory.walkingGroupApplication.query.dto.RegisterWalkingGrou
 import com.pettory.pettory.walkingGroupApplication.query.dto.RegisterWalkingGroupListResponse;
 import com.pettory.pettory.walkingGroupApplication.query.mapper.RegisterWalkingGroupMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class RegisterWalkingGroupQueryService {
 
@@ -19,12 +21,15 @@ public class RegisterWalkingGroupQueryService {
 
     @Transactional(readOnly = true)
     public RegisterWalkingGroupListResponse getRegisterWalkingGroups(Integer page, Integer size, int walkingGroupId) {
+        log.info("walkingGroupId" + walkingGroupId);
         int offset = (page - 1) * size;
         List<RegisterWalkingGroupDTO> registerWalkingGroups =  registerWalkingGroupMapper.selectRegisterWalkingGroups(
                 offset, size, walkingGroupId
         );
 
         long totalItems = registerWalkingGroupMapper.countRegisterWalkingGroups(walkingGroupId);
+
+        log.info("walkingGroupId" + walkingGroupId);
 
         return RegisterWalkingGroupListResponse.builder()
                 .registerWalkingGroups(registerWalkingGroups)

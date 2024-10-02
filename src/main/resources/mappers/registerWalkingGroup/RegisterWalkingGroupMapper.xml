@@ -10,10 +10,10 @@
             rwg.user_id,
             u.user_name,
             rwg.register_walking_group_state
-        FROM register_walking_group
-        JOIN u.user ON (rwg.user_id = u.user_id)
+        FROM register_walking_group rwg
+        JOIN user u ON (rwg.user_id = u.user_id)
         WHERE true
-        <if test="walking_group_id != null">
+        <if test="walkingGroupId != null">
             AND rwg.walking_group_id = #{walkingGroupId}
         </if>
         LIMIT #{limit} OFFSET #{offset}
@@ -23,7 +23,7 @@
         SELECT COUNT(*)
         FROM register_walking_group
         WHERE true
-        <if test="walking_group_id != null">
+        <if test="walkingGroupId != null">
             AND walking_group_id = #{walkingGroupId}
         </if>
     </select>
@@ -35,8 +35,8 @@
             rwg.user_id,
             u.user_name,
             rwg.register_walking_group_state
-        FROM register_walking_group
-        JOIN u.user ON (rwg.user_id = u.user_id)
+        FROM register_walking_group rwg
+        JOIN user u ON (rwg.user_id = u.user_id)
         WHERE rwg.user_id = #{userId}
     </select>
 </mapper>

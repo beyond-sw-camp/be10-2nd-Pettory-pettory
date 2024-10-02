@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface RegisterWalkingGroupMapper {
     List<RegisterWalkingGroupDTO> selectRegisterWalkingGroups(
-            @Param("offset") int offset, @Param("size") Integer size, @Param("walkingGroupId") int walkingGroupId);
+            @Param("offset") int offset, @Param("limit") int limit, @Param("walkingGroupId") int walkingGroupId);
 
     long countRegisterWalkingGroups(@Param("walkingGroupId") int walkingGroupId);
 
