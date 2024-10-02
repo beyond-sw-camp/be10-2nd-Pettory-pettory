@@ -31,7 +31,6 @@ public class JointShoppingCategoryCommandController {
     /* 카테고리 수정 */
     @PutMapping("/categories/{jointShoppingCategoryNum}")
     public ResponseEntity<Void> updateCategory(
-            @PathVariable Long jointShoppingCategoryNum,
             @RequestBody @Valid JointShoppingCategoryRequest categoryRequest
     ) {
 

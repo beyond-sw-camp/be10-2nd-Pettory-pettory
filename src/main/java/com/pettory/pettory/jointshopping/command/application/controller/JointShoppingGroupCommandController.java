@@ -35,7 +35,6 @@ public class JointShoppingGroupCommandController {
     /* 공동구매모임 수정 */
     @PutMapping("/groups/{jointShoppingGroupNum}")
     public ResponseEntity<Void> updateGroup(
-            @PathVariable Long jointShoppingGroupNum,
             @RequestPart @Valid JointShoppingGroupRequest groupRequest,
             @RequestPart(required = false) MultipartFile productImg
     ) {

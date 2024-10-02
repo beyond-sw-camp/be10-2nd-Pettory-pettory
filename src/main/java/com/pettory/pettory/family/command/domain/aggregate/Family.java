@@ -20,7 +20,6 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "UPDATE family SET family_state = 'D' where family_id = ?")
 public class Family {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,10 +68,8 @@ public class Family {
         this.familyNumber--;
     }
 
-    // 가족 상태를 DELETED로 변경하는 메소드
     public void updateFamilyStateAsDeleted() {
         this.familyState = FamilyState.DELETE;
-        this.familyDeleteDatetime = LocalDateTime.now();
     }
 
     // 해당 회원이 가족의 주인인지 확인하는 메소드

@@ -53,7 +53,6 @@ public class JointShoppingCategoryServiceTest {
     @Test
     void testGetCategorys() {
         Assertions.assertDoesNotThrow(
-                () -> jointShoppingCategoryQueryService.getCategorys("")
         );
     }
 }

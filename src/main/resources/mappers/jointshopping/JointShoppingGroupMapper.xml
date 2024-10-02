@@ -127,8 +127,6 @@
         FROM user u
         JOIN joint_shopping_group_user_list g ON (u.user_id = g.user_id)
         WHERE g.joint_shopping_group_num = #{groupNum}
-        AND g.joint_shopping_user_delete_datetime = NULL
-        ORDER BY g.joint_shopping_group_num
         LIMIT #{limit} OFFSET #{offset}
     </select>
 

@@ -1,8 +1,5 @@
 package com.pettory.pettory.jointshopping.query.controller;
 
-import com.pettory.pettory.jointshopping.query.dto.JointShoppingGroupDetailResponse;
-import com.pettory.pettory.jointshopping.query.dto.JointShoppingGroupListResponse;
-import com.pettory.pettory.jointshopping.query.dto.JointShoppingUserListResponse;
 import com.pettory.pettory.jointshopping.query.service.JointShoppingGroupQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

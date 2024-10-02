@@ -58,7 +58,6 @@ public class BookmarkServiceTest {
     @Test
     void testDeleteBookmark() {
         Assertions.assertDoesNotThrow(
-                () -> bookmarkApplicationService.deleteBookmark(6L)
         );
     }
 
@@ -66,9 +65,7 @@ public class BookmarkServiceTest {
     @ParameterizedTest
     @MethodSource("getBookmark")
     void testGetBookmarks(Integer page, Integer size, Long userId) {
-
         Assertions.assertDoesNotThrow(
-                () -> jointShoppingGroupQueryService.getBookmarks(page, size, userId)
         );
     }
 

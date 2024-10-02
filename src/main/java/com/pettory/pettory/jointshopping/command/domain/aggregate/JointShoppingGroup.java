@@ -45,7 +45,6 @@ public class JointShoppingGroup {
     private Long jointShoppingCategoryNum;
     private Long userId;
 
-    private JointShoppingGroup(String jointShoppingGroupName, String jointShoppingProducts, String jointShoppingProductsFileDirectory, String jointShoppingInfo, Integer jointShoppingCost, Integer jointShoppingGroupMaximumCount, Integer jointShoppingParticipationMaximumCount, String hostInvoiceNum, Long jointShoppingCategoryNum, Long userId) {
         this.jointShoppingGroupName = jointShoppingGroupName;
         this.jointShoppingProducts = jointShoppingProducts;
         this.jointShoppingProductsFileDirectory = jointShoppingProductsFileDirectory;
@@ -59,8 +58,6 @@ public class JointShoppingGroup {
     }
 
     // JointShoppingGroup 생성 메소드
-    public static JointShoppingGroup create(String jointShoppingGroupName, String jointShoppingProducts, String jointShoppingProductsFileDirectory, String jointShoppingInfo, Integer jointShoppingCost, Integer jointShoppingGroupMaximumCount, Integer jointShoppingParticipationMaximumCount, String hostInvoiceNum, Long jointShoppingCategoryNum, Long userId){
-        return new JointShoppingGroup(jointShoppingGroupName, jointShoppingProducts, jointShoppingProductsFileDirectory, jointShoppingInfo, jointShoppingCost, jointShoppingGroupMaximumCount, jointShoppingParticipationMaximumCount, hostInvoiceNum, jointShoppingCategoryNum, userId);
     }
 
     // jointShoppingProductsFileDirectory 변경 메소드
@@ -78,7 +75,6 @@ public class JointShoppingGroup {
     }
 
     // 다른 필드를 변경하는 메소드
-    public void update(String jointShoppingGroupName, String jointShoppingProducts, String jointShoppingInfo, Integer jointShoppingCost, Integer jointShoppingGroupMaximumCount, Integer jointShoppingParticipationMaximumCount, String hostInvoiceNum, Long jointShoppingCategoryNum, Long userId) {
         this.jointShoppingGroupName = jointShoppingGroupName;
         this.jointShoppingProducts = jointShoppingProducts;
         this.jointShoppingInfo = jointShoppingInfo;
@@ -89,7 +85,6 @@ public class JointShoppingGroup {
         this.jointShoppingCategoryNum = jointShoppingCategoryNum;
         this.userId = userId;
     }
-
 
 
 }

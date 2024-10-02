@@ -22,7 +22,6 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "UPDATE pet SET pet_state ='DELETE' where pet_id = ?")
 public class Pet {
 
     @Id

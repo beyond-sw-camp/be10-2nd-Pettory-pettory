@@ -15,5 +15,4 @@ public interface UserRepository {
     // 회원id로 회원을 찾는 메소드
     Optional<User> findById(Long invitationSendUserId);
 
-//    Optional<User> findByUserId(Long userId);
 }
