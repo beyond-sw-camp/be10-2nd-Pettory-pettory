@@ -153,14 +153,14 @@ public class JointShoppingGroupDomainService {
         }
     }
 
-    /* 상품 상태를 체크하고 주문완료 상태가 아니라면 택배 정보 등록이 불가능하게 하는 로직 */
+    /* 상품 상태를 체크하고 주문완료 상태가 아니라면 배송 정보 등록이 불가능하게 하는 로직 */
     public void checkProductsStateOrderCompleted(Long jointShoppingGroupNum) {
         JointShoppingGroup jointShoppingGroup = jointShoppingGroupRepository.findById(jointShoppingGroupNum)
                 .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 모임이 없습니다. code : " + jointShoppingGroupNum));
 
         String state = jointShoppingGroup.getJointShoppingProductsState().toString();
         if(!state.equals("OrderCompleted")){
-            throw new BadJoinException("아직 택배 정보를 입력하실 수 없습니다.");
+            throw new BadJoinException("아직 배송 정보를 입력하실 수 없습니다.");
         }
     }
 

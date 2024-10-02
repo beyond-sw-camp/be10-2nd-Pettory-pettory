@@ -114,7 +114,7 @@ public class JointShoppingGroupCommandController {
     @Operation(summary = "공동구매 방장 물품 배송 정보 등록")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "공동구매 방장 물품 배송 정보 성공"),
-            @ApiResponse(responseCode = "400", description = "택배 정보 입력 불가"),
+            @ApiResponse(responseCode = "400", description = "배송 정보 입력 불가"),
             @ApiResponse(responseCode = "404", description = "잘못된 공동구매모임 번호")
     })
     @PutMapping("/groups/delivery-info/{jointShoppingGroupNum}")

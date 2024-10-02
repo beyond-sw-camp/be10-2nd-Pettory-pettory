@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor    // 모든 값을 전달받은 생성자 생성
-@Schema(description = "택배정보 요청")
+@Schema(description = "배송 정보 요청")
 public class JointShoppingDeliveryInfoRequest {
 
     @NotEmpty
