@@ -12,32 +12,25 @@ import com.pettory.pettory.chat.mapper.ChattingMapper;
 import com.pettory.pettory.chat.repository.*;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ChatService {
-    private final SqlSessionTemplate sqlSession;
     private final ModelMapper chatModelMapper;
+    private final ChattingMapper chattingMapper;
     private final ChatRoomRepository chatRoomRepository;
-    private final ChattingFileRepository chattingFileRepository;
     private final ChattingRepository chattingRepository;
 
-    public ChatService(ChatRoomRepository chatRoomRepository,
-                       ChattingFileRepository chattingFileRepository,
-                       ChattingRepository chattingRepository,
-                       VoteChooseRepository voteChooseRepository,
-                       VoteChooseResultRepository voteChooseResultRepository,
-                       VoteRepository voteRepository,
-                       ModelMapper chatModelMapper,
-                       SqlSessionTemplate sqlSession) {
+    public ChatService(ModelMapper chatModelMapper,
+                       ChattingMapper chattingMapper,
+                       ChatRoomRepository chatRoomRepository,
+                       ChattingRepository chattingRepository) {
         this.chatModelMapper = chatModelMapper;
+        this.chattingMapper = chattingMapper;
         this.chatRoomRepository = chatRoomRepository;
-        this.chattingFileRepository = chattingFileRepository;
         this.chattingRepository = chattingRepository;
-        this.sqlSession = sqlSession;
     }
 
     /* 1. 채팅방 추가 */
@@ -88,37 +81,6 @@ public class ChatService {
 
     /* 6. 채팅 조회 */
     public List<SelectChattingDTO> selectChatRoomChatting(Integer chatRoomUniqueNum) {
-        return sqlSession.getMapper(ChattingMapper.class).selectChatRoomChatting(chatRoomUniqueNum);
+        return chattingMapper.selectChatRoomChatting(chatRoomUniqueNum);
     }
-
-    /* 7. 채팅 이미지 업로드 */
-    public void registerImageUpload() {
-
-    }
-
-    /* 8. 채팅 동영상 업로드 */
-    public void registerVideoUpload() {
-
-    }
-
-    /* 9. 채팅 파일 조회  */
-
-
-    /* 10. 투표 등록 */
-    public void registerVote() {
-
-    }
-
-    /* 11. 투표 수정 */
-    public void modifyVote() {
-
-    }
-
-    /* 12. 투표 삭제 */
-    public void deleteVote() {
-
-    }
-
-    /* 13. 투표 조회 */
-
 }
