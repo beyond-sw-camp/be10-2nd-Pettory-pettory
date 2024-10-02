@@ -22,11 +22,15 @@ spring:
             enable: true
     default-encoding: UTF-8
 
-
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: mappers/**/*.xml
+
+springdoc:
+  packages-to-scan: com.pettory.pettory
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
 
   # type-aliases-package: com.ohgiraffers.cqrs.product.query.dto
 
