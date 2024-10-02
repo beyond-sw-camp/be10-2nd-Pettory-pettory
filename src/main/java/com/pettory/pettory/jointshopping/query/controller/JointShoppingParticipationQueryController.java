@@ -17,7 +17,7 @@ public class JointShoppingParticipationQueryController {
     private final JointShoppingParticipationQueryService jointShoppingParticipationQueryService;
 
     /* 현재 공동구매모임 참가의 전체 사용자 목록 조회 */
-    @GetMapping("/participation")
+    @GetMapping("/participation/{groupNum}")
     public ResponseEntity<JointShoppingUserListResponse> getParticipants(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size,

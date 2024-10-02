@@ -44,7 +44,7 @@ public class JointShoppingGroupServiceTest {
                 Arguments.of(
                         1,
                         5,
-                        4L
+                        7L
                 )
         );
     }
