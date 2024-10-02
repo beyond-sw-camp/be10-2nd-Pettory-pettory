@@ -10,6 +10,8 @@ import com.pettory.pettory.chat.enums.ChatRoomStateEnum;
 import com.pettory.pettory.chat.enums.ChattingStateEnum;
 import com.pettory.pettory.chat.response.ResponseSelectChattingMessage;
 import com.pettory.pettory.chat.service.ChatService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Tag(name="Pettory 채팅 컨트롤러")
 @RestController
 @RequestMapping("/chat")
 public class ChatController {
@@ -33,12 +36,14 @@ public class ChatController {
     }
 
     /* Test 를 위한 Sample testChatting */
+    @Operation(summary = "테스트 채팅", description = "testChatting.html 로 이동한다.")
     @GetMapping("/testChatting")
     public String testChattingFeature() {
         return "testChatting";
     }
 
     /* 1. 채팅방 생성 */
+    @Operation(summary = "채팅방 생성", description = "모임이 만들어 질 때 호출되어 채팅방을 만든다.")
     @PostMapping("/chatroom")
     public ResponseEntity<?> registerChatRoom(@RequestBody InsertChatRoomDTO insertChatRoomDTO) {
         insertChatRoomDTO.setChatroomInsertTime(LocalDateTime.now());
@@ -52,6 +57,7 @@ public class ChatController {
     }
 
     /* 2. 채팅방 삭제 */
+    @Operation(summary = "채팅방 삭제", description = "상태 값만 DELETE 로 바꾸는 얇은 삭제를 실행한다.")
     @DeleteMapping("/chatroom/{chatroomUniqueNum}")
     public ResponseEntity<?> deleteChatRoomState(@PathVariable Integer chatroomUniqueNum) {
         DeleteChatRoomDTO deleteChatRoomDTO = new DeleteChatRoomDTO(chatroomUniqueNum);
@@ -68,6 +74,7 @@ public class ChatController {
     }
 
     /* 채팅방의 채팅 내용 조회 */
+    @Operation(summary = "채팅 조회", description = "특정 채팅방의 채팅 내역을 조회한다.")
     @GetMapping("/chatroom-chatting/{chatRoomUniqueNum}")
     public ResponseEntity<ResponseSelectChattingMessage> selectChatRoomChatting(@PathVariable Integer chatRoomUniqueNum) {
         /* 응답헤더 설정 */
@@ -85,6 +92,7 @@ public class ChatController {
     }
 
     /* 4. 채팅방의 채팅 내용을 수정 */
+    @Operation(summary = "채팅 수정", description = "특정 채팅을 수정한다.")
     @PutMapping("/chatroom-chatting")
     public ResponseEntity<?> modifyChatting(@RequestBody ModifyChattingDTO modifyChattingDTO) {
         modifyChattingDTO.setChattingUpdateTime(LocalDateTime.now());
@@ -98,6 +106,7 @@ public class ChatController {
     }
 
     /* 채팅방의 채팅 내용을 soft Delete */
+    @Operation(summary = "채팅 얇은 삭제", description = "특정 채팅의 상태 값을 DELETE 로 수정하는 얇은 삭제를 한다.")
     @DeleteMapping("/chatroom-chatting-soft/{chattingUniqueNum}")
     public ResponseEntity<?> softDeleteChatting(@PathVariable Integer chattingUniqueNum) {
         SoftDeleteChattingDTO softDeleteChattingDTO = new SoftDeleteChattingDTO();
@@ -113,6 +122,7 @@ public class ChatController {
     }
 
     /* 채팅방의 채팅 내용을 Hard Delete */
+    @Operation(summary = "채팅 깊은 삭제", description = "특정 채팅을 DB 에서 완전히 삭제한다.")
     @DeleteMapping("/chatroom-chatting-hard/{chattingUniqueNum}")
     public ResponseEntity<?> hardDeleteChatting(@PathVariable Integer chattingUniqueNum) {
         chatService.hardDeleteChatting(chattingUniqueNum);
