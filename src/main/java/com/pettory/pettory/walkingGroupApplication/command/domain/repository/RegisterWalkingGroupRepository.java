@@ -5,7 +5,11 @@ import com.pettory.pettory.walkingGroupApplication.command.domain.aggregate.Regi
 import java.util.Optional;
 
 public interface RegisterWalkingGroupRepository {
-    Optional<RegisterWalkingGroup> findById(String registerWalkingGroupId);
+
+    RegisterWalkingGroup save(RegisterWalkingGroup newRegisterWalkingGroup);
+
+    Optional<RegisterWalkingGroup> findById(int registerWalkingGroupId);
 
     void deleteById(int registerWalkingGroupId);
+
 }

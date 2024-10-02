@@ -14,7 +14,6 @@ public class JointShoppingGroupMapper {
                 groupRequest.getJointShoppingCost(),
                 groupRequest.getJointShoppingGroupMaximumCount(),
                 groupRequest.getJointShoppingParticipationMaximumCount(),
-                groupRequest.getHostCourierCode(),
                 groupRequest.getHostInvoiceNum(),
                 groupRequest.getJointShoppingCategoryNum(),
                 groupRequest.getUserId()

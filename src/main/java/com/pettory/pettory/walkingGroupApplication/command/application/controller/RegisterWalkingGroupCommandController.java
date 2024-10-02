@@ -1,6 +1,7 @@
 package com.pettory.pettory.walkingGroupApplication.command.application.controller;
 
 import com.pettory.pettory.walkingGroupApplication.command.application.dto.RegisterWalkingGroupUpdateRequest;
+import com.pettory.pettory.walkingGroupApplication.command.application.dto.WalkingGroupApplicationRequest;
 import com.pettory.pettory.walkingGroupApplication.command.application.service.RegisterWalkingGroupCommandService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +17,21 @@ public class RegisterWalkingGroupCommandController {
 
     private final RegisterWalkingGroupCommandService registerWalkingGroupCommandService;
 
+    @PutMapping("/{walkingGroupApplicationId}/acceptance")
+    public ResponseEntity<Void> acceptRegisterWalkingGroup(
+            @PathVariable int walkingGroupApplicationId,
+            @RequestBody @Valid WalkingGroupApplicationRequest walkingGroupApplicationRequest
+    ) {
+
+        registerWalkingGroupCommandService.acceptWalkingGroup(walkingGroupApplicationId, walkingGroupApplicationRequest);
+
+        return ResponseEntity.created(URI.create("/api/register-walking-group/")).build();
+
+    }
+
     @PutMapping("/{registerWalkingGroupId}")
     public ResponseEntity<Void> updateRegisterWalkingGroup(
-            @PathVariable String registerWalkingGroupId,
+            @PathVariable int registerWalkingGroupId,
             @RequestBody @Valid RegisterWalkingGroupUpdateRequest registerWalkingGroupUpdateRequest
     ) {
 
@@ -28,6 +41,7 @@ public class RegisterWalkingGroupCommandController {
         return ResponseEntity.created(URI.create("/api/register-walking-group/" + registerWalkingGroupId)).build();
 
     }
+
 
     @DeleteMapping("/{registerWalkingGroupId}")
     public ResponseEntity<Void> deleteRegisterWalkingGroup(@PathVariable int registerWalkingGroupId) {

@@ -41,6 +41,4 @@ public class UserSecurity {
             throw new AccessDeniedException("권한이 없습니다.");
         }
     }
-
-
 }

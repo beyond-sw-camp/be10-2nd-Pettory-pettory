@@ -2,10 +2,8 @@ package com.pettory.pettory.user.command.domain.aggregate;
 
 import com.pettory.pettory.exception.AlreadyInFamilyException;
 import com.pettory.pettory.family.command.domain.aggregate.Family;
-import com.pettory.pettory.feedingRecord.command.domain.aggregate.FeedingRecord;
 import com.pettory.pettory.pet.command.domain.aggregate.Pet;
 import com.pettory.pettory.pet.command.domain.aggregate.PetAccess;
-import com.pettory.pettory.walkingRecord.command.domain.aggregate.WalkingRecord;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -19,14 +17,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)    // 엔터티 삽입, 수정 시간 기록 위함
-@SQLDelete(sql = "UPDATE user SET user_state = 'DELETE', user_delete_datetime = NOW(), WHERE user_id = ? AND user_state != 'DELETE'")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
@@ -64,11 +60,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     List<PetAccess> petAccesses = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<WalkingRecord> walkingRecords = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    private List<FeedingRecord> feedingRecords = new ArrayList<>();
 
     // 생성자는 private으로 설정하여 외부에서의 호출 방지
     private User(String userEmail, String userPassword, String userNickname, String userName, LocalDate userBirth) {
@@ -96,20 +87,8 @@ public class User {
         family.addFamilyMember();
     }
 
-    // 회원의 가족id를 삭제하는 메소드
     public void updateFamilyIdAsNull() {
         this.family = null;
     }
-
-    // 회원을 삭제하는 메소드
-    public void updateUserAsDelete() {
-        this.userState = UserState.DELETE;
-    }
-
-    // 회원의 비밀번호를 수정하는 메소드
-    public void updatePassword(String encodedUserPassword) {
-        this.userPassword = encodedUserPassword;
-    }
-
 
 }

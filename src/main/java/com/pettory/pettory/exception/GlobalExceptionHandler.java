@@ -3,7 +3,6 @@ package com.pettory.pettory.exception;
 import com.pettory.pettory.common.CommonResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -105,53 +104,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.ok(response);
     }
 
-    @ExceptionHandler(AlreadyDeletedException.class)
-    public ResponseEntity<ErrorResponse> handleAlreadyDeletedException(AlreadyDeletedException ex) {
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .statusCode(HttpStatus.CONFLICT.value())
-                .message(ex.getMessage())
-                .build();
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
-    }
-
     @ExceptionHandler(AlreadyResignException.class)
     public ResponseEntity<ErrorResponse> handleAlreadyResignException(AlreadyResignException ex) {
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .statusCode(HttpStatus.BAD_REQUEST.value())
-                .message(ex.getMessage())
-                .build();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-    }
-
-    @ExceptionHandler(MailException.class)
-    public ResponseEntity<ErrorResponse> handleMailException(MailException ex) {
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .message(ex.getMessage())
-                .build();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-    }
-
-    @ExceptionHandler(AlreadyRegisterException.class)
-    public ResponseEntity<ErrorResponse> handleAlreadyRegisterException(AlreadyRegisterException ex) {
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .statusCode(HttpStatus.CONFLICT.value())
-                .message(ex.getMessage())
-                .build();
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
-    }
-
-    @ExceptionHandler(BadJoinException.class)
-    public ResponseEntity<ErrorResponse> handleAlreadyResignException(BadJoinException ex) {
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .statusCode(HttpStatus.BAD_REQUEST.value())
-                .message(ex.getMessage())
-                .build();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-    }
-
-    @ExceptionHandler(ChatException.class)
-    public ResponseEntity<ErrorResponse> chatException(ChatException ex) {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .message(ex.getMessage())

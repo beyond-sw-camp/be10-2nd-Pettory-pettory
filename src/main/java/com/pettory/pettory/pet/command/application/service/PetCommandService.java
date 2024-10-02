@@ -1,14 +1,11 @@
 package com.pettory.pettory.pet.command.application.service;
 
-import com.pettory.pettory.exception.AlreadyDeletedException;
 import com.pettory.pettory.exception.NotFoundException;
 import com.pettory.pettory.exception.UnauthorizedException;
-import com.pettory.pettory.feedingRecord.command.domain.aggregate.FeedingRecordState;
 import com.pettory.pettory.pet.command.application.dto.PetCreateRequest;
 import com.pettory.pettory.pet.command.application.dto.PetUpdateRequest;
 import com.pettory.pettory.pet.command.domain.aggregate.Pet;
 import com.pettory.pettory.pet.command.domain.aggregate.PetAccess;
-import com.pettory.pettory.pet.command.domain.aggregate.PetState;
 import com.pettory.pettory.pet.command.domain.repository.PetAccessRepository;
 import com.pettory.pettory.pet.command.domain.repository.PetRepository;
 import com.pettory.pettory.pet.command.infrastructure.repository.JpaPetRepository;
@@ -123,11 +120,6 @@ public class PetCommandService {
             }
             // 그 외의 경우, 반려동물이 존재하지 않는 것으로 처리
             throw new NotFoundException("반려동물이 존재하지 않습니다.");
-        }
-
-        // 이미 'DELETE' 상태인지 확인
-        if (pet.getPetState() == PetState.DELETE) {
-            throw new AlreadyDeletedException("이미 삭제된 급여 기록입니다.");
         }
 
         // jpa delete 호출

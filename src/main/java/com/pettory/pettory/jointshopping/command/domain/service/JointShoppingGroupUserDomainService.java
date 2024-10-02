@@ -1,6 +1,5 @@
 package com.pettory.pettory.jointshopping.command.domain.service;
 
-import com.pettory.pettory.exception.BadJoinException;
 import com.pettory.pettory.exception.NotFoundException;
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupUserRequest;
 import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingGroupUser;
@@ -61,7 +60,6 @@ public class JointShoppingGroupUserDomainService {
         );
 
         if(!jointShoppingGroupUserList.isEmpty()){
-           throw new BadJoinException("이미 강퇴당한 적이 있는 방입니다. ");
         }
     }
 

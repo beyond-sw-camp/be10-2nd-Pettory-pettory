@@ -1,6 +1,5 @@
 package com.pettory.pettory.jointshopping.query.controller;
 
-import com.pettory.pettory.jointshopping.query.dto.*;
 import com.pettory.pettory.jointshopping.query.service.JointShoppingGroupQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -76,26 +75,4 @@ public class JointShoppingGroupQueryController {
         return ResponseEntity.ok(response);
     }
 
-    /*  공동구매 물품 배송 정보 조회(방장) */
-    @GetMapping("/groups/delivery-info/{groupNum}")
-    public ResponseEntity<JointShoppingGroupDeliveryInfoResponse> getDeliveryInfo(@PathVariable Long groupNum) {
-
-        JointShoppingGroupDeliveryInfoResponse response = jointShoppingGroupQueryService.getDeliveryInfo(groupNum);
-
-        return ResponseEntity.ok(response);
-    }
-
-    /* 지급기록 조회 */
-    @GetMapping("/provision-records")
-    public ResponseEntity<ProvisionRecordResponse> getProvisionRecord(
-            @RequestParam(defaultValue = "1") Integer page,
-            @RequestParam(defaultValue = "10") Integer size,
-            @RequestParam(required = false) String provisionState
-    ){
-
-        ProvisionRecordResponse response = jointShoppingGroupQueryService.getProvisionRecord(page, size, provisionState);
-
-        return ResponseEntity.ok(response);
-    }
 }
-

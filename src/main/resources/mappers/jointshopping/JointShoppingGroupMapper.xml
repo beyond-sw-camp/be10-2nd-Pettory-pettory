@@ -11,7 +11,6 @@
 <!--        </association>-->
 <!--    </resultMap>-->
 
-<!--    공동구매모임 전체 리스트 조회(검색, 정렬) -->
     <select id="selectGroups" resultType="com.pettory.pettory.jointshopping.query.dto.JointShoppingGroupDTO">
         SELECT
         g.joint_shopping_group_num,
@@ -23,7 +22,6 @@
         g.joint_shopping_cost,
         g.joint_shopping_group_maximum_count,
         g.joint_shopping_participation_maximum_count,
-        g.host_courier_code,
         g.host_invoice_num,
         c.joint_shopping_category_num as "category.joint_shopping_category_num",
         c.joint_shopping_category_title as "category.joint_shopping_category_title",
@@ -44,7 +42,6 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-<!--    공동구매모임 특정 모임 상세 조회 -->
     <select id="selectGroupByNum" resultType="com.pettory.pettory.jointshopping.query.dto.JointShoppingGroupDTO">
         SELECT
         g.joint_shopping_group_num,
@@ -56,7 +53,6 @@
         g.joint_shopping_cost,
         g.joint_shopping_group_maximum_count,
         g.joint_shopping_participation_maximum_count,
-        g.host_courier_code,
         g.host_invoice_num,
         c.joint_shopping_category_num as "category.joint_shopping_category_num",
         c.joint_shopping_category_title as "category.joint_shopping_category_title",
@@ -82,7 +78,6 @@
         </if>
     </select>
 
-<!--    사용자가 등록한 즐겨찾기 조회  -->
     <select id="selectBookmarks" resultType="com.pettory.pettory.jointshopping.query.dto.JointShoppingGroupDTO">
         SELECT
         g.joint_shopping_group_num,
@@ -94,7 +89,6 @@
         g.joint_shopping_cost,
         g.joint_shopping_group_maximum_count,
         g.joint_shopping_participation_maximum_count,
-        g.host_courier_code,
         g.host_invoice_num,
         c.joint_shopping_category_num as "category.joint_shopping_category_num",
         c.joint_shopping_category_title as "category.joint_shopping_category_title",
@@ -133,8 +127,6 @@
         FROM user u
         JOIN joint_shopping_group_user_list g ON (u.user_id = g.user_id)
         WHERE g.joint_shopping_group_num = #{groupNum}
-        AND g.joint_shopping_user_delete_datetime IS NULL
-        ORDER BY u.user_nickname
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
@@ -158,7 +150,6 @@
         g.joint_shopping_cost,
         g.joint_shopping_group_maximum_count,
         g.joint_shopping_participation_maximum_count,
-        g.host_courier_code,
         g.host_invoice_num,
         c.joint_shopping_category_num as "category.joint_shopping_category_num",
         c.joint_shopping_category_title as "category.joint_shopping_category_title",
@@ -180,26 +171,4 @@
         AND (joint_shopping_group_state = 'APPLICATION' OR joint_shopping_group_state = 'CLOSE')
     </select>
 
-    <!--  지급기록 전체 리스트 조회(검색) -->
-    <select id="selectProvisionRecords" resultType="com.pettory.pettory.jointshopping.query.dto.ProvisionRecordDTO">
-        SELECT
-        provision_record_num
-        , provision_cost
-        , provision_state
-        , joint_shopping_group_num
-        FROM provision_record
-        <if test="provisionState != null">
-            WHERE provision_state = #{provisionState}
-        </if>
-        ORDER BY provision_record_num
-        LIMIT #{limit} OFFSET #{offset}
-    </select>
-
-    <select id="countProvisionRecords" resultType="long">
-        SELECT COUNT(*)
-        FROM provision_record
-        <if test="provisionState != null">
-            WHERE provision_state = #{provisionState}
-        </if>
-    </select>
 </mapper>
