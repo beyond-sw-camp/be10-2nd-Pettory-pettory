@@ -2,6 +2,7 @@ package com.pettory.pettory.walkingGroupApplication.command.domain.aggregate;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name ="register_walking_group")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @EntityListeners(AuditingEntityListener.class)
 @SQLDelete(sql = "UPDATE register_walking_group SET register_walking_group_state = 'DELETE', register_walking_group_delete_datetime = now() WHERE register_walking_group_id = ?")
 public class RegisterWalkingGroup {
@@ -30,6 +32,15 @@ public class RegisterWalkingGroup {
     @LastModifiedDate
     private LocalDateTime registerWalkingGroupUpdateDatetime;
     private LocalDateTime registerWalkingGroupDeleteDatetime;
+
+    public static RegisterWalkingGroup create(int walkingGroupId, int userId) {
+        return new RegisterWalkingGroup(walkingGroupId, userId);
+    }
+
+    public RegisterWalkingGroup(int walkingGroupId, int userId) {
+        this.registerWalkingGroupId = walkingGroupId;
+        this.userId = userId;
+    }
 
     public void updateRegisterWalkingGroupDetails(RegisterWalkingGroupState registerWalkingGroupState) {
         this.registerWalkingGroupState = registerWalkingGroupState;

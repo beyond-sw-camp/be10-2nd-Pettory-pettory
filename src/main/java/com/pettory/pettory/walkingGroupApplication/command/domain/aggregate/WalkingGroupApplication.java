@@ -22,7 +22,7 @@ public class WalkingGroupApplication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int walkingGroupApplicationId;
     @Enumerated(EnumType.STRING)
-    private WalkingGroupApprovalState walkingGroupApprovalState = WalkingGroupApprovalState.APPLICATION;
+    private WalkingGroupApprovalState walkingGroupApprovalState = WalkingGroupApprovalState.PENDING;
     @CreatedDate
     private LocalDateTime walkingGroupApplicationInsertDatetime;
     @Column(insertable = false)
