@@ -46,4 +46,19 @@ public class UserInfoResponse {
     private LocalDateTime userRegisterDatetime;
     private LocalDateTime userSuspensionEndDatetime;
 
+    public UserInfoResponse(
+            String userEmail, String userNickname, String userName, LocalDate userBirth, UserState userState, UserRole userRole, boolean userWalkingRecordPublicYn, String userHospitalName, String userHospitalInfo, LocalDateTime userRegisterDatetime, LocalDateTime userSuspensionEndDatetime
+    ) {
+        this.userEmail = userEmail;
+        this.userNickname = userNickname;
+        this.userName = userName;
+        this.userBirth = userBirth;
+        this.userState = userState;
+        this.userRole = userRole;
+        this.userWalkingRecordPublicYn = userWalkingRecordPublicYn;
+        this.userHospitalName = userHospitalName;
+        this.userHospitalInfo = userHospitalInfo;
+        this.userRegisterDatetime = userRegisterDatetime;
+        this.userSuspensionEndDatetime = userSuspensionEndDatetime;
+    }
 }
