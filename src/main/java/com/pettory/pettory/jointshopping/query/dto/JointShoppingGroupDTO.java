@@ -1,5 +1,6 @@
 package com.pettory.pettory.jointshopping.query.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,6 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Schema(description = "공동구매모임 DTO")
 public class JointShoppingGroupDTO {
     private Long jointShoppingGroupNum;
     private String jointShoppingGroupName;

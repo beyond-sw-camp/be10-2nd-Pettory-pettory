@@ -4,6 +4,10 @@ import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingDe
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupRequest;
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupUserRequest;
 import com.pettory.pettory.jointshopping.command.application.service.JointShoppingGroupApplicationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 
+@Tag(name = "Joint-Shopping-Group")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("jointshopping")
@@ -19,7 +24,8 @@ public class JointShoppingGroupCommandController {
 
     private final JointShoppingGroupApplicationService jointShoppingGroupApplicationService;
 
-    /* 공동구매모임 등록 */
+    @Operation(summary = "공동구매모임 등록")
+    @ApiResponse(responseCode = "201", description = "공동구매모임 등록 성공")
     @PostMapping("/groups")
     public ResponseEntity<Void> createGroup(
             @RequestPart @Valid JointShoppingGroupRequest groupRequest,
@@ -33,7 +39,11 @@ public class JointShoppingGroupCommandController {
                 .build();
     }
 
-    /* 공동구매모임 수정 */
+    @Operation(summary = "공동구매모임 수정")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "공동구매모임 수정 성공"),
+            @ApiResponse(responseCode = "404", description = "잘못된 공동구매모임 번호")
+    })
     @PutMapping("/groups/{jointShoppingGroupNum}")
     public ResponseEntity<Void> updateGroup(
             @PathVariable final Long jointShoppingGroupNum,
@@ -47,7 +57,8 @@ public class JointShoppingGroupCommandController {
 
     }
 
-    /* 공동구매모임 삭제 */
+    @Operation(summary = "공동구매모임 삭제")
+    @ApiResponse(responseCode = "204", description = "공동구매모임 삭제 성공")
     @DeleteMapping("/groups/{jointShoppingGroupNum}")
     public ResponseEntity<Void> deleteGroup(@PathVariable final Long jointShoppingGroupNum) {
 
@@ -56,7 +67,12 @@ public class JointShoppingGroupCommandController {
         return ResponseEntity.noContent().build();
     }
 
-    /* 공동구매모임 참가(모임 사용자 등록) */
+    @Operation(summary = "공동구매모임 참가")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "공동구매모임 참가 성공"),
+            @ApiResponse(responseCode = "400", description = "모임 참가 불가 or 이미 강퇴 당한 회원"),
+            @ApiResponse(responseCode = "404", description = "잘못된 공동구매모임 번호")
+    })
     @PostMapping("/groups/users")
     public ResponseEntity<Void> insertGroupUser(
             @RequestBody @Valid JointShoppingGroupUserRequest groupUserRequest
@@ -69,7 +85,11 @@ public class JointShoppingGroupCommandController {
                 .build();
     }
 
-    /* 공동구매모임 나가기 (모임 사용자 삭제) */
+    @Operation(summary = "공동구매모임 나가기")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "공동구매모임 나가기 성공"),
+            @ApiResponse(responseCode = "404", description = "잘못된 공동구매모임 번호 or 잘못된 공동구매 참가자 번호")
+    })
     @DeleteMapping("/groups/users/{jointShoppingGroupUserNum}")
     public ResponseEntity<Void> exitGroupUser(@PathVariable final Long jointShoppingGroupUserNum) {
 
@@ -78,7 +98,11 @@ public class JointShoppingGroupCommandController {
         return ResponseEntity.noContent().build();
     }
 
-    /* 공동구매모임 강퇴 (모임 사용자 삭제, 재등록 불가 ) */
+    @Operation(summary = "공동구매모임 강퇴")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "공동구매모임 강퇴 성공"),
+            @ApiResponse(responseCode = "404", description = "잘못된 공동구매모임 번호 or 잘못된 공동구매 참가자 번호")
+    })
     @DeleteMapping("/groups/users/withdrawal/{jointShoppingGroupUserNum}")
     public ResponseEntity<Void> withdrawalGroupUser(@PathVariable final Long jointShoppingGroupUserNum){
 
@@ -87,7 +111,12 @@ public class JointShoppingGroupCommandController {
         return ResponseEntity.noContent().build();
     }
 
-    /* 공동구매 방장 물품 배송 정보 등록(수정) */
+    @Operation(summary = "공동구매 방장 물품 배송 정보 등록")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "공동구매 방장 물품 배송 정보 성공"),
+            @ApiResponse(responseCode = "400", description = "택배 정보 입력 불가"),
+            @ApiResponse(responseCode = "404", description = "잘못된 공동구매모임 번호")
+    })
     @PutMapping("/groups/delivery-info/{jointShoppingGroupNum}")
     public ResponseEntity<Void> updateDeliveryInfo(
             @PathVariable final Long jointShoppingGroupNum,
