@@ -61,6 +61,10 @@ public class SecurityConfig {
                             .requestMatchers(new AntPathRequestMatcher("/feeding-records/**", "DELETE")).hasAnyAuthority("ROLE_USER", "ROLE_VET", "ROLE_ADMIN")
                             .requestMatchers(new AntPathRequestMatcher("/ws/**","POST")).permitAll()
                             .requestMatchers(new AntPathRequestMatcher("/ws/**","GET")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/jointshopping/**", "GET")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/jointshopping/**", "POST")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/jointshopping/**", "PUT")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/jointshopping/**", "DELETE")).hasAuthority("ROLE_USER")
                             .anyRequest().authenticated();
                 })
                 .sessionManagement(
