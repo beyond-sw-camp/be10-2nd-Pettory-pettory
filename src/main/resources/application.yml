@@ -30,7 +30,7 @@ mybatis:
 
   # type-aliases-package: com.ohgiraffers.cqrs.product.query.dto
 
-# image:
+  # image:
   # image-url: http://localhost:8080/productimgs/
   # image-dir: src/main/resources/static/productimgs
 
