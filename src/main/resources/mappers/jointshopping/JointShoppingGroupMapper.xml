@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.pettory.jointshopping.query.mapper.JointShoppingGroupMapper">
+
+<!--    <resultMap id="product" type="ProductDto" autoMapping="true">-->
+<!--        <id property="productCode" column="product_code"/>-->
+<!--        <association property="category" javaType="CategoryDto" autoMapping="true">-->
+<!--            <id property="categoryCode" column="category_code"/>-->
+<!--        </association>-->
+<!--    </resultMap>-->
+
+<!--    공동구매모임 전체 리스트 조회(검색, 정렬) -->
+    <select id="selectGroups" resultType="com.pettory.pettory.jointshopping.query.dto.JointShoppingGroupDTO">
+        SELECT
+        g.joint_shopping_group_num,
+        g.joint_shopping_group_name,
+        g.joint_shopping_products,
+        g.joint_shopping_products_state,
+        g.joint_shopping_products_file_directory,
+        g.joint_shopping_info,
+        g.joint_shopping_cost,
+        g.joint_shopping_group_maximum_count,
+        g.joint_shopping_participation_maximum_count,
+        g.host_courier_code,
+        g.host_invoice_num,
+        c.joint_shopping_category_num as "category.joint_shopping_category_num",
+        c.joint_shopping_category_title as "category.joint_shopping_category_title",
+        g.user_id
+        FROM joint_shopping_group g
+        JOIN joint_shopping_category c ON (g.joint_shopping_category_num = c.joint_shopping_category_num)
+        WHERE (g.joint_shopping_group_state = 'APPLICATION' OR g.joint_shopping_group_state = 'CLOSE')
+        <if test="categoryNum != null">
+            AND g.joint_shopping_category_num = #{categoryNum}
+        </if>
+        <if test="groupName != null">
+            AND g.joint_shopping_group_name LIKE CONCAT('%', #{groupName}, '%')
+        </if>
+        <if test="products != null">
+            AND g.joint_shopping_products LIKE CONCAT('%', #{products}, '%')
+        </if>
+        ORDER BY g.joint_shopping_group_num
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+<!--    공동구매모임 특정 모임 상세 조회 -->
+    <select id="selectGroupByNum" resultType="com.pettory.pettory.jointshopping.query.dto.JointShoppingGroupDTO">
+        SELECT
+        g.joint_shopping_group_num,
+        g.joint_shopping_group_name,
+        g.joint_shopping_products,
+        g.joint_shopping_products_state,
+        g.joint_shopping_products_file_directory,
+        g.joint_shopping_info,
+        g.joint_shopping_cost,
+        g.joint_shopping_group_maximum_count,
+        g.joint_shopping_participation_maximum_count,
+        g.host_courier_code,
+        g.host_invoice_num,
+        c.joint_shopping_category_num as "category.joint_shopping_category_num",
+        c.joint_shopping_category_title as "category.joint_shopping_category_title",
+        g.user_id
+        FROM joint_shopping_group g
+        JOIN joint_shopping_category c ON (g.joint_shopping_category_num = c.joint_shopping_category_num)
+        WHERE joint_shopping_group_num = #{groupNum}
+        AND (g.joint_shopping_group_state = 'APPLICATION' OR g.joint_shopping_group_state = 'CLOSE')
+    </select>
+
+    <select id="countGroups" resultType="long">
+        SELECT COUNT(*)
+        FROM joint_shopping_group
+        WHERE (joint_shopping_group_state = 'APPLICATION' OR joint_shopping_group_state = 'CLOSE')
+        <if test="categoryNum != null">
+            AND joint_shopping_category_num = #{categoryNum}
+        </if>
+        <if test="groupName != null">
+            AND joint_shopping_group_name LIKE CONCAT('%', #{groupName}, '%')
+        </if>
+        <if test="products != null">
+            AND joint_shopping_products LIKE CONCAT('%', #{products}, '%')
+        </if>
+    </select>
+
+<!--    사용자가 등록한 즐겨찾기 조회  -->
+    <select id="selectBookmarks" resultType="com.pettory.pettory.jointshopping.query.dto.JointShoppingGroupDTO">
+        SELECT
+        g.joint_shopping_group_num,
+        g.joint_shopping_group_name,
+        g.joint_shopping_products,
+        g.joint_shopping_products_state,
+        g.joint_shopping_products_file_directory,
+        g.joint_shopping_info,
+        g.joint_shopping_cost,
+        g.joint_shopping_group_maximum_count,
+        g.joint_shopping_participation_maximum_count,
+        g.host_courier_code,
+        g.host_invoice_num,
+        c.joint_shopping_category_num as "category.joint_shopping_category_num",
+        c.joint_shopping_category_title as "category.joint_shopping_category_title",
+        g.user_id
+        FROM joint_shopping_group g
+        JOIN joint_shopping_category c ON (g.joint_shopping_category_num = c.joint_shopping_category_num)
+        JOIN bookmark b ON (g.joint_shopping_group_num = b.joint_shopping_group_num)
+        WHERE b.user_id = #{userId}
+        AND (g.joint_shopping_group_state = 'APPLICATION' OR g.joint_shopping_group_state = 'CLOSE')
+        ORDER BY g.joint_shopping_group_num
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countBookmarks" resultType="long">
+        SELECT COUNT(*)
+        FROM joint_shopping_group g
+        JOIN bookmark b ON (g.joint_shopping_group_num = b.joint_shopping_group_num)
+        WHERE b.user_id = #{userId}
+        AND (joint_shopping_group_state = 'APPLICATION' OR joint_shopping_group_state = 'CLOSE')
+    </select>
+
+<!--  현재 공동구매모임의 전체 사용자 목록 조회    -->
+    <select id="selectGroupUsers" resultType="com.pettory.pettory.user.query.dto.UserInfoResponse">
+        SELECT
+        u.user_email AS userEmail
+        , u.user_nickname AS userNickname
+        , u.user_name AS userName
+        , u.user_birth AS userBirth
+        , u.user_state AS userState
+        , u.user_role AS userRole
+        , u.user_walking_record_public_yn AS userWalkingRecordPublicYn
+        , u.user_hospital_name AS userHospitalName
+        , u.user_hospital_info AS userHospitalInfo
+        , u.user_register_datetime AS userRegisterDatetime
+        , u.user_suspension_end_datetime AS userSuspensionEndDatetime
+        FROM user u
+        JOIN joint_shopping_group_user_list g ON (u.user_id = g.user_id)
+        WHERE g.joint_shopping_group_num = #{groupNum}
+        AND g.joint_shopping_user_delete_datetime IS NULL
+        ORDER BY u.user_nickname
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countGroupUsers" resultType="long">
+        SELECT COUNT(*)
+        FROM user u
+        JOIN joint_shopping_group_user_list g ON (u.user_id = g.user_id)
+        WHERE g.joint_shopping_group_num = #{groupNum}
+        AND g.joint_shopping_user_delete_datetime = NULL
+    </select>
+
+<!--  현재 사용자가 참여한 공동구매모임 목록 조회  -->
+    <select id="selectUserGroups" resultType="com.pettory.pettory.jointshopping.query.dto.JointShoppingGroupDTO">
+        SELECT
+        g.joint_shopping_group_num,
+        g.joint_shopping_group_name,
+        g.joint_shopping_products,
+        g.joint_shopping_products_state,
+        g.joint_shopping_products_file_directory,
+        g.joint_shopping_info,
+        g.joint_shopping_cost,
+        g.joint_shopping_group_maximum_count,
+        g.joint_shopping_participation_maximum_count,
+        g.host_courier_code,
+        g.host_invoice_num,
+        c.joint_shopping_category_num as "category.joint_shopping_category_num",
+        c.joint_shopping_category_title as "category.joint_shopping_category_title",
+        g.user_id
+        FROM joint_shopping_group g
+        JOIN joint_shopping_category c ON (g.joint_shopping_category_num = c.joint_shopping_category_num)
+        JOIN joint_shopping_group_user_list u ON (g.joint_shopping_group_num = u.joint_shopping_group_num)
+        WHERE u.user_id = #{userId}
+        AND (g.joint_shopping_group_state = 'APPLICATION' OR g.joint_shopping_group_state = 'CLOSE')
+        ORDER BY g.joint_shopping_group_num
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countUserGroups" resultType="long">
+        SELECT COUNT(*)
+        FROM joint_shopping_group g
+        JOIN joint_shopping_group_user_list u ON (g.joint_shopping_group_num = u.joint_shopping_group_num)
+        WHERE u.user_id = #{userId}
+        AND (joint_shopping_group_state = 'APPLICATION' OR joint_shopping_group_state = 'CLOSE')
+    </select>
+
+    <!--  지급기록 전체 리스트 조회(검색) -->
+    <select id="selectProvisionRecords" resultType="com.pettory.pettory.jointshopping.query.dto.ProvisionRecordDTO">
+        SELECT
+        provision_record_num
+        , provision_cost
+        , provision_state
+        , joint_shopping_group_num
+        FROM provision_record
+        <if test="provisionState != null">
+            WHERE provision_state = #{provisionState}
+        </if>
+        ORDER BY provision_record_num
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countProvisionRecords" resultType="long">
+        SELECT COUNT(*)
+        FROM provision_record
+        <if test="provisionState != null">
+            WHERE provision_state = #{provisionState}
+        </if>
+    </select>
+</mapper>

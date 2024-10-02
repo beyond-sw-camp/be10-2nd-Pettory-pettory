@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.pettory.pet.query.mapper.PetMapper">
+
+    <!-- 받은 초대 조회 -->
+    <select id="findPetsByUserId" resultType="com.pettory.pettory.pet.query.dto.PetDTO">
+        SELECT
+                   p.pet_type AS petType
+                ,  p.pet_name AS petName
+                , p.pet_birth AS petBirth
+                , p.pet_breed AS petBreed
+                , p.pet_gender AS petGender
+                , p.pet_neutering_yn AS petNeuteringYn
+                , p.pet_weight AS petWeight
+                , p.pet_memo AS petMemo
+          FROM pet p
+          JOIN pet_access pa ON p.pet_id = pa.pet_id
+         WHERE pa.user_id = #{userId}
+           AND p.pet_state = 'ACTIVE'
+           AND pa.pet_access_state = 'ACTIVE'
+        UNION
+
+        SELECT
+                  p.pet_type AS petType
+                , p.pet_name AS petName
+                , p.pet_birth AS petBirth
+                , p.pet_breed AS petBreed
+                , p.pet_gender AS petGender
+                , p.pet_neutering_yn AS petNeuteringYn
+                , p.pet_weight AS petWeight
+                , p.pet_memo AS petMemo
+          FROM pet p
+          JOIN user u ON p.user_id = u.user_id
+         WHERE u.family_id = (SELECT family_id FROM user WHERE user_id = #{userId})
+           AND u.family_id IS NOT NULL
+           AND u.user_id != #{userId}
+           AND p.pet_state = 'ACTIVE'
+    </select>
+</mapper>
