@@ -65,6 +65,12 @@ public class SecurityConfig {
                             .requestMatchers(new AntPathRequestMatcher("/jointshopping/**", "POST")).hasAuthority("ROLE_USER")
                             .requestMatchers(new AntPathRequestMatcher("/jointshopping/**", "PUT")).hasAuthority("ROLE_USER")
                             .requestMatchers(new AntPathRequestMatcher("/jointshopping/**", "DELETE")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/swagger-resources/**")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/swagger-ui/index.html")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/webjars/**")).permitAll()
+
                             .anyRequest().authenticated();
                 })
                 .sessionManagement(
