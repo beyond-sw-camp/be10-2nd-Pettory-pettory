@@ -12,6 +12,7 @@ import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -42,6 +43,7 @@ public class SecurityConfig {
                             .requestMatchers(new AntPathRequestMatcher("/users/**", "POST")).permitAll()
                             .requestMatchers(new AntPathRequestMatcher("/users/**", "GET")).hasAnyAuthority("ROLE_USER", "ROLE_VET", "ROLE_ADMIN")
                             .requestMatchers(new AntPathRequestMatcher("/users/**", "DELETE")).hasAnyAuthority("ROLE_USER", "ROLE_VET", "ROLE_ADMIN")
+                            .requestMatchers(new AntPathRequestMatcher("/users/**", "PUT")).hasAnyAuthority("ROLE_USER", "ROLE_VET", "ROLE_ADMIN")
                             .requestMatchers(new AntPathRequestMatcher("/families/**", "GET")).hasAnyAuthority("ROLE_USER", "ROLE_VET", "ROLE_ADMIN")
                             .requestMatchers(new AntPathRequestMatcher("/families/**", "POST")).hasAnyAuthority("ROLE_USER", "ROLE_VET", "ROLE_ADMIN")
                             .requestMatchers(new AntPathRequestMatcher("/families/**", "PUT")).hasAnyAuthority("ROLE_USER", "ROLE_VET", "ROLE_ADMIN")
