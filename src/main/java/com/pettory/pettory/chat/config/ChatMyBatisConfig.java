@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 public class ChatMyBatisConfig {
     @Value("${spring.datasource.driver-class-name}")
     private String driverClassName;
