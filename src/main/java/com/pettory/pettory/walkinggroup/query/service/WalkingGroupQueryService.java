@@ -19,11 +19,11 @@ public class WalkingGroupQueryService {
 
     /* 산책 모임 조회 */
     @Transactional(readOnly = true)
-    public WalkingGroupListResponse getWalkingGroups(Integer page, Integer size, String walkingGroupInfo) {
+    public WalkingGroupListResponse getWalkingGroups(Integer page, Integer size, String walkingGroupName, String walkingGroupInfo) {
         int offset = (page - 1) * size;
-        List<WalkingGroupDTO> walkingGroups = walkingGroupMapper.selectWalkingGroups(offset, size, walkingGroupInfo);
+        List<WalkingGroupDTO> walkingGroups = walkingGroupMapper.selectWalkingGroups(offset, size, walkingGroupName, walkingGroupInfo);
 
-        long totalItems = walkingGroupMapper.countWalkingGroups(walkingGroupInfo);
+        long totalItems = walkingGroupMapper.countWalkingGroups(walkingGroupName, walkingGroupInfo);
 
         return WalkingGroupListResponse.builder()
                 .walkingGroups(walkingGroups)
@@ -35,14 +35,14 @@ public class WalkingGroupQueryService {
 
     /* 산책 모임 상세 조회 */
     @Transactional(readOnly = true)
-    public WalkingGroupDetailResponse getWalkingGroup(String walkingGroupName) {
-        List<WalkingGroupDTO> walkingGroupsByName = walkingGroupMapper.selectWalkingGroupByName(walkingGroupName);
+    public WalkingGroupDetailResponse getWalkingGroup(int walkingGroupId) {
+        WalkingGroupDTO walkingGroup = walkingGroupMapper.selectWalkingGroupById(walkingGroupId);
 
-        if(walkingGroupsByName == null) {
-            throw new NotFoundException("해당 이름을 가진 산책 모임을 찾지 못했습니다. 산책 모임 이름 : " + walkingGroupName);
+        if(walkingGroup == null) {
+            throw new NotFoundException("해당 아이디를 가진 산책 모임을 찾지 못했습니다. 산책 모임 아이디 : " + walkingGroupId);
         }
 
-        return new WalkingGroupDetailResponse(walkingGroupsByName);
+        return new WalkingGroupDetailResponse(walkingGroup);
 
     }
 }

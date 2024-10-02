@@ -11,10 +11,14 @@ public interface WalkingGroupMapper {
 
     List<WalkingGroupDTO> selectWalkingGroups(
             @Param("offset") int offset, @Param("limit") int limit,
+            @Param("walkingGroupName") String walkingGroupName,
             @Param("walkingGroupInfo") String walkingGroupInfo
     );
 
-    long countWalkingGroups(@Param("walkingGroupInfo") String walkingGroupInfo);
+    long countWalkingGroups(
+            @Param("walkingGroupName") String walkingGroupName,
+            @Param("walkingGroupInfo") String walkingGroupInfo
+    );
 
-    List<WalkingGroupDTO> selectWalkingGroupByName(@Param("walkingGroupName") String walkingGroupName);
+    WalkingGroupDTO selectWalkingGroupById(@Param("walkingGroupId") int walkingGroupId);
 }

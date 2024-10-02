@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/walkinggroup")
+@RequestMapping("/api/walking-group")
 public class WalkingGroupQueryController {
 
     private final WalkingGroupQueryService walkingGroupQueryService;
@@ -18,18 +18,19 @@ public class WalkingGroupQueryController {
     public ResponseEntity<WalkingGroupListResponse> getWalkingGroups(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
+            @RequestParam(required = false) String walkingGroupName,
             @RequestParam(required = false) String walkingGroupInfo
     ) {
 
-        WalkingGroupListResponse response = walkingGroupQueryService.getWalkingGroups(page, size, walkingGroupInfo);
+        WalkingGroupListResponse response = walkingGroupQueryService.getWalkingGroups(page, size, walkingGroupName, walkingGroupInfo);
 
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{walkingGroupName}")
-    public ResponseEntity<WalkingGroupDetailResponse> getWalkingGroup(@PathVariable String walkingGroupName) {
+    @GetMapping("/{walkingGroupId}")
+    public ResponseEntity<WalkingGroupDetailResponse> getWalkingGroup(@PathVariable int walkingGroupId) {
 
-        WalkingGroupDetailResponse response = walkingGroupQueryService.getWalkingGroup(walkingGroupName);
+        WalkingGroupDetailResponse response = walkingGroupQueryService.getWalkingGroup(walkingGroupId);
 
         return ResponseEntity.ok(response);
 
