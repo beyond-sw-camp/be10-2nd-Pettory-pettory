@@ -43,20 +43,6 @@ public class JointShoppingGroupQueryController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "즐겨찾기된 모임 목록 조회")
-    @ApiResponse(responseCode = "200", description = "즐겨찾기된 모임 목록 조회 성공")
-    @GetMapping("/bookmarks")
-    public ResponseEntity<JointShoppingGroupListResponse> getBookmarks(
-            @RequestParam(defaultValue = "1") Integer page,
-            @RequestParam(defaultValue = "10") Integer size,
-            @RequestParam Long userId
-    ) {
-
-        JointShoppingGroupListResponse response = jointShoppingGroupQueryService.getBookmarks(page, size, userId);
-
-        return ResponseEntity.ok(response);
-    }
-
     @Operation(summary = "현재 공동구매모임의 전체 사용자 목록 조회")
     @ApiResponse(responseCode = "200", description = "현재 공동구매모임의 전체 사용자 목록 조회 성공")
     @GetMapping("/groups/users/{groupNum}")
