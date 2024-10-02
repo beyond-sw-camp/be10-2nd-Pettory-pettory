@@ -38,7 +38,7 @@ public class RegisterWalkingGroup {
     }
 
     public RegisterWalkingGroup(int walkingGroupId, int userId) {
-        this.registerWalkingGroupId = walkingGroupId;
+        this.walkingGroupId = walkingGroupId;
         this.userId = userId;
     }
 

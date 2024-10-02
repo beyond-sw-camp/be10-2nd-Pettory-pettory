@@ -5,6 +5,6 @@ import lombok.Getter;
 @Getter
 public class WalkingGroupApplicationRequest {
 
-    private String walkingGroupApplicationState;
+    private String walkingGroupApprovalState;
 
 }
