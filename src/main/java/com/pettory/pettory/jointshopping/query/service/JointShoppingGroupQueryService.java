@@ -92,4 +92,36 @@ public class JointShoppingGroupQueryService {
                 .build();
     }
 
+    /*  공동구매 물품 배송 정보 조회(방장) */
+    @Transactional(readOnly = true)
+    public JointShoppingGroupDeliveryInfoResponse getDeliveryInfo(Long groupNum) {
+        JointShoppingGroupDTO group = jointShoppingGroupMapper.selectGroupByNum(groupNum);
+
+        if (group == null) {
+            throw new NotFoundException("해당 코드를 가진 그룹을 찾지 못했습니다. 그룹 코드 : " + groupNum);
+        }
+
+        return JointShoppingGroupDeliveryInfoResponse.builder()    // 이 클래스가 가지고 있는 필드값들이 메서드에 자동완성, 세팅을 여기서 함
+                .hostCourierCode(group.getHostCourierCode())
+                .hostInvoiceNum(group.getHostInvoiceNum())
+                .build();
+    }
+
+    /* 지급기록 조회 */
+    @Transactional(readOnly = true)
+    public ProvisionRecordResponse getProvisionRecord(Integer page, Integer size, String provisionState) {
+        int offset = (page - 1) * size;
+        List<ProvisionRecordDTO> provisionRecords = jointShoppingGroupMapper.selectProvisionRecords(offset, size, provisionState);
+
+        long totalItems = jointShoppingGroupMapper.countProvisionRecords(provisionState);
+
+        return ProvisionRecordResponse.builder()    // 이 클래스가 가지고 있는 필드값들이 메서드에 자동완성, 세팅을 여기서 함
+                .provisionRecords(provisionRecords)
+                .currentPage(page)
+                .totalPages((int) Math.ceil((double) totalItems / size))
+                .totalItems(totalItems)
+                .build();
+    }
+
+
 }

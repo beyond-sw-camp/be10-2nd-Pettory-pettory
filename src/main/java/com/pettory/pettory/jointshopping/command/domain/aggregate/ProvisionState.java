@@ -6,4 +6,5 @@ public enum ProvisionState {
     Waiting,    // 지급 대기
     Cancellation    // 지급 취소
 
+
 }

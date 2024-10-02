@@ -26,6 +26,7 @@ public class JointShoppingParticipationUser {
     private Long paymentCost;
     @Enumerated(value = EnumType.STRING)
     private JointShoppingParticipationState participationState = JointShoppingParticipationState.ACTIVE;
+    private String userCourierCode;
     private String userInvoiceNum;
     private Boolean productsReceiptYn = Boolean.FALSE;
     @CreatedDate
@@ -33,4 +34,15 @@ public class JointShoppingParticipationUser {
     private LocalDateTime jointShoppingParticipationDeleteDatetime;
     private Long jointShoppingGroupNum;
     private Long userId;
+
+    // 물품 배송 정보를 변경하는 메소드
+    public void update(String courierCode, String invoiceNum) {
+        this.userCourierCode = courierCode;
+        this.userInvoiceNum = invoiceNum;
+    }
+
+    // 물품 수령 여부를 변경하는 메소드
+    public void changeProductsReceipt() {
+        this.productsReceiptYn = Boolean.TRUE;
+    }
 }
