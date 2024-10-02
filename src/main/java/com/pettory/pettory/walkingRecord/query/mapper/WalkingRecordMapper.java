@@ -22,9 +22,9 @@ public interface WalkingRecordMapper {
     List<WalkingRecordSummaryResponse> findAllWalkingRecordsByFamilyAndPetAndMonth(Long familyId, Long petId, int year, int month);
 
     // 2. 날짜별 산책 기록 조회
-    List<WalkingRecordDailyResponse> findWalkingRecordsByDateAndFamily(LocalDate date, Long familyId);
+    List<WalkingRecordDailyResponse> findWalkingRecordsByDateAndFamily(LocalDate date, Long petId, Long familyId);
 
-    List<WalkingRecordDailyResponse> findWalkingRecordsByDateAndUserId(LocalDate date, Long userId);
+    List<WalkingRecordDailyResponse> findWalkingRecordsByDateAndUserId(LocalDate date, Long petId, Long userId);
     
     // 3. 산책 기록 상세 조회(특정 산책 기록의 상세 정보 조회)
     WalkingRecordDetailResponse findWalkingRecordDetailByIdAndFamily(Long walkingRecordId, Long familyId);

@@ -49,6 +49,17 @@ public class UserCommandService implements UserDetailsService {
     @Transactional
     public void registerUser(UserRegisterRequest userRegisterRequest) {
 
+        // 이메일 중복 체크
+        if (userRepository.existsByUserEmail(userRegisterRequest.getUserEmail())) {
+            throw new AlreadyRegisterException("이미 존재하는 이메일입니다.");
+        }
+
+        // 닉네임 중복 체크
+        if (userRepository.existsByUserNickname(userRegisterRequest.getUserNickname())) {
+            throw new AlreadyRegisterException("이미 존재하는 닉네임입니다.");
+        }
+
+
         User newUser = UserMapper.toEntity(userRegisterRequest);
         newUser.encryptPassword(passwordEncoder.encode(newUser.getUserPassword())); // newUser의 plain pw를 암호화
 

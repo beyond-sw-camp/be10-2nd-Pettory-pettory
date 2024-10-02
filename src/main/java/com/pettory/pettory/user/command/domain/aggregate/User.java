@@ -34,6 +34,7 @@ public class User {
     @Column(unique = true)
     private String userEmail;   // 회원이메일
     private String userPassword;    // 회원비밀번호
+    @Column(unique = true)
     private String userNickname;    // 회원닉네임
     private String userName;    // 회원이름
     private LocalDate userBirth; // 회원생년월일

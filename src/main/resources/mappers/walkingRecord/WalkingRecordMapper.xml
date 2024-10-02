@@ -64,6 +64,7 @@
          WHERE wr.walking_record_date = #{date}
            AND wr.user_id = #{userId}
            AND wr.walking_record_state = 'ACTIVE'
+           AND pet_id = #{petId}
     </select>
 
     <!-- 2-2. 특정 날짜의 가족 구성원의 산책 기록까지 모두 조회(가족이 있는 경우) -->
@@ -78,6 +79,7 @@
          WHERE wr.walking_record_date = #{date}
            AND u.family_id = #{familyId}
            AND wr.walking_record_state = 'ACTIVE'
+           AND pet_id = #{petId}
     </select>
 
     <!-- 3-1. 특정 산책 기록의 상세 정보 조회: 가족 구성원의 산책 기록 조회 -->

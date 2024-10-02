@@ -40,12 +40,15 @@ public class WalkingRecordQueryController {
     }
 
     // 2. 날짜별 산책 기록 조회
-    @GetMapping("/{date}")
-    public ResponseEntity<CommonResponseDTO> getWalkingRecordsByDate(@PathVariable LocalDate date) {
+    @GetMapping("/{date}/{petId}")
+    public ResponseEntity<CommonResponseDTO> getWalkingRecordsByDate(
+            @PathVariable LocalDate date,
+            @PathVariable Long petId
+    ) {
 
         String currentUserEmail = UserSecurity.getCurrentUserEmail();
 
-        List<WalkingRecordDailyResponse> walkingRecords = walkingRecordQueryService.getWalkingRecordsByDate(currentUserEmail, date);
+        List<WalkingRecordDailyResponse> walkingRecords = walkingRecordQueryService.getWalkingRecordsByDate(currentUserEmail, petId, date);
 
         CommonResponseDTO commonResponseDTO = new CommonResponseDTO(HttpStatus.OK.value(), "산책 기록 조회 성공", walkingRecords);
         return ResponseEntity.ok(commonResponseDTO);
