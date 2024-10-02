@@ -2,6 +2,7 @@ package com.pettory.pettory.user.query.dto;
 
 import com.pettory.pettory.user.command.domain.aggregate.UserRole;
 import com.pettory.pettory.user.command.domain.aggregate.UserState;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -22,10 +23,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 public class UserInfoResponse {
+    @Schema(example = "ju@gmail.com")
     @NotBlank
     private String userEmail;
+
     @NotBlank
     private String userNickname;
+
     @NotBlank
     private String userName;
     @NotNull
