@@ -93,12 +93,16 @@ public class WalkingRecordQueryService {
 
     // 2. 날짜별 산책 기록 조회
     @Transactional(readOnly = true)
-    public List<WalkingRecordDailyResponse> getWalkingRecordsByDate(String userEmail, LocalDate date) {
+    public List<WalkingRecordDailyResponse> getWalkingRecordsByDate(String userEmail, Long petId, LocalDate date) {
 
         UserSecurity.validateCurrentUser(userEmail);
 
         // 로그인 회원 id 조회
         Long userId = userMapper.findUserIdByEmail(userEmail).getUserId();
+
+        // 반려동물 조회
+        Pet pet = petRepository.findById(petId)
+                .orElseThrow(() -> new NotFoundException("반려동물이 존재하지 않습니다."));
 
         // 가족 ID 조회
         Long familyId = userRepository.findFamilyIdByUserId(userId).orElse(null);
@@ -108,10 +112,10 @@ public class WalkingRecordQueryService {
 
         if (familyId != null) {
             // 가족 구성원의 산책 기록까지 모두 조회
-            walkingRecords = walkingRecordMapper.findWalkingRecordsByDateAndFamily(date, familyId);
+            walkingRecords = walkingRecordMapper.findWalkingRecordsByDateAndFamily(date, petId, familyId);
         } else {
             // 회원 본인의 산책 기록만 조회
-            walkingRecords = walkingRecordMapper.findWalkingRecordsByDateAndUserId(date, userId);
+            walkingRecords = walkingRecordMapper.findWalkingRecordsByDateAndUserId(date, petId, userId);
         }
 
         return walkingRecords;

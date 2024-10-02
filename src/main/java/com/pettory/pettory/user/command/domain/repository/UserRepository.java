@@ -22,4 +22,8 @@ public interface UserRepository {
     Optional<Long> findFamilyIdByUserId(@Param("userId") Long userId);
 
     Optional<User> findByUserNickname(String userNickname);
+
+    boolean existsByUserEmail(String userEmail);
+
+    boolean existsByUserNickname(String userNickname);
 }
