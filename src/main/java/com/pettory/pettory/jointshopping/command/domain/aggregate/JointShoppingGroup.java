@@ -103,10 +103,10 @@ public class JointShoppingGroup {
     /* 배송 상태를 변경하는 메소드 */
     public void changeProductsState(JointShoppingProductsState jointShoppingProductsState) {
         if(jointShoppingProductsState.equals(JointShoppingProductsState.Recruitment))
-            this.jointShoppingProductsState = JointShoppingProductsState.Delivery;
-        else if(jointShoppingProductsState.equals(JointShoppingProductsState.Delivery))
             this.jointShoppingProductsState = JointShoppingProductsState.OrderCompleted;
         else if(jointShoppingProductsState.equals(JointShoppingProductsState.OrderCompleted))
+            this.jointShoppingProductsState = JointShoppingProductsState.Delivery;
+        else if(jointShoppingProductsState.equals(JointShoppingProductsState.Delivery))
             this.jointShoppingProductsState = JointShoppingProductsState.Arrival;
     }
 }
