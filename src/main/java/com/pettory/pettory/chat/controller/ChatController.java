@@ -7,6 +7,7 @@ import com.pettory.pettory.chat.dto.chatting.SelectChattingDTO;
 import com.pettory.pettory.chat.dto.chatting.SoftDeleteChattingDTO;
 import com.pettory.pettory.chat.entity.ChatRoom;
 import com.pettory.pettory.chat.enums.ChatRoomStateEnum;
+import com.pettory.pettory.chat.enums.ChattingStateEnum;
 import com.pettory.pettory.chat.response.ResponseSelectChattingMessage;
 import com.pettory.pettory.chat.service.ChatService;
 import org.springframework.http.HttpHeaders;
@@ -62,7 +63,7 @@ public class ChatController {
         chatService.deleteChatRoom(deleteChatRoomDTO);
 
         return ResponseEntity.created(
-                URI.create("/chat/chatroom-state/" + deleteChatRoomDTO.getChatroomUniqueNum())
+                URI.create("/chat/chatroom/" + deleteChatRoomDTO.getChatroomUniqueNum())
         ).build();
     }
 
@@ -84,38 +85,35 @@ public class ChatController {
     }
 
     /* 4. 채팅방의 채팅 내용을 수정 */
-    @PutMapping("/chatroom-chatting/{chattingUniqueNum}")
-    public ResponseEntity<?> modifyChatting(@PathVariable Integer chattingUniqueNum,
-                                            @RequestBody ModifyChattingDTO modifyChattingDTO) {
-        LocalDateTime localDateTime = LocalDateTime.now();
-
-        modifyChattingDTO.setChattingUniqueNum(chattingUniqueNum);
-        modifyChattingDTO.setChattingUpdateTime(localDateTime);
+    @PutMapping("/chatroom-chatting")
+    public ResponseEntity<?> modifyChatting(@RequestBody ModifyChattingDTO modifyChattingDTO) {
+        modifyChattingDTO.setChattingUpdateTime(LocalDateTime.now());
+        modifyChattingDTO.setChattingState(String.valueOf(ChattingStateEnum.MODIFY));
 
         chatService.modifyChatting(modifyChattingDTO);
 
         return ResponseEntity.created(
-                URI.create("/chat/chatting/" + modifyChattingDTO.getChattingUniqueNum())
+                URI.create("/chat/chatroom-chatting/" + modifyChattingDTO.getChattingUniqueNum())
         ).build();
     }
 
     /* 채팅방의 채팅 내용을 soft Delete */
-    @DeleteMapping("/chatroom-chatting-fake/{chattingUniqueNum}")
-    public ResponseEntity<?> softDeleteChatting(@PathVariable Integer chattingUniqueNum,
-                                                SoftDeleteChattingDTO softDeleteChattingDTO) {
-        LocalDateTime localDateTime = LocalDateTime.now();
+    @DeleteMapping("/chatroom-chatting-soft/{chattingUniqueNum}")
+    public ResponseEntity<?> softDeleteChatting(@PathVariable Integer chattingUniqueNum) {
+        SoftDeleteChattingDTO softDeleteChattingDTO = new SoftDeleteChattingDTO();
         softDeleteChattingDTO.setChattingUniqueNum(chattingUniqueNum);
-        softDeleteChattingDTO.setChattingDeleteTime(localDateTime);
+        softDeleteChattingDTO.setChattingDeleteTime(LocalDateTime.now());
+        softDeleteChattingDTO.setChattingState(String.valueOf(ChattingStateEnum.DELETE));
 
         chatService.softDeleteChatting(softDeleteChattingDTO);
 
         return ResponseEntity.created(
-                URI.create("/chat/chatting-soft/" + softDeleteChattingDTO.getChattingUniqueNum())
+                URI.create("/chat/chatroom-chatting-fake/" + softDeleteChattingDTO.getChattingUniqueNum())
         ).build();
     }
 
     /* 채팅방의 채팅 내용을 Hard Delete */
-    @DeleteMapping("/chatroom-chatting-real/{chattingUniqueNum}")
+    @DeleteMapping("/chatroom-chatting-hard/{chattingUniqueNum}")
     public ResponseEntity<?> hardDeleteChatting(@PathVariable Integer chattingUniqueNum) {
         chatService.hardDeleteChatting(chattingUniqueNum);
 
