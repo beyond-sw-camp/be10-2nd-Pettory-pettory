@@ -1,8 +1,11 @@
 package com.pettory.pettory.walkingGroupRecord.command.application.controller;
 
+import com.pettory.pettory.common.CommonResponseDTO;
 import com.pettory.pettory.walkingGroupRecord.command.application.dto.WalkingGroupRecordCreateRequest;
 import com.pettory.pettory.walkingGroupRecord.command.application.dto.WalkingGroupRecordUpdateRequest;
 import com.pettory.pettory.walkingGroupRecord.command.application.service.WalkingGroupRecordCommandService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
+@Tag(name = "산책모임산책기록")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/walking-group-record")
@@ -17,8 +21,9 @@ public class WalkingGroupRecordCommandController {
 
     private final WalkingGroupRecordCommandService walkingGroupRecordCommandService;
 
+    @Operation(summary = "산책기록생성", description = "산책모임의 산책 기록을 작성한다.")
     @PostMapping("/")
-    public ResponseEntity<Void> createWalkingGroupRecord(
+    public ResponseEntity<CommonResponseDTO> createWalkingGroupRecord(
             @RequestBody @Valid WalkingGroupRecordCreateRequest walkingGroupRecordRequest
     ) {
 
@@ -31,8 +36,9 @@ public class WalkingGroupRecordCommandController {
                 .build();
     }
 
+    @Operation(summary = "산책모임기록수정", description = "산책모임의 산책기록을 수정한다.")
     @PutMapping("/{walkingGroupRecordId}")
-    public ResponseEntity<Void> updateWalkingGroupRecord(
+    public ResponseEntity<CommonResponseDTO> updateWalkingGroupRecord(
             @PathVariable int walkingGroupRecordId,
             @RequestBody @Valid WalkingGroupRecordUpdateRequest walkingGroupRequest
     ) {
@@ -43,8 +49,9 @@ public class WalkingGroupRecordCommandController {
 
     }
 
+    @Operation(summary = "산책모임기록삭제", description = "산책모임의 산책기록을 삭제한다.")
     @DeleteMapping("/{walkingGroupRecordId}")
-    public ResponseEntity<Void> deleteWalkingGroupRecord(@PathVariable int walkingGroupRecordId) {
+    public ResponseEntity<CommonResponseDTO> deleteWalkingGroupRecord(@PathVariable int walkingGroupRecordId) {
 
         walkingGroupRecordCommandService.deleteWalkingGroupRecord(walkingGroupRecordId);
 
