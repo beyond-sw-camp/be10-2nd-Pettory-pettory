@@ -1,6 +1,7 @@
 package com.pettory.pettory.chat.service;
 
-import com.pettory.pettory.chat.dto.ChatRoomDTO;
+import com.pettory.pettory.chat.dto.chatroom.InsertChatRoomDTO;
+import com.pettory.pettory.chat.dto.chatroom.DeleteChatRoomDTO;
 import com.pettory.pettory.chat.dto.chatting.InsertChattingDTO;
 import com.pettory.pettory.chat.dto.chatting.ModifyChattingDTO;
 import com.pettory.pettory.chat.dto.chatting.SelectChattingDTO;
@@ -41,17 +42,17 @@ public class ChatService {
 
     /* 1. 채팅방 추가 */
     @Transactional
-    public ChatRoom registerChatRoom(ChatRoomDTO chatRoomDTO) {
-        return chatRoomRepository.save(chatModelMapper.map(chatRoomDTO, ChatRoom.class));
+    public ChatRoom registerChatRoom(InsertChatRoomDTO insertChatRoomDTO) {
+        return chatRoomRepository.save(chatModelMapper.map(insertChatRoomDTO, ChatRoom.class));
     }
 
     /* 2. 채팅방 상태 수정 */
     @Transactional
-    public void modifyChatRoom(ChatRoomDTO chatRoomDTO) {
-        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomDTO.getChatRoomUniqueNum()).orElseThrow(IllegalArgumentException::new);
-        chatRoom.modifyChatRoomState(chatRoomDTO.getChatRoomState());
-        chatRoom.modifyChatRoomUpdateTime(chatRoomDTO.getChatRoomUpdateTime());
-        chatRoom.modifyChatRoomDeleteTime(chatRoomDTO.getChatRoomDeleteTime());
+    public void deleteChatRoom(DeleteChatRoomDTO deleteChatRoomDTO) {
+        ChatRoom chatRoom = chatRoomRepository.findById(deleteChatRoomDTO.getChatroomUniqueNum()).orElseThrow(IllegalArgumentException::new);
+        chatRoom.modifyChatRoomState(deleteChatRoomDTO.getChatroomState());
+        chatRoom.modifyChatRoomUpdateTime(deleteChatRoomDTO.getChatroomUpdateTime());
+        chatRoom.modifyChatRoomDeleteTime(deleteChatRoomDTO.getChatroomDeleteTime());
     }
 
     /* 3. 채팅 내용 DB 저장 */
