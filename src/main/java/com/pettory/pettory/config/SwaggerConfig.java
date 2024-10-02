@@ -14,6 +14,6 @@ public class SwaggerConfig {
     }
 
     private Info swaggerInfo() {
-        return new Info().title("Pettory API Document").description("SpringBoot Swagger 문서").version("0.1");
+        return new Info().title("Pettory API Document").description("SpringBoot Swagger 문서").version("1.0.0");
     }
 }
