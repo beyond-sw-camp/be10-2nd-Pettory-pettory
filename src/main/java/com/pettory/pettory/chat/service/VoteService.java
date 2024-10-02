@@ -9,24 +9,23 @@ import com.pettory.pettory.chat.mapper.VoteMapper;
 import com.pettory.pettory.chat.repository.VoteRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class VoteService {
-    private final SqlSessionTemplate sqlSession;
+    private final VoteMapper voteMapper;
     private final ModelMapper chatModelMapper;
     private final VoteRepository voteRepository;
 
     /* 생성자 */
-    public VoteService(ModelMapper chatModelMapper,
-                       VoteRepository voteRepository,
-                       SqlSessionTemplate sqlSession) {
+    public VoteService(VoteMapper voteMapper,
+                       ModelMapper chatModelMapper,
+                       VoteRepository voteRepository) {
+        this.voteMapper = voteMapper;
         this.chatModelMapper = chatModelMapper;
         this.voteRepository = voteRepository;
-        this.sqlSession = sqlSession;
     }
 
     @Transactional
@@ -58,6 +57,6 @@ public class VoteService {
     }
 
     public List<SelectVoteDTO> selectVoteList(Integer voteChatroomUniqueNum) {
-        return sqlSession.getMapper(VoteMapper.class).selectVoteList(voteChatroomUniqueNum);
+        return voteMapper.selectVoteList(voteChatroomUniqueNum);
     }
 }

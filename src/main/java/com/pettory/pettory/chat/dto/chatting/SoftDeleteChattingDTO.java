@@ -16,4 +16,6 @@ public class SoftDeleteChattingDTO {
     private int chattingChatroomUniqueNum;
     private LocalDateTime chattingDeleteTime;
     private String chattingState;
+
+    public SoftDeleteChattingDTO() {}
 }
