@@ -28,33 +28,29 @@ public class QuestionCommandService {
         this.modelMapper = modelMapper;
     }
 
-    @Transactional
-    public void selectQuestion(QuestionCommandDTO questionCommandDTO) {
-        Question question = questionRepository.save(modelMapper.map(questionCommandDTO, Question.class));
-        question.increaseCounselingQuestionHits(question.getCounselingQuestionHits() + 1);
-    }
-
     // 질문 작성 및 파일 저장
     @Transactional
-    public void registQuestionWithFile(QuestionCommandDTO questionCommandDTO, MultipartFile file) throws IOException {
+    public int createQuestion(QuestionCommandDTO questionCommandDTO, MultipartFile questionCommandImg) throws IOException {
         // 1. 질문 저장
         Question question = questionRepository.save(modelMapper.map(questionCommandDTO, Question.class));
 
         // 2. 파일 저장 처리
-        if (file != null && !file.isEmpty()) {
+        if (questionCommandImg != null && !questionCommandImg.isEmpty()) {
             String uploadDir = "uploads/";
-            String originalFilename = file.getOriginalFilename();
+            String originalFilename = questionCommandImg.getOriginalFilename();
             String storageFileName = System.currentTimeMillis() + "_" + originalFilename;
             String filePath = uploadDir + storageFileName;
 
             // 파일 저장 디렉토리에 파일 저장
             File dest = new File(filePath);
-            file.transferTo(dest);
+            questionCommandImg.transferTo(dest);
 
             // 파일 메타데이터 저장
-            QuestionFile questionFile = new QuestionFile(question.getCounselingQuestionNum(), (int) file.getSize(), filePath);
+            QuestionFile questionFile = new QuestionFile(question.getCounselingQuestionNum(), (int) questionCommandImg.getSize(), filePath);
             questionFileRepository.save(questionFile);
         }
+
+        return question.getCounselingQuestionNum();
     }
 
     @Transactional
@@ -64,9 +60,15 @@ public class QuestionCommandService {
     }
 
     @Transactional
-    public void deleteQuestion(QuestionCommandDTO questionCommandDTO) {
+    public void increaseHits(QuestionCommandDTO questionCommandDTO) {
+        Question question = questionRepository.save(modelMapper.map(questionCommandDTO, Question.class));
+        question.increaseCounselingQuestionHits(question.getCounselingQuestionHits() + 1);
+    }
+
+    @Transactional
+    public void removeQuestion(QuestionCommandDTO questionCommandDTO) {
         Question foundQuestion = questionRepository.save(modelMapper.map(questionCommandDTO, Question.class));
-        foundQuestion.deleteCounselingQuestion(QuestionState.DELETE, LocalDateTime.now().toString());
+        foundQuestion.removeCounselingQuestion(QuestionState.DELETE, LocalDateTime.now().toString());
     }
 
 }
