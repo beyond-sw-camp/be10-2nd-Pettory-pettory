@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.pettory.board.query.mapper.BoardCategoryMapper">
+
+    <!-- 카테고리 조회 -->
+    <select id="selectCategoryList" resultType="com.pettory.pettory.board.query.dto.BoardCategoryDTO">
+        SELECT
+        category_num,
+        category_title
+        FROM board_category
+    </select>
+
+
+</mapper>
