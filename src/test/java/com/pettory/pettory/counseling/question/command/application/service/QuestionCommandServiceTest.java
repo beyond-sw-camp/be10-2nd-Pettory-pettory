@@ -32,22 +32,6 @@ class QuestionCommandServiceTest {
     private static Stream<Arguments> getQuestion() {
         return Stream.of(
                 Arguments.of(
-                        1,
-                        1,
-                        "신삼 2번출구에서 잃어버린 마루를 찾습니다",
-                        "제가 어제 나갔다가 마루를 잃어버렸~~~~~.",
-                        1103,
-                        "ACTIVE",
-                        LocalDateTime.now().toString(),
-                        null,
-                        null
-                )
-        );
-    }
-
-    private static Stream<Arguments> getQuestion2() {
-        return Stream.of(
-                Arguments.of(
                         3,
                         "7",
                         "7",
@@ -60,10 +44,10 @@ class QuestionCommandServiceTest {
         );
     }
 
-    private static Stream<Arguments> getQuestion3() {
+    private static Stream<Arguments> getQuestion2() {
         return Stream.of(
                 Arguments.of(
-                        1,
+                        6,
                         1,
                         "신삼 3번출구에서 잃어버린 마루를 찾습니다",
                         "제가 그제 나갔다가 마루를 잃어버렸~~~~~.",
@@ -76,10 +60,27 @@ class QuestionCommandServiceTest {
         );
     }
 
+    private static Stream<Arguments> getQuestion3() {
+        return Stream.of(
+                Arguments.of(
+                        6,
+                        1,
+                        "신삼 2번출구에서 잃어버린 마루를 찾습니다",
+                        "제가 어제 나갔다가 마루를 잃어버렸~~~~~.",
+                        1103,
+                        "ACTIVE",
+                        LocalDateTime.now().toString(),
+                        null,
+                        null
+                )
+        );
+    }
+
+
     private static Stream<Arguments> getQuestion4() {
         return Stream.of(
                 Arguments.of(
-                        1,
+                        6,
                         1,
                         "신삼 2번출구에서 잃어버린 마루를 찾습니다",
                         "제가 어제 나갔다가 마루를 잃어버렸~~~~~.",
@@ -92,39 +93,10 @@ class QuestionCommandServiceTest {
         );
     }
 
-    @DisplayName("질문 상세 조회 테스트")
-    @ParameterizedTest
-    @MethodSource("getQuestion")
-    void testSelectQuestion(
-            int counselingQuestionNum,
-            int userId, String counselingQuestionTitle,
-            String counselingQuestionContent, int counselingQuestionHits,
-            QuestionState counselingQuestionState, String counselingQuestionInsertDatetime,
-            String counselingQuestionDeleteDatetime, String counselingQuestionUpdateDatetime) {
-        //given
-        QuestionCommandDTO question = new QuestionCommandDTO(
-                counselingQuestionNum,
-                userId,
-                counselingQuestionTitle,
-                counselingQuestionContent,
-                counselingQuestionHits,
-                counselingQuestionState,
-                counselingQuestionInsertDatetime,
-                counselingQuestionDeleteDatetime,
-                counselingQuestionUpdateDatetime
-        );
-
-        //when
-        //then
-        Assertions.assertDoesNotThrow(
-                () -> questionCommandService.selectQuestion(question)
-        );
-    }
-
     @DisplayName("질문 작성 테스트")
     @ParameterizedTest
-    @MethodSource("getQuestion2")
-    void testRegistQuestionWithFile(
+    @MethodSource("getQuestion")
+    void testCreateQuestion(
             int userId, String counselingQuestionTitle,
             String counselingQuestionContent, int counselingQuestionHits,
             QuestionState counselingQuestionState, String counselingQuestionInsertDatetime,
@@ -149,13 +121,13 @@ class QuestionCommandServiceTest {
 
         //then
         Assertions.assertDoesNotThrow(
-                () -> questionCommandService.registQuestionWithFile(newQuestion, multipartFile)
+                () -> questionCommandService.createQuestion(newQuestion, multipartFile)
         );
     }
 
     @DisplayName("질문 수정 테스트")
     @ParameterizedTest
-    @MethodSource("getQuestion3")
+    @MethodSource("getQuestion2")
     void testModifyQuestion(
             int counselingQuestionNum,
             int userId, String counselingQuestionTitle,
@@ -182,10 +154,10 @@ class QuestionCommandServiceTest {
         );
     }
 
-    @DisplayName("질문 삭제 테스트")
+    @DisplayName("질문 조회 수 증가 테스트")
     @ParameterizedTest
-    @MethodSource("getQuestion4")
-    void testDeleteQuestion(
+    @MethodSource("getQuestion3")
+    void testIncreaseHits(
             int counselingQuestionNum,
             int userId, String counselingQuestionTitle,
             String counselingQuestionContent, int counselingQuestionHits,
@@ -207,7 +179,36 @@ class QuestionCommandServiceTest {
         //when
         //then
         Assertions.assertDoesNotThrow(
-                () -> questionCommandService.deleteQuestion(question)
+                () -> questionCommandService.increaseHits(question)
+        );
+    }
+
+    @DisplayName("질문 삭제 테스트")
+    @ParameterizedTest
+    @MethodSource("getQuestion4")
+    void testRemoveQuestion(
+            int counselingQuestionNum,
+            int userId, String counselingQuestionTitle,
+            String counselingQuestionContent, int counselingQuestionHits,
+            QuestionState counselingQuestionState, String counselingQuestionInsertDatetime,
+            String counselingQuestionDeleteDatetime, String counselingQuestionUpdateDatetime) {
+        //given
+        QuestionCommandDTO question = new QuestionCommandDTO(
+                counselingQuestionNum,
+                userId,
+                counselingQuestionTitle,
+                counselingQuestionContent,
+                counselingQuestionHits,
+                counselingQuestionState,
+                counselingQuestionInsertDatetime,
+                counselingQuestionDeleteDatetime,
+                counselingQuestionUpdateDatetime
+        );
+
+        //when
+        //then
+        Assertions.assertDoesNotThrow(
+                () -> questionCommandService.removeQuestion(question)
         );
     }
 

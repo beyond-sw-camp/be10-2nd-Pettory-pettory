@@ -15,9 +15,9 @@ public class QuestionQueryService {
         this.questionMapper = questionMapper;
     }
 
-    public List<QuestionQueryDTO> findQuestionList() {
+    public List<QuestionQueryDTO> findAllQuestions() {
 
-        List<QuestionQueryDTO> questionList = questionMapper.findQuestionList();
+        List<QuestionQueryDTO> questionList = questionMapper.findAllQuestions();
 
         return questionList;
     }
@@ -29,30 +29,30 @@ public class QuestionQueryService {
         return question;
     }
 
-    public List<QuestionQueryDTO> findByCounselingQuestionTitle(String counselingQuestionTitle) {
+    public List<QuestionQueryDTO> findQuestionsByTitle(String counselingQuestionTitle) {
 
-        List<QuestionQueryDTO> questionList = questionMapper.findByCounselingQuestionTitle(counselingQuestionTitle);
-
-        return questionList;
-    }
-
-    public List<QuestionQueryDTO> findByCounselingQuestionContent(String counselingQuestionContent) {
-
-        List<QuestionQueryDTO> questionList = questionMapper.findByCounselingQuestionContent(counselingQuestionContent);
+        List<QuestionQueryDTO> questionList = questionMapper.findQuestionsByTitle(counselingQuestionTitle);
 
         return questionList;
     }
 
-    public List<QuestionQueryDTO> findByCounselingQuestionTopic(String counselingQuestionTopic) {
+    public List<QuestionQueryDTO> findQuestionsByContent(String counselingQuestionContent) {
 
-        List<QuestionQueryDTO> questionList = questionMapper.findByCounselingQuestionTopic(counselingQuestionTopic);
+        List<QuestionQueryDTO> questionList = questionMapper.findQuestionsByContent(counselingQuestionContent);
 
         return questionList;
     }
 
-    public List<QuestionQueryDTO> findByUserNickname(String userNickname) {
+    public List<QuestionQueryDTO> findQuestionsByTopic(String counselingQuestionTopic) {
 
-        List<QuestionQueryDTO> questionList = questionMapper.findByUserNickname(userNickname);
+        List<QuestionQueryDTO> questionList = questionMapper.findQuestionsByTopic(counselingQuestionTopic);
+
+        return questionList;
+    }
+
+    public List<QuestionQueryDTO> findQuestionsByNickname(String userNickname) {
+
+        List<QuestionQueryDTO> questionList = questionMapper.findQuestionsByNickname(userNickname);
 
         return questionList;
     }

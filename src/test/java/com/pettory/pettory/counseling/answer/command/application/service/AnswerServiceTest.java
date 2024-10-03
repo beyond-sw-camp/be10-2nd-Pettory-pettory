@@ -32,13 +32,13 @@ class AnswerServiceTest {
     private static Stream<Arguments> getAnswer() {
         return Stream.of(
                 Arguments.of(
-                        3,
+                        6,
                         "7",
                         "ACTIVE",
                         LocalDateTime.now().toString(),
                         null,
                         null,
-                        0
+                        -1
                 )
         );
     }
@@ -46,14 +46,14 @@ class AnswerServiceTest {
     private static Stream<Arguments> getAnswer2() {
         return Stream.of(
                 Arguments.of(
-                        4,
-                        1,
+                        19,
+                        6,
                         "제가 40분전에 3번출구 쪽에서 본거같아요",
                         "ACTIVE",
                         "2023-01-01 10:00:00",
                         null,
                         LocalDateTime.now().toString(),
-                        4
+                        -1
                 )
         );
     }
@@ -61,14 +61,14 @@ class AnswerServiceTest {
     private static Stream<Arguments> getAnswer3() {
         return Stream.of(
                 Arguments.of(
-                        4,
-                        1,
+                        19,
+                        6,
                         "제가 30분전에 3번출구 쪽에서 본거같아요",
-                        "CONCLUDE",
+                        "DELETE",
                         "2023-01-01 10:00:00",
                         LocalDateTime.now().toString(),
                         null,
-                        4
+                        -1
                 )
         );
     }
@@ -76,13 +76,13 @@ class AnswerServiceTest {
     private static Stream<Arguments> getSubAnswer() {
         return Stream.of(
                 Arguments.of(
-                        3,
+                        6,
                         "7",
                         "ACTIVE",
                         LocalDateTime.now().toString(),
                         null,
                         null,
-                        5
+                        19
                 )
         );
     }
@@ -90,7 +90,7 @@ class AnswerServiceTest {
     @DisplayName("답변 작성 테스트")
     @ParameterizedTest
     @MethodSource("getAnswer")
-    void testRegistAnswerWithFile(
+    void testCreateAnswer(
             int counselingQuestionNum, String counselingAnswerContent,
             AnswerState counselingAnswerState, String counselingAnswerInsertDatetime,
             String counselingAnswerDeleteDatetime, String counselingAnswerUpdateDatetime,
@@ -114,7 +114,7 @@ class AnswerServiceTest {
 
         //then
         Assertions.assertDoesNotThrow(
-                () -> answerService.registAnswerWithFile(newAnswer, multipartFile)
+                () -> answerService.createAnswer(newAnswer, multipartFile)
         );
     }
 
@@ -148,7 +148,7 @@ class AnswerServiceTest {
     @DisplayName("답변 삭제 테스트")
     @ParameterizedTest
     @MethodSource("getAnswer3")
-    void testDeleteAnswer(
+    void testRemoveAnswer(
             int counselingAnswerNum, int counselingQuestionNum,
             String counselingAnswerContent, AnswerState counselingAnswerState,
             String counselingAnswerInsertDatetime, String counselingAnswerDeleteDatetime,
@@ -168,14 +168,14 @@ class AnswerServiceTest {
         //when
         //then
         Assertions.assertDoesNotThrow(
-                () -> answerService.deleteAnswer(answer)
+                () -> answerService.removeAnswer(answer)
         );
     }
 
     @DisplayName("재답변 작성 테스트")
     @ParameterizedTest
     @MethodSource("getSubAnswer")
-    void testRegistSubAnswerWithFile(
+    void testCreateSubAnswer(
             int counselingQuestionNum, String counselingAnswerContent,
             AnswerState counselingAnswerState, String counselingAnswerInsertDatetime,
             String counselingAnswerDeleteDatetime, String counselingAnswerUpdateDatetime,
@@ -199,7 +199,7 @@ class AnswerServiceTest {
 
         //then
         Assertions.assertDoesNotThrow(
-                () -> answerService.registSubAnswerWithFile(newSubAnswer, multipartFile)
+                () -> answerService.createSubAnswer(newSubAnswer, multipartFile)
         );
     }
 
