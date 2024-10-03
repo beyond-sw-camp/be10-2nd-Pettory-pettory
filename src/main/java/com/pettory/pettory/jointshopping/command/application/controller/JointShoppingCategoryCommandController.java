@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
-@Tag(name = "공동구매 카테고리")
+@Tag(name = "공동구매 카테고리", description = "카테고리 등록/수정/삭제/조회")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("jointshopping")

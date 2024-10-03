@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 
-@Tag(name = "공동구매 참가")
+@Tag(name = "공동구매 참가", description = "공동구매 참가 등록/취소/배송 정보 등록/물품 수령 변경/조회")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("jointshopping")
