@@ -5,14 +5,18 @@ import com.pettory.pettory.board.command.application.dto.CommentUpdateRequest;
 import com.pettory.pettory.board.command.application.service.BoardCommentDeleteService;
 import com.pettory.pettory.board.command.application.service.BoardCommentInsertService;
 import com.pettory.pettory.board.command.application.service.BoardCommentUpdateService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "댓글", description = "댓글 등록/수정/삭제")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/board/comments")
+@RequestMapping("/board")
 public class BoardCommentCRUDController {
 
     private final BoardCommentInsertService boardCommentInsertService;
@@ -20,7 +24,9 @@ public class BoardCommentCRUDController {
     private final BoardCommentDeleteService boardCommentDeleteService;
 
     // 댓글 작성
-    @PostMapping("/create")
+    @Operation(summary = "댓글 등록", description = "회원이 댓글을 등록한다.")
+    @ApiResponse(responseCode = "201", description = "댓글 등록 성공")
+    @PostMapping("/comments")
     public ResponseEntity<String> createComment(
             @RequestBody CommentRequest commentRequest) {
 
@@ -31,7 +37,10 @@ public class BoardCommentCRUDController {
         return ResponseEntity.status(201).body("댓글이 성공적으로 생성되었습니다. 댓글 번호: " + commentNum);
     }
 
-    @PutMapping("/update/{commentNum}")
+    // 댓글 수정
+    @Operation(summary = "댓글 수정", description = "회원이 댓글을 수정한다.")
+    @ApiResponse(responseCode = "201", description = "댓글 수정 성공")
+    @PutMapping("/comments/{commentNum}")
     public ResponseEntity<String> updateComment(
             @PathVariable int commentNum,                         // 수정할 댓글 번호
             @Valid @RequestBody CommentUpdateRequest commentUpdateRequest // 수정된 댓글 내용
@@ -44,7 +53,9 @@ public class BoardCommentCRUDController {
     }
 
     // 댓글 삭제
-    @DeleteMapping("/delete/{commentNum}")
+    @Operation(summary = "댓글 삭제", description = "회원이 댓글을 삭제한다.")
+    @ApiResponse(responseCode = "201", description = "댓글 삭제 성공")
+    @DeleteMapping("/comments/{commentNum}")
     public ResponseEntity<String> deleteComment(
             @PathVariable int commentNum) {
 

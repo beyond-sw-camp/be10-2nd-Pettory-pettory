@@ -16,9 +16,9 @@ public class BoardCommentDomainService {
     public Comment createComment(CommentRequest commentRequest) {
         return new Comment(
                 commentRequest.getCommentContent(),
-                commentRequest.getUserId(),
                 commentRequest.getPostNum(),
-                commentRequest.getRecommentNum()
+                commentRequest.getRecommentNum(),
+                commentRequest.getUserId()
         );
     }
 

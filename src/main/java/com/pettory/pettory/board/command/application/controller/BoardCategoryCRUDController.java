@@ -5,13 +5,17 @@ import com.pettory.pettory.board.command.application.dto.CategoryUpdateRequest;
 import com.pettory.pettory.board.command.application.service.BoardCategoryDeleteService;
 import com.pettory.pettory.board.command.application.service.BoardCategoryInsertService;
 import com.pettory.pettory.board.command.application.service.BoardCategoryUpdateService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "카테고리", description = "카테고리 등록/수정/삭제")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/board/category")
+@RequestMapping("/board")
 public class BoardCategoryCRUDController {
 
     private final BoardCategoryInsertService boardCategoryInsertService;
@@ -20,7 +24,9 @@ public class BoardCategoryCRUDController {
 
 
     // 카테고리 생성
-    @PostMapping("/create")
+    @Operation(summary = "카테고리 등록", description = "회원이 카테고리을 등록한다.")
+    @ApiResponse(responseCode = "201", description = "카테고리 등록 성공")
+    @PostMapping("/categorys")
     public ResponseEntity<String> createCategory(
             @RequestBody CategoryRequest categoryRequest) {
 
@@ -32,7 +38,9 @@ public class BoardCategoryCRUDController {
     }
 
     // 카테고리 수정
-    @PutMapping("/update/{categoryNum}")
+    @Operation(summary = "카테고리 수정", description = "회원이 카테고리을 수정한다.")
+    @ApiResponse(responseCode = "201", description = "카테고리 수정 성공")
+    @PutMapping("/categorys/{categoryNum}")
     public ResponseEntity<String> updateCategory(
             @PathVariable int categoryNum,
             @RequestBody CategoryUpdateRequest categoryUpdateRequest) {
@@ -45,7 +53,9 @@ public class BoardCategoryCRUDController {
     }
 
     // 카테고리 삭제
-    @DeleteMapping("/delete/{categoryNum}")
+    @Operation(summary = "카테고리 삭제", description = "회원이 카테고리을 삭제한다.")
+    @ApiResponse(responseCode = "201", description = "카테고리 삭제 성공")
+    @DeleteMapping("/categorys/{categoryNum}")
     public ResponseEntity<String> deleteCategory(@PathVariable int categoryNum) {
 
         // 1. 카테고리 삭제 서비스 호출 (하드 삭제)

@@ -26,9 +26,6 @@ public class BoardCategoryDomainService {
     }
 
     public void deleteCategory(Category category) {
-        if (category.hasPosts()) {
-            throw new IllegalStateException("이 카테고리에 속한 게시글이 있어 삭제할 수 없습니다.");
-        }
 
         // 카테고리 삭제
         jPACategoryRepository.delete(category);

@@ -1,5 +1,6 @@
 package com.pettory.pettory.board.query.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @RequiredArgsConstructor
+@Schema(description = "게시글 상세 내용 DTO")
 public class BoardPostDetailDTO {
     private int postNum;
     private String postTitle;

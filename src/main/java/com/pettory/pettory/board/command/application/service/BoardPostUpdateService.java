@@ -23,6 +23,7 @@ public class BoardPostUpdateService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
 
         // 2. 도메인 서비스로 게시글 수정 로직 위임
+        System.out.println("updatePost 호출됨 - 도메인 서비스에서 게시글 수정 진행");
         boardPostDomainService.updatePost(post, postUpdateRequest.getPostTitle(), postUpdateRequest.getPostContent());
 
         // 3. 변경된 게시글 저장
