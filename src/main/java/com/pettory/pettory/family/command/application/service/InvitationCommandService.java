@@ -31,7 +31,7 @@ public class InvitationCommandService {
 
     // 다른 사용자를 가족으로 초대
     @Transactional
-    public void inviteUserToFamily(String invitationSenderEmail, InviteToFamilyRequest inviteToFamilyRequest) {
+    public Long inviteUserToFamily(String invitationSenderEmail, InviteToFamilyRequest inviteToFamilyRequest) {
 
         UserSecurity.validateCurrentUser(invitationSenderEmail);
 
@@ -89,7 +89,8 @@ public class InvitationCommandService {
 
         // 7. 초대 생성
         Invitation invitation = Invitation.createInvitation(sender.getUserId(), receiver.getUserId(), senderFamily);
-        invitationRepository.save(invitation);
+        Invitation sendInvitation = invitationRepository.save(invitation);
+        return sendInvitation.getInvitationId();
     }
 
     // 가족 초대를 거절

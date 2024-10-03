@@ -28,9 +28,9 @@ public class InvitationCommandController {
 
         String currentUserEmail = UserSecurity.getCurrentUserEmail();
 
-        invitationCommandService.inviteUserToFamily(currentUserEmail, inviteToFamilyRequest);
+        Long sendUserId = invitationCommandService.inviteUserToFamily(currentUserEmail, inviteToFamilyRequest);
 
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "초대 전송 성공", null);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "초대 전송 성공", sendUserId);
         return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
 
     }

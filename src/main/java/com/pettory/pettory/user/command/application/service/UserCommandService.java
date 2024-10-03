@@ -47,7 +47,7 @@ public class UserCommandService implements UserDetailsService {
 
     // 회원가입
     @Transactional
-    public void registerUser(UserRegisterRequest userRegisterRequest) {
+    public Long registerUser(UserRegisterRequest userRegisterRequest) {
 
         // 이메일 중복 체크
         if (userRepository.existsByUserEmail(userRegisterRequest.getUserEmail())) {
@@ -64,7 +64,9 @@ public class UserCommandService implements UserDetailsService {
         newUser.encryptPassword(passwordEncoder.encode(newUser.getUserPassword())); // newUser의 plain pw를 암호화
 
         // repository에 저장
-        userRepository.save(newUser);
+
+        User savedUser = userRepository.save(newUser);
+        return savedUser.getUserId();
     }
 
     // 회원 탈퇴
@@ -181,7 +183,7 @@ public class UserCommandService implements UserDetailsService {
 
     // 비밀번호 변경
     @Transactional
-    public void changePasswords(String userEmail, ChangePasswordRequest changePasswordRequest) {
+    public Long changePasswords(String userEmail, ChangePasswordRequest changePasswordRequest) {
         UserSecurity.validateCurrentUser(userEmail);
 
         User user = userRepository.findByUserEmail(userEmail)
@@ -197,7 +199,8 @@ public class UserCommandService implements UserDetailsService {
         // 새 비밀번호 변경
         user.updatePassword(passwordEncoder.encode(changePasswordRequest.getNewUserPassword()));
 
-        userRepository.save(user);
+        User changedUser = userRepository.save(user);
+        return changedUser.getUserId();
     }
 
 }
