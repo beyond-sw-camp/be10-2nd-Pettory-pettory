@@ -3,6 +3,7 @@ package com.pettory.pettory.jointshopping.command.application.controller;
 import com.pettory.pettory.common.CommonResponseDTO;
 import com.pettory.pettory.jointshopping.command.application.dto.BookmarkRequest;
 import com.pettory.pettory.jointshopping.command.application.service.BookmarkApplicationService;
+import com.pettory.pettory.jointshopping.command.domain.aggregate.Bookmark;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,9 +30,9 @@ public class BookmarkCommandController {
     public ResponseEntity<CommonResponseDTO> createBookmark(
             @RequestBody @Valid BookmarkRequest bookmarkRequest
     ) {
-        Long bookmarkNum = bookmarkApplicationService.createBookmark(bookmarkRequest);
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "즐겨찾기 등록 성공", bookmarkNum);
-        
+        Bookmark bookmark = bookmarkApplicationService.createBookmark(bookmarkRequest);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "즐겨찾기 등록 성공", bookmark);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
     }
 
@@ -43,8 +44,8 @@ public class BookmarkCommandController {
     ) {
 
         bookmarkApplicationService.deleteBookmark(bookmarkNum);
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.NO_CONTENT.value(), "즐겨찾기 삭제 성공", bookmarkNum);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "즐겨찾기 삭제 성공", bookmarkNum);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(successResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(successResponse);
     }
 }

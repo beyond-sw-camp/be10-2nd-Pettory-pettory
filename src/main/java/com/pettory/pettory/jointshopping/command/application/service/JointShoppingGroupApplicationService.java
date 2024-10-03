@@ -23,7 +23,7 @@ public class JointShoppingGroupApplicationService {
 
     /* 공동구매모임 등록 */
     @Transactional
-    public Long createGroup(JointShoppingGroupRequest groupRequest, MultipartFile productImg) {
+    public JointShoppingGroup createGroup(JointShoppingGroupRequest groupRequest, MultipartFile productImg) {
 
         /* jointshoppinggroup 도메인 생성 로직 실행, entity 반환 */
         JointShoppingGroup newJointShoppingGroup = jointShoppingGroupDomainService.createGroup(groupRequest, productImg);
@@ -31,14 +31,15 @@ public class JointShoppingGroupApplicationService {
         /* save 로직 실행 */
         JointShoppingGroup jointShoppingGroup = jointShoppingGroupDomainService.saveGroup(newJointShoppingGroup);
 
-        /* 등록된 번호 반환 */
-        return jointShoppingGroup.getJointShoppingGroupNum();
+        /* 엔티티 반환 */
+        return jointShoppingGroup;
     }
 
     /* 공동구매모임 수정 */
     @Transactional
-    public void updateGroup(Long jointShoppingGroupNum, JointShoppingGroupRequest productRequest, MultipartFile productImg) {
-        jointShoppingGroupDomainService.updateGroup(jointShoppingGroupNum, productRequest, productImg);
+    public JointShoppingGroup updateGroup(Long jointShoppingGroupNum, JointShoppingGroupRequest productRequest, MultipartFile productImg) {
+        JointShoppingGroup jointShoppingGroup =  jointShoppingGroupDomainService.updateGroup(jointShoppingGroupNum, productRequest, productImg);
+        return jointShoppingGroup;
     }
 
     /* 공동구매모임 삭제 */
@@ -49,7 +50,7 @@ public class JointShoppingGroupApplicationService {
 
     /* 공동구매모임 참가(모임 사용자 등록) */
     @Transactional
-    public Long insertGroupUser(JointShoppingGroupUserRequest groupUserRequest) {
+    public JointShoppingGroupUser insertGroupUser(JointShoppingGroupUserRequest groupUserRequest) {
 
         /* 모임이 신청 가능한 상태인지 체크*/
         jointShoppingGroupDomainService.checkGroupState(groupUserRequest.getJointShoppingGroupNum());
@@ -73,8 +74,8 @@ public class JointShoppingGroupApplicationService {
             jointShoppingGroupDomainService.updateClosing(jointShoppingGroupNum);
         }
 
-        /* 등록된 번호 반환 */
-        return jointShoppingGroupNum;
+        /* 엔티티 반환 */
+        return jointShoppingGroupUser;
     }
 
     /* 공동구매모임 나가기(모임 사용자 삭제) */

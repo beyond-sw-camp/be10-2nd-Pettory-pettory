@@ -5,6 +5,8 @@ import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingDe
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupRequest;
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupUserRequest;
 import com.pettory.pettory.jointshopping.command.application.service.JointShoppingGroupApplicationService;
+import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingGroup;
+import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingGroupUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -35,8 +37,8 @@ public class JointShoppingGroupCommandController {
             @RequestPart(required = false) MultipartFile productImg
     ) {
 
-        Long jointShoppingGroupNum = jointShoppingGroupApplicationService.createGroup(groupRequest, productImg);
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "공동구매모임 등록 성공", jointShoppingGroupNum);
+        JointShoppingGroup jointShoppingGroup = jointShoppingGroupApplicationService.createGroup(groupRequest, productImg);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "공동구매모임 등록 성공", jointShoppingGroup);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
     }
@@ -50,8 +52,8 @@ public class JointShoppingGroupCommandController {
             @RequestPart(required = false) MultipartFile productImg
     ) {
 
-        jointShoppingGroupApplicationService.updateGroup(jointShoppingGroupNum, groupRequest, productImg);
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "공동구매모임 수정 성공", jointShoppingGroupNum);
+        JointShoppingGroup jointShoppingGroup = jointShoppingGroupApplicationService.updateGroup(jointShoppingGroupNum, groupRequest, productImg);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "공동구매모임 수정 성공", jointShoppingGroup);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
     }
@@ -64,9 +66,9 @@ public class JointShoppingGroupCommandController {
     ) {
 
         jointShoppingGroupApplicationService.deleteGroup(jointShoppingGroupNum);
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.NO_CONTENT.value(), "공동구매모임 삭제 성공", jointShoppingGroupNum);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "공동구매모임 삭제 성공", jointShoppingGroupNum);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(successResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(successResponse);
     }
 
     @Operation(summary = "공동구매모임 참가", description = "회원이 공동구매모임에 참가한다. 가득찬 모임이거나 이미 강퇴당한적 있는 모임이라면 참가할 수 없다.")
@@ -76,8 +78,8 @@ public class JointShoppingGroupCommandController {
             @RequestBody @Valid JointShoppingGroupUserRequest groupUserRequest
     ){
 
-        Long jointShoppingGroupUserListNum = jointShoppingGroupApplicationService.insertGroupUser(groupUserRequest);
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "공동구매모임 참가 성공", jointShoppingGroupUserListNum);
+        JointShoppingGroupUser jointShoppingGroupUser = jointShoppingGroupApplicationService.insertGroupUser(groupUserRequest);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "공동구매모임 참가 성공", jointShoppingGroupUser);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
     }
@@ -90,9 +92,9 @@ public class JointShoppingGroupCommandController {
     ) {
 
         jointShoppingGroupApplicationService.exitGroupUser(jointShoppingGroupUserNum);
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.NO_CONTENT.value(), "공동구매모임 나가기 성공", jointShoppingGroupUserNum);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "공동구매모임 나가기 성공", jointShoppingGroupUserNum);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(successResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(successResponse);
     }
 
     @Operation(summary = "공동구매모임 강퇴", description = "회원이 공동구매모임에서 강퇴당한다. 해당 모임에 다시 참가할 수 없다.")
@@ -103,9 +105,9 @@ public class JointShoppingGroupCommandController {
     ){
 
         jointShoppingGroupApplicationService.withdrawalGroupUser(jointShoppingGroupUserNum);
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.NO_CONTENT.value(), "공동구매모임 강퇴 성공", jointShoppingGroupUserNum);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "공동구매모임 강퇴 성공", jointShoppingGroupUserNum);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(successResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(successResponse);
     }
 
     @Operation(summary = "공동구매 방장 물품 배송 정보 등록", description = "회원이 공동구매 물품의 배송정보를 등록한다. 아직 주문완료 상태가 아니라면 입력할 수 없다.")
@@ -117,7 +119,7 @@ public class JointShoppingGroupCommandController {
     ) {
 
         jointShoppingGroupApplicationService.updateDeliveryInfo(jointShoppingGroupNum, jointShoppingDeliveryInfoRequest);
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "공동구매 방장 물품 배송 정보 등록 성공", jointShoppingGroupNum);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "공동구매 방장 물품 배송 정보 등록 성공", jointShoppingDeliveryInfoRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
     }

@@ -5,6 +5,7 @@ import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingDe
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingGroupRequest;
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingParticipationRequest;
 import com.pettory.pettory.jointshopping.command.application.service.JointShoppingParticipationApplicationService;
+import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingParticipationUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,8 +34,8 @@ public class JointShoppingParticipationCommandController {
     public ResponseEntity<CommonResponseDTO> createParticipation(
             @RequestBody @Valid JointShoppingParticipationRequest participationRequest
     ) {
-        Long participationNum = jointShoppingParticipationApplicationService.createParticipation(participationRequest);
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "공동구매 참가 성공", participationNum);
+        JointShoppingParticipationUser jointShoppingParticipationUser = jointShoppingParticipationApplicationService.createParticipation(participationRequest);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "공동구매 참가 성공", jointShoppingParticipationUser);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
     }
@@ -47,9 +48,9 @@ public class JointShoppingParticipationCommandController {
     ) {
 
         jointShoppingParticipationApplicationService.deleteParticipation(participationNum);
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.NO_CONTENT.value(), "공동구매 참가 취소 성공", participationNum);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "공동구매 참가 취소 성공", participationNum);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(successResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(successResponse);
     }
 
     @Operation(summary = "공동구매 참가자 물품 배송 정보 등록", description = "공동구매 방장이 참가자에게 물품을 보낼 배송 정보를 등록한다.")
@@ -61,7 +62,7 @@ public class JointShoppingParticipationCommandController {
     ) {
 
         jointShoppingParticipationApplicationService.updateDeliveryInfo(participationNum, jointShoppingDeliveryInfoRequest);
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "공동구매 참가자 물품 배송 정보 등록 성공", participationNum);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "공동구매 참가자 물품 배송 정보 등록 성공", jointShoppingDeliveryInfoRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
     }
