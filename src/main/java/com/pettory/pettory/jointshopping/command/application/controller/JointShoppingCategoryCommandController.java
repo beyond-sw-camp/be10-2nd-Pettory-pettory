@@ -1,5 +1,6 @@
 package com.pettory.pettory.jointshopping.command.application.controller;
 
+import com.pettory.pettory.common.CommonResponseDTO;
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingCategoryRequest;
 import com.pettory.pettory.jointshopping.command.application.service.JointShoppingCategoryApplicationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,14 +26,13 @@ public class JointShoppingCategoryCommandController {
     @Operation(summary = "카테고리 등록")
     @ApiResponse(responseCode = "201", description = "카테고리 등록 성공")
     @PostMapping("/categories")
-    public ResponseEntity<Void> createCategory(
+    public ResponseEntity<CommonResponseDTO> createCategory(
             @RequestBody @Valid JointShoppingCategoryRequest categoryRequest
     ) {
         Long jointShoppingCategoryNum = jointShoppingCategoryApplicationService.createCategory(categoryRequest);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "카테고리 등록 성공", jointShoppingCategoryNum);
 
-        return ResponseEntity
-                .created(URI.create("/jointshopping/categories/" + jointShoppingCategoryNum))
-                .build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
     }
 
     @Operation(summary = "카테고리 수정")
@@ -40,24 +41,25 @@ public class JointShoppingCategoryCommandController {
             @ApiResponse(responseCode = "404", description = "잘못된 카테고리 번호")
     })
     @PutMapping("/categories/{jointShoppingCategoryNum}")
-    public ResponseEntity<Void> updateCategory(
+    public ResponseEntity<CommonResponseDTO> updateCategory(
             @PathVariable final Long jointShoppingCategoryNum,
             @RequestBody @Valid JointShoppingCategoryRequest categoryRequest
     ) {
 
-        jointShoppingCategoryApplicationService.updateCategory(jointShoppingCategoryNum, categoryRequest);
+        jointShoppingCategoryApplicationService.updateCategory(jointShoppingCategoryNum, categoryRequest);;
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "카테고리 수정 성공", jointShoppingCategoryNum);
 
-        return ResponseEntity.created(URI.create("/jointshopping/categories/" + jointShoppingCategoryNum)).build();
-
+        return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
     }
 
     @Operation(summary = "카테고리 삭제")
     @ApiResponse(responseCode = "204", description = "카테고리 삭제 성공")
     @DeleteMapping("/categories/{jointShoppingCategoryNum}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable final Long jointShoppingCategoryNum) {
+    public ResponseEntity<CommonResponseDTO> deleteCategory(@PathVariable final Long jointShoppingCategoryNum) {
 
         jointShoppingCategoryApplicationService.deleteCategory(jointShoppingCategoryNum);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.NO_CONTENT.value(), "카테고리 삭제 성공", jointShoppingCategoryNum);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(successResponse);
     }
 }
