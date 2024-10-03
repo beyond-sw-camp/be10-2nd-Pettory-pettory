@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "UPDATE walking_group SET walking_group_state = 'DELETE', walkingGroupDeleteDatetime = now() WHERE walking_group_id = ?")
+@SQLDelete(sql = "UPDATE walking_group SET walking_group_state = 'DELETE', walking_group_delete_datetime = now() WHERE walking_group_id = ?")
 public class WalkingGroup {
 
     @Id
@@ -33,15 +33,17 @@ public class WalkingGroup {
     @LastModifiedDate
     private LocalDateTime walkingGroupUpdateDatetime;
     private LocalDateTime walkingGroupDeleteDatetime;
+    private int walkingGroupOwner;
 
-    public WalkingGroup(String walkingGroupName, String walkingGroupInfo, int walkingGroupMaximumCount) {
+    public WalkingGroup(String walkingGroupName, String walkingGroupInfo, int walkingGroupMaximumCount, int walkingGroupOwner) {
         this.walkingGroupName = walkingGroupName;
         this.walkingGroupInfo = walkingGroupInfo;
         this.walkingGroupMaximumCount = walkingGroupMaximumCount;
+        this.walkingGroupOwner = walkingGroupOwner;
     }
 
-    public static WalkingGroup create(String walkingGroupName, String walkingGroupInfo, int walkingGroupMaximumCount) {
-        return new WalkingGroup(walkingGroupName, walkingGroupInfo, walkingGroupMaximumCount);
+    public static WalkingGroup create(String walkingGroupName, String walkingGroupInfo, int walkingGroupMaximumCount, int walkingGroupOwner) {
+        return new WalkingGroup(walkingGroupName, walkingGroupInfo, walkingGroupMaximumCount,walkingGroupOwner);
     }
 
     public void updateWalkingGroupDetails(String walkingGroupName, String walkingGroupInfo, int walkingGroupMaximumCount, WalkingGroupState walkingGroupState) {

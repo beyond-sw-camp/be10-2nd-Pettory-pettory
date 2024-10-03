@@ -18,4 +18,9 @@ public class ChangePasswordRequest {
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#\\$%\\^&\\*])[A-Za-z\\d!@#\\$%\\^&\\*]{8,}$",
             message = "비밀번호는 최소 8자 이상, 대소문자, 숫자, 특수문자를 모두 포함해주세요.")
     private String newUserPassword;
+
+    public ChangePasswordRequest(String currentPassword, String newPassword) {
+        this.currentUserPassword = currentPassword;
+        this.newUserPassword = newPassword;
+    }
 }

@@ -197,14 +197,6 @@ public class UserCommandService implements UserDetailsService {
         // 새 비밀번호 변경
         user.updatePassword(passwordEncoder.encode(changePasswordRequest.getNewUserPassword()));
 
-//        // 비밀번호 변경 후 이메일 알림
-//        emailService.sendEmail(
-//                user.getUserEmail(),
-//                "펫토리 비밀번호 변경 안내",
-//                user.getUserNickname() + " 님의 비밀번호가 변경되었습니다.\n" +
-//                        "본인이 비밀번호를 변경하지 않았다면 mypettory@gmail.com 으로 문의 바랍니다."
-//        );
-
         userRepository.save(user);
     }
 

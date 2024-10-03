@@ -6,6 +6,7 @@ import com.pettory.pettory.pet.command.application.dto.PetUpdateRequest;
 import com.pettory.pettory.pet.command.application.service.PetCommandService;
 import com.pettory.pettory.security.util.UserSecurity;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,7 @@ public class PetCommandController {
     // 반려동물 정보 수정
     @PutMapping("/{petId}")
     public ResponseEntity<CommonResponseDTO> modifyPet(
-            @PathVariable Long petId,
+            @PathVariable @Schema(example = "7") Long petId,
             @RequestBody PetUpdateRequest petUpdateRequest) {
 
         String currentUserEmail = UserSecurity.getCurrentUserEmail();
@@ -47,10 +48,11 @@ public class PetCommandController {
         return ResponseEntity.ok(successResponse);
     }
 
-    @Operation(summary = "반려동물 정보 삭제", description = "기존의 반려동물 정볼를 삭제한다.")
+
+    @Operation(summary = "반려동물 정보 삭제", description = "기존의 반려동물 정보를 삭제한다.")
     // 반려동물 정보 삭제
     @DeleteMapping("/{petId}")
-    public ResponseEntity<CommonResponseDTO> deletePet(@PathVariable Long petId) {
+    public ResponseEntity<CommonResponseDTO> deletePet(@PathVariable @Schema(example = "5") Long petId) {
         String currentUserEmail = UserSecurity.getCurrentUserEmail();
 
         petCommandService.deletePet(currentUserEmail, petId);

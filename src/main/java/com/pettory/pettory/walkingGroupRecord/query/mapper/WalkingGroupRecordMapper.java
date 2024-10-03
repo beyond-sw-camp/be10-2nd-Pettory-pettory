@@ -11,7 +11,7 @@ import java.util.List;
 public interface WalkingGroupRecordMapper {
     List<WalkingGroupRecordDTO> selectWalkingGroupRecords(
             @Param("offset") int offset,
-            @Param("size") Integer size,
+            @Param("limit") Integer limit,
             @Param("walkingGroupDate") LocalDate walkingGroupDate,
             @Param("walkingGroupRecordState") String walkingGroupRecordState
     );

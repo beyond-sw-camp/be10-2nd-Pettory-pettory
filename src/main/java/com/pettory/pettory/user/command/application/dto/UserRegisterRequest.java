@@ -1,5 +1,7 @@
 package com.pettory.pettory.user.command.application.dto;
 
+import com.pettory.pettory.user.command.domain.aggregate.UserRole;
+import com.pettory.pettory.user.command.domain.aggregate.UserState;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -9,6 +11,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Schema(description = "회원 가입 요청 파라미터")
 @Getter
@@ -38,4 +41,11 @@ public class UserRegisterRequest {
     @NotNull    // 문자열이 아니므로 @NotBlank 가 아니라 @NotNull 사용
     private LocalDate userBirth;
 
+    public UserRegisterRequest(String userEmail, String userPassword, String userNickname, String userName, LocalDate userBirth) {
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
+        this.userNickname = userNickname;
+        this.userName = userName;
+        this.userBirth = userBirth;
+    }
 }
