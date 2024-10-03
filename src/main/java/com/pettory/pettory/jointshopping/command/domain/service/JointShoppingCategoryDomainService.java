@@ -29,13 +29,15 @@ public class JointShoppingCategoryDomainService {
     }
 
     /* 도메인 객체를 수정하는 로직 */
-    public void updateCategory(Long jointShoppingCategoryNum, JointShoppingCategoryRequest categoryRequest) {
+    public JointShoppingCategory updateCategory(Long jointShoppingCategoryNum, JointShoppingCategoryRequest categoryRequest) {
 
         JointShoppingCategory jointShoppingCategory  = jointShoppingCategoryRepository.findById(jointShoppingCategoryNum)
                 .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 카테고리가 없습니다. code : " + jointShoppingCategoryNum));
 
         /* 수정을 위해 엔터티 정보 변경 */
         jointShoppingCategory.update(categoryRequest.getJointShoppingCategoryTitle());
+
+        return jointShoppingCategory;
     }
 
     /* 도메인 객체를 삭제하는 로직 */

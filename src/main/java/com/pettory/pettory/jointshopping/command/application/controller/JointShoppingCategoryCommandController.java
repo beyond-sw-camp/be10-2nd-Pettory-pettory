@@ -3,6 +3,7 @@ package com.pettory.pettory.jointshopping.command.application.controller;
 import com.pettory.pettory.common.CommonResponseDTO;
 import com.pettory.pettory.jointshopping.command.application.dto.JointShoppingCategoryRequest;
 import com.pettory.pettory.jointshopping.command.application.service.JointShoppingCategoryApplicationService;
+import com.pettory.pettory.jointshopping.command.domain.aggregate.JointShoppingCategory;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -30,8 +31,8 @@ public class JointShoppingCategoryCommandController {
     public ResponseEntity<CommonResponseDTO> createCategory(
             @RequestBody @Valid JointShoppingCategoryRequest categoryRequest
     ) {
-        Long jointShoppingCategoryNum = jointShoppingCategoryApplicationService.createCategory(categoryRequest);
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "카테고리 등록 성공", jointShoppingCategoryNum);
+        JointShoppingCategory jointShoppingCategory = jointShoppingCategoryApplicationService.createCategory(categoryRequest);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "카테고리 등록 성공", jointShoppingCategory);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
     }
@@ -44,8 +45,8 @@ public class JointShoppingCategoryCommandController {
             @RequestBody @Valid JointShoppingCategoryRequest categoryRequest
     ) {
 
-        jointShoppingCategoryApplicationService.updateCategory(jointShoppingCategoryNum, categoryRequest);;
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "카테고리 수정 성공", jointShoppingCategoryNum);
+        JointShoppingCategory jointShoppingCategory =  jointShoppingCategoryApplicationService.updateCategory(jointShoppingCategoryNum, categoryRequest);;
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "카테고리 수정 성공", jointShoppingCategory);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
     }
@@ -58,8 +59,9 @@ public class JointShoppingCategoryCommandController {
     ) {
 
         jointShoppingCategoryApplicationService.deleteCategory(jointShoppingCategoryNum);
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.NO_CONTENT.value(), "카테고리 삭제 성공", jointShoppingCategoryNum);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "카테고리 삭제 성공", jointShoppingCategoryNum);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(successResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(successResponse);
     }
 }
+

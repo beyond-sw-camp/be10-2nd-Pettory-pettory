@@ -49,7 +49,7 @@ public class JointShoppingGroupDomainService {
     }
 
     /* 도메인 객체를 수정하는 로직 */
-    public void updateGroup(Long jointShoppingGroupNum, @Valid JointShoppingGroupRequest groupRequest, MultipartFile productImg) {
+    public JointShoppingGroup updateGroup(Long jointShoppingGroupNum, @Valid JointShoppingGroupRequest groupRequest, MultipartFile productImg) {
 
         JointShoppingGroup jointShoppingGroup = jointShoppingGroupRepository.findById(jointShoppingGroupNum)
                 .orElseThrow(() -> new NotFoundException("해당 번호에 맞는 모임이 없습니다. code : " + jointShoppingGroupNum));
@@ -74,6 +74,8 @@ public class JointShoppingGroupDomainService {
                 groupRequest.getJointShoppingCategoryNum(),
                 groupRequest.getUserId()
         );
+
+        return jointShoppingGroup;
     }
 
     /* 방 상태를 체크하고 리턴하는 로직 */

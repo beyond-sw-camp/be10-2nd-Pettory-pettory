@@ -15,7 +15,7 @@ public class JointShoppingCategoryApplicationService {
 
     /* 카테고리 등록 */
     @Transactional
-    public Long createCategory(JointShoppingCategoryRequest categoryRequest) {
+    public JointShoppingCategory createCategory(JointShoppingCategoryRequest categoryRequest) {
 
         /* jointshoppingcategory 도메인 로직 실행, entity 반환 */
         JointShoppingCategory newJointShoppingCategory = jointShoppingCategoryDomainService.createCategory(categoryRequest);
@@ -23,14 +23,15 @@ public class JointShoppingCategoryApplicationService {
         /* save 로직 실행 */
         JointShoppingCategory jointShoppingCategory = jointShoppingCategoryDomainService.saveCategory(newJointShoppingCategory);
 
-        /* 등록된 번호 반환 */
-        return jointShoppingCategory.getJointShoppingCategoryNum();
+        /* 엔티티 반환 */
+        return jointShoppingCategory;
     }
 
     /* 카테고리 수정 */
     @Transactional
-    public void updateCategory(Long jointShoppingCategoryNum, JointShoppingCategoryRequest categoryRequest) {
-        jointShoppingCategoryDomainService.updateCategory(jointShoppingCategoryNum, categoryRequest);
+    public JointShoppingCategory updateCategory(Long jointShoppingCategoryNum, JointShoppingCategoryRequest categoryRequest) {
+        JointShoppingCategory jointShoppingCategory = jointShoppingCategoryDomainService.updateCategory(jointShoppingCategoryNum, categoryRequest);
+        return jointShoppingCategory;
     }
 
     /* 카테고리 삭제 */

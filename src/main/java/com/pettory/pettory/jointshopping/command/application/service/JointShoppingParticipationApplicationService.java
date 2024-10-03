@@ -25,7 +25,7 @@ public class JointShoppingParticipationApplicationService {
 
     /* 공동구매 참가 등록 */
     @Transactional
-    public Long createParticipation(JointShoppingParticipationRequest participationRequest) {
+    public JointShoppingParticipationUser createParticipation(JointShoppingParticipationRequest participationRequest) {
 
         /* 참가가 가득 찼는지 체크 */
         Long jointShoppingGroupNum = participationRequest.getJointShoppingGroupNum();
@@ -63,8 +63,8 @@ public class JointShoppingParticipationApplicationService {
         }
 
 
-        /* 등록된 번호 반환 */
-        return jointShoppingParticipationUser.getJointShoppingParticipationUserListNum();
+        /* 엔티티 반환 */
+        return jointShoppingParticipationUser;
 
     }
 

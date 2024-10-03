@@ -15,7 +15,7 @@ public class BookmarkApplicationService {
 
     /* 즐겨찾기 등록 */
     @Transactional
-    public Long createBookmark(BookmarkRequest bookmarkRequest) {
+    public Bookmark createBookmark(BookmarkRequest bookmarkRequest) {
 
         /* Bookmark 도메인 로직 실행, entity 반환 */
         Bookmark newBookmark = bookmarkDomainService.createBookmark(bookmarkRequest);
@@ -23,8 +23,8 @@ public class BookmarkApplicationService {
         /* save 로직 실행 */
         Bookmark bookmark = bookmarkDomainService.saveBookmark(newBookmark);
 
-        /* 등록된 번호 반환 */
-        return bookmark.getBookmarkNum();
+        /* 엔티티 반환 */
+        return bookmark;
 
     }
 
