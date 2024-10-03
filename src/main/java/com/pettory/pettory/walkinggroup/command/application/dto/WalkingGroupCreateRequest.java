@@ -20,4 +20,6 @@ public class WalkingGroupCreateRequest {
     @Min(value = 2)
     @Schema(description = "산책모임가입최대인원")
     private final int walkingGroupMaximumCount;
+    @Schema(description = "산책모임방장")
+    private final int walkingGroupOwner;
 }

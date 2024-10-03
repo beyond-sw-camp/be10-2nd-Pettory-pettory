@@ -9,5 +9,4 @@ public class WalkingGroupApplicationRequest {
 
     @Schema(description = "산책모임승인상태", example = "ACCEPT")
     private String walkingGroupApprovalState;
-
 }
