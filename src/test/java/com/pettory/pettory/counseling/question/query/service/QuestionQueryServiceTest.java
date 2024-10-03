@@ -19,10 +19,10 @@ class QuestionQueryServiceTest {
 
     @Test
     @DisplayName("질문 목록 조회 테스트")
-    void testFindQuestionList() {
+    void testFindAllQuestions() {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<QuestionQueryDTO> questions = questionQueryService.findQuestionList();
+                    List<QuestionQueryDTO> questions = questionQueryService.findAllQuestions();
                     questions.forEach(System.out::println);
                 }
         );
@@ -43,10 +43,10 @@ class QuestionQueryServiceTest {
     @DisplayName("질문 제목별 질문 조회 확인 테스트")
     @ParameterizedTest
     @ValueSource(strings = {"신삼", "할거없으면"})
-    void testFindByCounselingQuestionTitle(String counselingQuestionTitle) {
+    void testFindQuestionsByTitle(String counselingQuestionTitle) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<QuestionQueryDTO> questions = questionQueryService.findByCounselingQuestionTitle(counselingQuestionTitle);
+                    List<QuestionQueryDTO> questions = questionQueryService.findQuestionsByTitle(counselingQuestionTitle);
                     questions.forEach(System.out::println);
                 }
         );
@@ -55,10 +55,10 @@ class QuestionQueryServiceTest {
     @DisplayName("질문 내용별 질문 조회 확인 테스트")
     @ParameterizedTest
     @ValueSource(strings = {"제가", "호박나이트에서"})
-    void testFindByCounselingQuestionContent(String counselingQuestionContent) {
+    void testFindQuestionsByContent(String counselingQuestionContent) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<QuestionQueryDTO> questions = questionQueryService.findByCounselingQuestionContent(counselingQuestionContent);
+                    List<QuestionQueryDTO> questions = questionQueryService.findQuestionsByContent(counselingQuestionContent);
                     questions.forEach(System.out::println);
                 }
         );
@@ -67,10 +67,10 @@ class QuestionQueryServiceTest {
     @DisplayName("질문 제목+내용별 질문 조회 확인 테스트")
     @ParameterizedTest
     @ValueSource(strings = {"마루"})
-    void testFindByCounselingQuestionTopic(String counselingQuestionTopic) {
+    void testFindQuestionsByTopic(String counselingQuestionTopic) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<QuestionQueryDTO> questions = questionQueryService.findByCounselingQuestionTopic(counselingQuestionTopic);
+                    List<QuestionQueryDTO> questions = questionQueryService.findQuestionsByTopic(counselingQuestionTopic);
                     questions.forEach(System.out::println);
                 }
         );
@@ -79,10 +79,10 @@ class QuestionQueryServiceTest {
     @DisplayName("회원 닉네임별 질문 조회 확인 테스트")
     @ParameterizedTest
     @ValueSource(strings = {"민권쓰", "찌유"})
-    void testFindByUserNickname(String userNickname) {
+    void testFindQuestionsByNickname(String userNickname) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<QuestionQueryDTO> questions = questionQueryService.findByUserNickname(userNickname);
+                    List<QuestionQueryDTO> questions = questionQueryService.findQuestionsByNickname(userNickname);
                     questions.forEach(System.out::println);
                 }
         );
