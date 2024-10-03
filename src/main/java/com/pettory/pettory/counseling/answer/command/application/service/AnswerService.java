@@ -30,25 +30,27 @@ public class AnswerService {
 
     // 답변 작성 및 파일 저장
     @Transactional
-    public void registAnswerWithFile(AnswerDTO answerDTO, MultipartFile file) throws IOException {
+    public int createAnswer(AnswerDTO answerDTO, MultipartFile answerImg) throws IOException {
         // 1. 답변 저장
         Answer answer = answerRepository.save(modelMapper.map(answerDTO, Answer.class));
 
         // 2. 파일 저장 처리
-        if (file != null && !file.isEmpty()) {
+        if (answerImg != null && !answerImg.isEmpty()) {
             String uploadDir = "uploads/";
-            String originalFilename = file.getOriginalFilename();
+            String originalFilename = answerImg.getOriginalFilename();
             String storageFileName = System.currentTimeMillis() + "_" + originalFilename;
             String filePath = uploadDir + storageFileName;
 
             // 파일 저장 디렉토리에 파일 저장
             File dest = new File(filePath);
-            file.transferTo(dest);
+            answerImg.transferTo(dest);
 
             // 파일 메타데이터 저장
-            AnswerFile answerFile = new AnswerFile(answer.getCounselingAnswerNum(), (int) file.getSize(), filePath);
+            AnswerFile answerFile = new AnswerFile(answer.getCounselingAnswerNum(), (int) answerImg.getSize(), filePath);
             answerFileRepository.save(answerFile);
         }
+
+        return answer.getCounselingAnswerNum();
     }
 
     @Transactional
@@ -58,30 +60,32 @@ public class AnswerService {
     }
 
     @Transactional
-    public void deleteAnswer(AnswerDTO answerDTO) {
+    public void removeAnswer(AnswerDTO answerDTO) {
         Answer foundAnswer = answerRepository.save(modelMapper.map(answerDTO, Answer.class));
-        foundAnswer.deleteCounselingAnswer(AnswerState.DELETE, LocalDateTime.now().toString());
+        foundAnswer.removeCounselingAnswer(AnswerState.DELETE, LocalDateTime.now().toString());
     }
 
     @Transactional
-    public void registSubAnswerWithFile(AnswerDTO answerDTO, MultipartFile file) throws IOException {
+    public int createSubAnswer(AnswerDTO answerDTO, MultipartFile subAnswerImg) throws IOException {
         Answer subAnswer = answerRepository.save(modelMapper.map(answerDTO, Answer.class));
 
         // 재답변 저장
-        subAnswer.registSubAnswerWithFile(subAnswer.getCounselingAnswerNum());
+        subAnswer.createSubAnswer(subAnswer.getCounselingAnswerNum());
 
-        if (file != null && !file.isEmpty()) {
+        if (subAnswerImg != null && !subAnswerImg.isEmpty()) {
             String uploadDir = "uploads/";
-            String originalFilename = file.getOriginalFilename();
+            String originalFilename = subAnswerImg.getOriginalFilename();
             String storageFileName = System.currentTimeMillis() + "_" + originalFilename;
             String filePath = uploadDir + storageFileName;
 
             File dest = new File(filePath);
-            file.transferTo(dest);
+            subAnswerImg.transferTo(dest);
 
-            AnswerFile subAnswerFile = new AnswerFile(subAnswer.getCounselingAnswerReanswerNum(), (int) file.getSize(), filePath);
+            AnswerFile subAnswerFile = new AnswerFile(subAnswer.getCounselingAnswerReanswerNum(), (int) subAnswerImg.getSize(), filePath);
             answerFileRepository.save(subAnswerFile);
         }
+
+        return subAnswer.getCounselingAnswerReanswerNum();
     }
 
 }
