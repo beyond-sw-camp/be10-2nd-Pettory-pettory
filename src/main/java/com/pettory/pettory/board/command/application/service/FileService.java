@@ -23,7 +23,8 @@ public class FileService {
         for (MultipartFile file : files) {
             // 파일 저장 경로 설정 (예: 로컬 디렉터리)
             ClassPathResource resource = new ClassPathResource("files/");
-            String uploadDir = resource.getFile().getAbsolutePath();
+//            String uploadDir = resource.getFile().getAbsolutePath();
+            String uploadDir = System.getProperty("user.dir") + "/uploaded-files/";
 
             String filePath = uploadDir + "/" + file.getOriginalFilename();
 

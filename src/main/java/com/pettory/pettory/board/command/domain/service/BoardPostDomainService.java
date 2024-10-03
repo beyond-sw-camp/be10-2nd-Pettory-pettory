@@ -22,14 +22,11 @@ public class BoardPostDomainService {
         );
     }
 
-    // 도메인 객체를 저장
-    public Post savePost(Post newPost) {
-        return postRepository.save(newPost);
-    }
 
     // 도메인 객체를 수정
     public void updatePost(Post post, String postTitle, String postContent) {
         // 1. 게시글 제목과 내용 변경을 위한 메서드 호출
+        System.out.println("updatePost 메서드가 호출되었습니다.");
         post.updatePost(postTitle, postContent);
 
 

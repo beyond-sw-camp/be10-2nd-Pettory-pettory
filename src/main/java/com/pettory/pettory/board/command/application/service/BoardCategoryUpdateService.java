@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardCategoryUpdateService {
 
     private final BoardCategoryDomainService boardCategoryDomainService;
-    private JPACategoryRepository jpacategoryRepository;
+    private final JPACategoryRepository jpacategoryRepository;
 
     // 카테고리 수정
     @Transactional

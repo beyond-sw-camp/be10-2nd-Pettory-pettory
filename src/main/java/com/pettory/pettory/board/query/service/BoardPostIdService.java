@@ -21,13 +21,13 @@ public class BoardPostIdService {
     public BoardPostDetailResponse getPostsById(int id){
 
         List<BoardPostDetailDTO> detailposts = boardPostMapper.selectPostById(id);
-        List<String> fileLinks = boardPostMapper.postFilelinks(id);
+//        List<String> fileLinks = boardPostMapper.postFilelinks(id);
 
 
         jpaPostRepository.incrementPostHits((long)id);
         return BoardPostDetailResponse.builder()
                 .postDetail(detailposts)
-                .fileLinks(fileLinks)
+//                .fileLinks(fileLinks)
                 .build();
 
 
