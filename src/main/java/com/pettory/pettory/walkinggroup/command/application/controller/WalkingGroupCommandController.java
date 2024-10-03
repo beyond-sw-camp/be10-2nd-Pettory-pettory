@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,10 +27,9 @@ public class WalkingGroupCommandController {
     @PostMapping("/")
     public ResponseEntity<CommonResponseDTO> createWalkingGroup(@RequestBody @Valid WalkingGroupCreateRequest walkingGroupCreateRequest) {
         int walkingGroupId = walkingGroupCommandService.createWalkingGroup(walkingGroupCreateRequest);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "새 산책모임 등록 성공", walkingGroupId);
 
-        return ResponseEntity
-                .created(URI.create("/api/walking-group/" + walkingGroupId))
-                .build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
     }
 
     /* 산책 모임 수정 */
@@ -41,7 +41,8 @@ public class WalkingGroupCommandController {
     ) {
         walkingGroupCommandService.updateWalkingGroup(walkingGroupId, walkingGroupRequest);
 
-        return ResponseEntity.created(URI.create("/api/walking-group/" + walkingGroupId)).build();
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "산책모임 정보 수정 성공", walkingGroupRequest);
+        return ResponseEntity.ok(successResponse);
     }
 
     /* 산책 모임 삭제 */
@@ -51,7 +52,8 @@ public class WalkingGroupCommandController {
 
         walkingGroupCommandService.deleteWalkingGroup(walkingGroupId);
 
-        return ResponseEntity.noContent().build();
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "산책모임 삭제 성공", null);
+        return ResponseEntity.ok(successResponse);
     }
 
 

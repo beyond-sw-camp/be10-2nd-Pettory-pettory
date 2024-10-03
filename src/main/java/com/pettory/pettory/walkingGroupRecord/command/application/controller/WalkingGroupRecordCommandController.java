@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,9 +32,8 @@ public class WalkingGroupRecordCommandController {
                 walkingGroupRecordRequest
         );
 
-        return ResponseEntity
-                .created(URI.create("/api/walking-group-record/" + walkingGroupRecordId))
-                .build();
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "산책 모임 기록 작성 성공", walkingGroupRecordId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
     }
 
     @Operation(summary = "산책모임기록수정", description = "산책모임의 산책기록을 수정한다.")
@@ -45,7 +45,8 @@ public class WalkingGroupRecordCommandController {
 
         walkingGroupRecordCommandService.updateWalkingGroupRecord(walkingGroupRecordId, walkingGroupRequest);
 
-        return ResponseEntity.created(URI.create("/api/walking-group-record/" + walkingGroupRecordId)).build();
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "산책 모임 기록 수정 성공", walkingGroupRequest);
+        return ResponseEntity.ok(successResponse);
 
     }
 
@@ -55,7 +56,8 @@ public class WalkingGroupRecordCommandController {
 
         walkingGroupRecordCommandService.deleteWalkingGroupRecord(walkingGroupRecordId);
 
-        return ResponseEntity.noContent().build();
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "산책 모임 기록 삭제", null);
+        return ResponseEntity.ok(successResponse);
     }
 
 
