@@ -56,12 +56,13 @@ public class ChatService {
 
     /* 4. 채팅 내용 수정 */
     @Transactional
-    public void modifyChatting(ModifyChattingDTO modifyChattingDTO) {
+    public Chatting modifyChatting(ModifyChattingDTO modifyChattingDTO) {
         Chatting chatting = chattingRepository.findById(modifyChattingDTO.getChattingUniqueNum()).orElseThrow(IllegalArgumentException::new);
         /* 채팅 수정 메소드 */
         chatting.modifyChatting(modifyChattingDTO.getChattingContent(),
                                 modifyChattingDTO.getChattingUpdateTime(),
                                 modifyChattingDTO.getChattingState());
+        return chatting;
     }
 
     /* 5-1. 채팅 얇은 삭제 */
