@@ -1,5 +1,6 @@
 package com.pettory.pettory.jointshopping.query.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -7,6 +8,7 @@ import java.util.List;
 
 @Getter
 @Builder
+@Schema(description = "공동구매모임 응답")
 public class JointShoppingGroupListResponse {
     private List<JointShoppingGroupDTO> groupList;
     private int currentPage;            // 현재 페이지
