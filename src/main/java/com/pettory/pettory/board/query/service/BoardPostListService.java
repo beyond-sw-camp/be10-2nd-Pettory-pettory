@@ -16,12 +16,11 @@ public class BoardPostListService {
     private final BoardPostMapper boardPostMapper;
 
     // 게시글 목록 조회
-    @Transactional(readOnly = true)
-    public BoardPostListResponse getPosts(String postTitle) {
+    public BoardPostListResponse getPostList() {
 
-        List<BoardPostDTO> posts = boardPostMapper.selectPosts(postTitle);
 
-        int totalPosts = boardPostMapper.countPosts(postTitle);
+        List<BoardPostDTO> posts = boardPostMapper.selectPosts();
+        int totalPosts = boardPostMapper.countPosts();
 
         return BoardPostListResponse.builder()
                 .postList(posts)
