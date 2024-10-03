@@ -6,6 +6,7 @@ import com.pettory.pettory.feedingRecord.command.domain.aggregate.FeedingRecord;
 import com.pettory.pettory.pet.command.domain.aggregate.Pet;
 import com.pettory.pettory.pet.command.domain.aggregate.PetAccess;
 import com.pettory.pettory.walkingRecord.command.domain.aggregate.WalkingRecord;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -27,34 +28,60 @@ import java.util.UUID;
 @Getter
 @EntityListeners(AuditingEntityListener.class)    // 엔터티 삽입, 수정 시간 기록 위함
 @SQLDelete(sql = "UPDATE user SET user_state = 'DELETE', user_delete_datetime = NOW(), WHERE user_id = ? AND user_state != 'DELETE'")
+@Schema(description = "회원DTO")
 public class User {
+    @Schema(description = "회원id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
     private Long userId;    // 회원id
+
+    @Schema(description = "회원이메일")
     @Column(unique = true)
     private String userEmail;   // 회원이메일
+
+    @Schema(description = "회원비밀번호")
     private String userPassword;    // 회원비밀번호
+
+    @Schema(description = "회원닉네임")
     @Column(unique = true)
     private String userNickname;    // 회원닉네임
+
+    @Schema(description = "회원이름")
     private String userName;    // 회원이름
+
+    @Schema(description = "회원생년월일")
     private LocalDate userBirth; // 회원생년월일
 
+    @Schema(description = "회원상태")
     // DB의 기본값 설정이 잘 동작하지 않는 경우가 발생하여 JPA로 기본값을 명시적으로 처리
     @Enumerated(EnumType.STRING)
     private UserState userState = UserState.ACTIVE; // 회원상태  // 기본값 설정
-    //    private boolean userVetYn = false;  // 회원수의사여부  // 기본값 설정
+
+    @Schema(description = "회원역할")
     @Enumerated(EnumType.STRING)
     private UserRole userRole = UserRole.USER;  // 회원역할
+
+    @Schema(description = "회원산책기록공개여부")
     private boolean userWalkingRecordPublicYn = true;  // 회원산책기록공개여부    // 기본값 설정
+
     private String userHospitalName;    // 회원병원이름
     private String userHospitalInfo;    // 회원병원정보
+
+    @Schema(description = "회원등록일시")
     @CreatedDate
     private LocalDateTime userRegisterDatetime; // 회원등록일시
+
+    @Schema(description = "회원수정일시")
     @Column(insertable = false)
     @LastModifiedDate
     private LocalDateTime userWithdrawDatetime; // 회원탈퇴일시
+
+    @Schema(description = "회원정지횟수")
     private Long userSuspensionCount = 0L;   // 회원계정정지횟수
+
     private LocalDateTime userSuspensionEndDatetime; // 회원계정정지종료일시
+
+    @Schema(description = "회원권한제공자")
     private String user_auth_provider = "LOCAL";
 
     @ManyToOne

@@ -50,7 +50,7 @@ public class FamilyCommandService {
         }
 
         // 7. 삭제 당하는 회원이 삭제하는 회원과 같은 가족인지 확인
-        if (!member.getFamily().equals(owner.getFamily())) {
+        if (member.getFamily() == null || owner.getFamily() == null || !member.getFamily().equals(owner.getFamily())) {
             throw new UnauthorizedException("해당 회원은 같은 가족이 아닙니다.");
         }
 

@@ -2,6 +2,7 @@ package com.pettory.pettory.user.query.dto;
 
 import com.pettory.pettory.user.command.domain.aggregate.UserRole;
 import com.pettory.pettory.user.command.domain.aggregate.UserState;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -22,10 +23,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 public class UserInfoResponse {
+    @Schema(example = "ju@gmail.com")
     @NotBlank
     private String userEmail;
+
     @NotBlank
     private String userNickname;
+
     @NotBlank
     private String userName;
     @NotNull
@@ -42,4 +46,19 @@ public class UserInfoResponse {
     private LocalDateTime userRegisterDatetime;
     private LocalDateTime userSuspensionEndDatetime;
 
+    public UserInfoResponse(
+            String userEmail, String userNickname, String userName, LocalDate userBirth, UserState userState, UserRole userRole, boolean userWalkingRecordPublicYn, String userHospitalName, String userHospitalInfo, LocalDateTime userRegisterDatetime, LocalDateTime userSuspensionEndDatetime
+    ) {
+        this.userEmail = userEmail;
+        this.userNickname = userNickname;
+        this.userName = userName;
+        this.userBirth = userBirth;
+        this.userState = userState;
+        this.userRole = userRole;
+        this.userWalkingRecordPublicYn = userWalkingRecordPublicYn;
+        this.userHospitalName = userHospitalName;
+        this.userHospitalInfo = userHospitalInfo;
+        this.userRegisterDatetime = userRegisterDatetime;
+        this.userSuspensionEndDatetime = userSuspensionEndDatetime;
+    }
 }

@@ -5,11 +5,15 @@ import com.pettory.pettory.family.command.application.dto.InviteToFamilyRequest;
 import com.pettory.pettory.family.command.application.dto.KickMemberRequest;
 import com.pettory.pettory.family.command.application.service.InvitationCommandService;
 import com.pettory.pettory.security.util.UserSecurity;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Pettory 가족 컨트롤러")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/invitations")
@@ -17,6 +21,7 @@ public class InvitationCommandController {
 
     private final InvitationCommandService invitationCommandService;
 
+    @Operation(summary = "회원을 가족으로 초대", description = "다른 회원을 자신의 가족으로 초대한다.")
     // 다른 회원을 가족으로 초대
     @PostMapping
     public ResponseEntity<CommonResponseDTO> inviteToFamily(@RequestBody InviteToFamilyRequest inviteToFamilyRequest) {
@@ -31,8 +36,9 @@ public class InvitationCommandController {
     }
 
     // 가족 초대 거절
+    @Operation(summary = "받은 가족 초대를 거절", description = "다른 사람이 보낸 가족 초대를 거절한다.")
     @PutMapping("/{invitationId}/rejection")
-    public ResponseEntity<CommonResponseDTO> rejectInvitation(@PathVariable Long invitationId) {
+    public ResponseEntity<CommonResponseDTO> rejectInvitation(@PathVariable @Schema(example = "4") Long invitationId) {
 
         String currentUserEmail = UserSecurity.getCurrentUserEmail();
 
@@ -43,8 +49,9 @@ public class InvitationCommandController {
     }
 
     // 가족 초대 수락
+    @Operation(summary = "받은 가족 초대를 수락", description = "다른 사람이 보낸 가족 초대를 수락한다.")
     @PutMapping("/{invitationId}/acceptance")
-    public ResponseEntity<CommonResponseDTO> acceptInvitation(@PathVariable Long invitationId) {
+    public ResponseEntity<CommonResponseDTO> acceptInvitation(@PathVariable @Schema(example = "5") Long invitationId) {
 
         String currentUseremail = UserSecurity.getCurrentUserEmail();
 
