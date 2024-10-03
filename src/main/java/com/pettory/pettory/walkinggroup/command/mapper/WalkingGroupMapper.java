@@ -8,7 +8,8 @@ public class WalkingGroupMapper {
         return WalkingGroup.create(
                 walkingGroupRequest.getWalkingGroupName(),
                 walkingGroupRequest.getWalkingGroupInfo(),
-                walkingGroupRequest.getWalkingGroupMaximumCount()
+                walkingGroupRequest.getWalkingGroupMaximumCount(),
+                walkingGroupRequest.getWalkingGroupOwner()
         );
     }
 }

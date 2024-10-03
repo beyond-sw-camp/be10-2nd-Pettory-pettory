@@ -12,4 +12,7 @@ public class WalkingGroupApplicationUpdateRequest {
     @Schema(description = "산책모임승인상태", example = "REFUSAL")
     private  String walkingGroupApprovalState;
 
+    public WalkingGroupApplicationUpdateRequest(String walkingGroupApprovalState) {
+        this.walkingGroupApprovalState = walkingGroupApprovalState;
+    }
 }
