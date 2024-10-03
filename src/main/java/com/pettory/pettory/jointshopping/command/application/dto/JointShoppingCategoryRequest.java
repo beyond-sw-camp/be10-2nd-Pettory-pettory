@@ -11,6 +11,7 @@ import java.beans.ConstructorProperties;
 @Schema(description = "카테고리 요청")
 public class JointShoppingCategoryRequest {
 
+    @Schema(example = "개껌")
     @NotBlank
     private final String jointShoppingCategoryTitle;
 

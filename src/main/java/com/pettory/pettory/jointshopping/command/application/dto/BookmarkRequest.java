@@ -10,8 +10,11 @@ import lombok.RequiredArgsConstructor;
 @Schema(description = "즐겨찾기 요청")
 public class BookmarkRequest {
 
+    @Schema(example = "1")
     @NotNull
     private final Long jointShoppingGroupNum;
+
+    @Schema(example = "3")
     @NotNull
     private final Long userId;
 }

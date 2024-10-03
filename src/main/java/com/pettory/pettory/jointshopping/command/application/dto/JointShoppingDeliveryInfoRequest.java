@@ -11,8 +11,11 @@ import lombok.RequiredArgsConstructor;
 @Schema(description = "배송 정보 요청")
 public class JointShoppingDeliveryInfoRequest {
 
+    @Schema(example = "03")
     @NotEmpty
     private final String courierCode;
+
+    @Schema(example = "22222222")
     @NotEmpty
     private final String invoiceNum;
     

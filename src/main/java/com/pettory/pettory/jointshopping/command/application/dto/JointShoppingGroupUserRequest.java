@@ -10,8 +10,11 @@ import lombok.RequiredArgsConstructor;
 @Schema(description = "공동구매모임회원 요청")
 public class JointShoppingGroupUserRequest {
 
+    @Schema(example = "1")
     @NotNull
     private final Long jointShoppingGroupNum;
+
+    @Schema(example = "3")
     @NotNull
     private final Long userId;
 }
