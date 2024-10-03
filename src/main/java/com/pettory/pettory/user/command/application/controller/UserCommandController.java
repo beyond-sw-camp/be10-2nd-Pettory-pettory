@@ -30,10 +30,10 @@ public class UserCommandController {
     public ResponseEntity<CommonResponseDTO> registerUser(@Valid @RequestBody @Schema UserRegisterRequest userRegisterRequest) {
 
 
-        userCommandService.registerUser(userRegisterRequest);
+        Long newUserId = userCommandService.registerUser(userRegisterRequest);
 
         // 회원가입 성공 시 응답
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "회원가입 성공", null);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.CREATED.value(), "회원가입 성공", newUserId);
         return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
 
     }
@@ -68,9 +68,9 @@ public class UserCommandController {
 
         String currentUserEmail = UserSecurity.getCurrentUserEmail();
 
-        userCommandService.changePasswords(currentUserEmail, changePasswordRequest);
+        Long changedUserId = userCommandService.changePasswords(currentUserEmail, changePasswordRequest);
 
-        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "비밀번호 변경 성공", null);
+        CommonResponseDTO successResponse = new CommonResponseDTO(HttpStatus.OK.value(), "비밀번호 변경 성공", changedUserId);
         return ResponseEntity.status(HttpStatus.OK).body(successResponse);
     }
 
