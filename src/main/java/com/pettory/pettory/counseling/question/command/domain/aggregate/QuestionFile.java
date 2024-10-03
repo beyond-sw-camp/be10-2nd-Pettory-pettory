@@ -13,9 +13,16 @@ public class QuestionFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "counseling_question_file_num")
     private int counselingQuestionFileNum;
+
+    @Column(name = "counseling_question_num")
     private int counselingQuestionNum;
+
+    @Column(name = "counseling_question_file_size")
     private int counselingQuestionFileSize;
+
+    @Column(name = "counseling_question_file_directory")
     private String counselingQuestionFileDirectory;
 
     public QuestionFile(int counselingQuestionNum, int counselingQuestionFileSize, String counselingQuestionFileDirectory) {
