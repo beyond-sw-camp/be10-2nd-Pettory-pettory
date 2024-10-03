@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
-@Tag(name = "즐겨찾기")
+@Tag(name = "즐겨찾기", description = "즐겨찾기 등록/삭제/조회")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("jointshopping")
