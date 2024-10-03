@@ -72,6 +72,14 @@ public class SecurityConfig {
                             .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
                             .requestMatchers(new AntPathRequestMatcher("/swagger-ui/index.html")).permitAll()
                             .requestMatchers(new AntPathRequestMatcher("/webjars/**")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/question/**", "GET")).hasAnyAuthority("ROLE_USER", "ROLE_VET", "ROLE_ADMIN")
+                            .requestMatchers(new AntPathRequestMatcher("/question/**", "POST")).hasAnyAuthority("ROLE_USER", "ROLE_VET", "ROLE_ADMIN")
+                            .requestMatchers(new AntPathRequestMatcher("/question/**", "PUT")).hasAnyAuthority("ROLE_USER", "ROLE_VET", "ROLE_ADMIN")
+                            .requestMatchers(new AntPathRequestMatcher("/question/**", "DELETE")).hasAnyAuthority("ROLE_USER", "ROLE_VET", "ROLE_ADMIN")
+                            .requestMatchers(new AntPathRequestMatcher("/answer/**", "POST")).hasAnyAuthority("ROLE_USER", "ROLE_VET", "ROLE_ADMIN")
+                            .requestMatchers(new AntPathRequestMatcher("/answer/**", "PUT")).hasAnyAuthority("ROLE_USER", "ROLE_VET", "ROLE_ADMIN")
+                            .requestMatchers(new AntPathRequestMatcher("/answer/**", "DELETE")).hasAnyAuthority("ROLE_USER", "ROLE_VET", "ROLE_ADMIN")
+                            .requestMatchers(new AntPathRequestMatcher("/answer/subanswers", "POST")).hasAnyAuthority("ROLE_USER", "ROLE_VET", "ROLE_ADMIN")
 
                             //board 부분
                             .requestMatchers(new AntPathRequestMatcher("/board/posts/**", "GET")).permitAll()
