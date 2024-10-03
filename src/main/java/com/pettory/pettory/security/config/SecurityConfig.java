@@ -73,6 +73,18 @@ public class SecurityConfig {
                             .requestMatchers(new AntPathRequestMatcher("/swagger-ui/index.html")).permitAll()
                             .requestMatchers(new AntPathRequestMatcher("/webjars/**")).permitAll()
 
+                            //board 부분
+                            .requestMatchers(new AntPathRequestMatcher("/board/posts/**", "GET")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/board/posts/**", "POST")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/board/posts/**", "PUT")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/board/posts/**", "DELETE")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/board/comments/**", "GET")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/board/comments/create", "POST")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/board/comments/update/**", "PUT")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/board/comments/delete/**", "DELETE")).hasAuthority("ROLE_USER")
+                            .requestMatchers(new AntPathRequestMatcher("/board/category/**", "PUT")).hasAuthority("ROLE_ADMIN")
+                            .requestMatchers(new AntPathRequestMatcher("/board/category/**", "POST")).hasAuthority("ROLE_ADMIN")
+                            .requestMatchers(new AntPathRequestMatcher("/board/category/**", "DELETE")).hasAuthority("ROLE_ADMIN")
                             .anyRequest().authenticated();
                 })
                 .sessionManagement(

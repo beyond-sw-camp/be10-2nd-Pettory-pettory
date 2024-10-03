@@ -27,6 +27,12 @@ public class Post {
     @Enumerated(EnumType.STRING)
     private PostState postState;
 
+    @ManyToOne
+    @JoinColumn(name = "category_num")  // Category 테이블의 FK
+    private Category category;
+
+
+
     // PostRequest를 통해 필요한 값들로 설정하는 생성자
     public Post(String postTitle, String postContent, int postCategoryNum, int postWriterNum) {
         this.postTitle = postTitle;
@@ -38,6 +44,8 @@ public class Post {
         this.postUpdateDatetime = null;  // 기본적으로 null
         this.postDeleteDateTime = null;  // 기본적으로 null
         this.postState = PostState.ACTIVE;  // 기본값으로 ACTIVE 설정
+
+
     }
 
 

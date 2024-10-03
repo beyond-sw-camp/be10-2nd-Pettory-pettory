@@ -14,7 +14,7 @@ public interface BoardPostMapper {
 
     int countPosts();
 
-    List<BoardPostDetailDTO> selectPostById(@Param("postId") int postId);
+    List<BoardPostDetailDTO> selectPostById(@Param("postNum") int postNum);
 
-    List<String> postFilelinks(@Param("postId") int postId);
+    List<String> postFilelinks(@Param("postNum") int postNum);
 }

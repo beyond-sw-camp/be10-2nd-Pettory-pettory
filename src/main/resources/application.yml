@@ -22,6 +22,12 @@ spring:
             enable: true
     default-encoding: UTF-8
 
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
@@ -42,3 +48,5 @@ springdoc:
 token:
   secret: z9Hwd2bJp8hffAvC8HM8E7U13IgHEXldNH1JyG88hqXxvk05afj0CHFazkGqxq2ZPRpWNwqSBWp4TDHpLC7KNA==
   expiration_time : 604800000
+
+
