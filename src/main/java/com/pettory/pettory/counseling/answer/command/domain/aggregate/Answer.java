@@ -42,12 +42,12 @@ public class Answer {
         this.counselingAnswerUpdateDatetime = counselingAnswerUpdateDatetime;
     }
 
-    public void deleteCounselingAnswer(AnswerState counselingAnswerState, String counselingAnswerDeleteDatetime) {
+    public void removeCounselingAnswer(AnswerState counselingAnswerState, String counselingAnswerDeleteDatetime) {
         this.counselingAnswerState = counselingAnswerState;
         this.counselingAnswerDeleteDatetime = counselingAnswerDeleteDatetime;
     }
 
-    public void registSubAnswerWithFile(int counselingAnswerReanswerNum) {
+    public void createSubAnswer(int counselingAnswerReanswerNum) {
         this.counselingAnswerReanswerNum = counselingAnswerReanswerNum;
     }
 
