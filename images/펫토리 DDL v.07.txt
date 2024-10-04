@@ -1,0 +1,737 @@
+CREATE TABLE `board`
+(
+    `post_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '게시글번호',
+    `post_content`    LONGTEXT NOT NULL COMMENT '게시글내용',
+    `post_title`    VARCHAR(50) NOT NULL COMMENT '게시글제목',
+    `post_hits`    INTEGER NOT NULL COMMENT '게시글조회수',
+    `post_delete_datetime`    DATETIME COMMENT '게시글삭제시간',
+    `post_state`    VARCHAR(20) NOT NULL COMMENT '게시글상태',
+    `post_insert_datetime`    DATETIME DEFAULT NOW() NOT NULL COMMENT '게시글등록시간',
+    `post_update_datetime`    DATETIME COMMENT '게시글수정시간',
+    `post_writer_num`    INTEGER NOT NULL COMMENT '게시글작성자',
+    `post_category_num`    INTEGER NOT NULL COMMENT '게시글카테고리번호',
+ PRIMARY KEY ( `post_num` )
+) COMMENT = '게시판';
+
+
+CREATE TABLE `board_category`
+(
+    `category_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '카테고리번호',
+    `category_title`    VARCHAR(50) NOT NULL COMMENT '카테고리제목',
+ PRIMARY KEY ( `category_num` )
+) COMMENT = '게시판카테고리';
+
+
+CREATE TABLE `board_comment`
+(
+    `comment_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '댓글번호',
+    `comment_content`    LONGTEXT NOT NULL COMMENT '댓글내용',
+    `comment_state`    VARCHAR(20) NOT NULL COMMENT '댓글상태',
+    `comment_insert_datetime`    DATETIME NOT NULL COMMENT '댓글입력시간',
+    `comment_update_datetime`    DATETIME COMMENT '댓글수정시간',
+    `comment_delete_datetime`    DATETIME COMMENT '댓글삭제시간',
+    `post_num`    INTEGER NOT NULL COMMENT '게시글번호',
+    `recomment_num`    INTEGER COMMENT '대댓글번호',
+    `user_id`    INTEGER NOT NULL COMMENT '댓글작성자',
+ PRIMARY KEY ( `comment_num` )
+) COMMENT = '게시판댓글';
+
+
+CREATE TABLE `board_file_table`
+(
+    `board_file_unique_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '게시판파일고유번호',
+    `board_file_storage_directory`    LONGTEXT NOT NULL COMMENT '게시판파일경로',
+    `post_num`    INTEGER NOT NULL COMMENT '게시글번호',
+    `board_file_size`    INTEGER NOT NULL COMMENT '게시판파일크기',
+ PRIMARY KEY ( `board_file_unique_num` )
+) COMMENT = '게시판파일';
+
+
+CREATE TABLE `bookmark`
+(
+    `bookmark_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '즐겨찾기번호',
+    `joint_shopping_group_num`    INTEGER NOT NULL COMMENT '공동구매모임번호',
+    `user_id`    INTEGER NOT NULL COMMENT '회원아이디',
+ PRIMARY KEY ( `bookmark_num` )
+) COMMENT = '즐겨찾기';
+
+
+CREATE TABLE `chatroom_table`
+(
+    `chatroom_unique_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '채팅방고유번호',
+    `chatroom_insert_time`    DATETIME NOT NULL COMMENT '채팅방등록시간',
+    `chatroom_update_time`    DATETIME COMMENT '채팅방수정시간',
+    `chatroom_delete_time`    DATETIME COMMENT '채팅방삭제시간',
+    `chatroom_state`    VARCHAR(20) NOT NULL COMMENT '채팅방상태',
+    `chatroom_type`    VARCHAR(20) NOT NULL COMMENT '채팅방종류',
+    `chatroom_type_num`    INTEGER NOT NULL COMMENT '채팅방종류번호',
+ PRIMARY KEY ( `chatroom_unique_num` )
+) COMMENT = '채팅방';
+
+
+CREATE TABLE `chatting_file_table`
+(
+    `chatting_file_unique_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '채팅파일고유번호',
+    `file_chatting_unique_num`    INTEGER COMMENT '채팅고유번호',
+    `chatting_file_storage_directory`    LONGTEXT NOT NULL COMMENT '채팅파일경로',
+    `chatting_file_size`    INTEGER NOT NULL COMMENT '채팅파일크기',
+ PRIMARY KEY ( `chatting_file_unique_num` )
+) COMMENT = '파일';
+
+
+CREATE TABLE `chatting_table`
+(
+    `chatting_unique_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '채팅고유번호',
+    `chatting_chatroom_unique_num`    INTEGER COMMENT '채팅방고유번호',
+    `chatting_content`    LONGTEXT NOT NULL COMMENT '채팅작성내용',
+    `chatting_insert_time`    DATETIME NOT NULL COMMENT '채팅작성시간',
+    `chatting_update_time`    DATETIME COMMENT '채팅수정시간',
+    `chatting_delete_time`    DATETIME COMMENT '채팅삭제시간',
+    `chatting_state`    VARCHAR(20) NOT NULL COMMENT '채팅상태',
+    `user_id`    INTEGER NOT NULL COMMENT '채팅작성자번호',
+ PRIMARY KEY ( `chatting_unique_num` )
+) COMMENT = '채팅';
+
+
+CREATE TABLE `counseling_answer`
+(
+    `counseling_answer_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '상담답변번호',
+    `counseling_question_num`    INTEGER COMMENT '상담질문번호',
+    `counseling_answer_content`    LONGTEXT NOT NULL COMMENT '상담답변내용',
+    `counseling_answer_state`    VARCHAR(20) NOT NULL COMMENT '상담답변상태',
+    `counseling_answer_insert_datetime`    DATETIME NOT NULL COMMENT '상담답변작성일시',
+    `counseling_answer_delete_datetime`    DATETIME COMMENT '상담답변삭제일시',
+    `counseling_answer_update_datetime`    DATETIME COMMENT '상담답변수정일시',
+    `counseling_answer_reanwer_num`    INTEGER COMMENT '재답변번호',
+ PRIMARY KEY ( `counseling_answer_num` )
+) COMMENT = '상담답변';
+
+
+CREATE TABLE `counseling_answer_file`
+(
+    `counseling_answer_file_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '상담답변파일번호',
+    `counseling_answer_num`    INTEGER COMMENT '상담답변번호',
+    `counseling_answer_file_size`    INTEGER NOT NULL COMMENT '상담답변파일크기',
+    `counseling_answer_file_directory`    LONGTEXT NOT NULL COMMENT '상담답변파일경로',
+ PRIMARY KEY ( `counseling_answer_file_num` )
+) COMMENT = '상담답변첨부파일';
+
+
+CREATE TABLE `counseling_question`
+(
+    `counseling_question_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '상담질문번호',
+    `user_id`    INTEGER NOT NULL COMMENT '회원id',
+    `counseling_question_title`    VARCHAR(50) NOT NULL COMMENT '상담질문제목',
+    `counseling_question_content`    LONGTEXT NOT NULL COMMENT '상담질문내용',
+    `counseling_question_hits`    INTEGER NOT NULL COMMENT '상담질문조회수',
+    `counseling_question_state`    VARCHAR(20) NOT NULL COMMENT '상담질문상태',
+    `counseling_question_insert_datetime`    DATETIME NOT NULL COMMENT '상담질문작성일시',
+    `counseling_question_delete_datetime`    DATETIME COMMENT '상담질문삭제일시',
+    `counseling_question_update_datetime`    DATETIME COMMENT '상담질문수정일시',
+ PRIMARY KEY ( `counseling_question_num` )
+) COMMENT = '상담질문';
+
+
+CREATE TABLE `counseling_question_file`
+(
+    `counseling_question_file_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '상담질문파일번호',
+    `counseling_question_num`    INTEGER COMMENT '상담질문번호',
+    `counseling_question_file_size`    INTEGER NOT NULL COMMENT '상담질문파일크기',
+    `counseling_question_file_directory`    LONGTEXT NOT NULL COMMENT '상담질문파일경로',
+ PRIMARY KEY ( `counseling_question_file_num` )
+) COMMENT = '상담질문첨부파일';
+
+
+CREATE TABLE `family`
+(
+    `family_id`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '가족id',
+    `family_name`    VARCHAR(50) NOT NULL COMMENT '가족이름',
+    `family_insert_datetime`    DATETIME NOT NULL COMMENT '가족등록일시',
+    `family_delete_datetime`    DATETIME COMMENT '가족삭제일시',
+    `family_state`    VARCHAR(50) NOT NULL COMMENT '가족상태',
+    `family_update_datetime`    DATETIME COMMENT '가족수정일시',
+    `family_number`    INTEGER NOT NULL COMMENT '가족구성원수',
+    `family_owner_id`    INTEGER NOT NULL COMMENT '가족주인id',
+ PRIMARY KEY ( `family_id` )
+) COMMENT = '가족';
+
+
+CREATE TABLE `feeding_record`
+(
+    `feeding_record_id`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '급여기록id',
+    `feeding_record_feeding_type`    VARCHAR(50) NOT NULL COMMENT '급여기록사료간식분류',
+    `feeding_record_name`    VARCHAR(50) NOT NULL COMMENT '급여이름',
+    `feeding_record_type`    VARCHAR(50) NOT NULL COMMENT '급여종류',
+    `feeding_record_amount`    VARCHAR(50) COMMENT '급여량',
+    `feeding_record_insert_datetime`    DATETIME NOT NULL COMMENT '급여기록등록일시',
+    `feeding_record_image`    VARCHAR(255) COMMENT '급여사진',
+    `feeding_record_memo`    LONGTEXT COMMENT '급여메모',
+    `feeding_record_delete_datetime`    DATETIME COMMENT '급여기록삭제일시',
+    `feeding_record_state`    VARCHAR(20) DEFAULT 'A' NOT NULL COMMENT '급여기록상태',
+    `pet_id`    INTEGER COMMENT '반려동물id',
+    `feeding_record_update_datetime`    DATETIME COMMENT '급여기록수정일시',
+    `feeding_record_user_insert_datetime`    DATETIME NOT NULL COMMENT '급여기록회원등록일시',
+    `user_id`    INTEGER NOT NULL COMMENT '회원id',
+ PRIMARY KEY ( `feeding_record_id` )
+) COMMENT = '급여기록';
+
+
+CREATE TABLE `invitation`
+(
+    `invitation_id`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '초대id',
+    `invitation_send_user_id`    INTEGER NOT NULL COMMENT '초대하는회원id',
+    `invitation_receive_user_id`    INTEGER NOT NULL COMMENT '초대받는회원id',
+    `invitation_state`    VARCHAR(50) NOT NULL COMMENT '초대상태',
+    `invitation_created_at`    DATETIME NOT NULL COMMENT '초대생성일시',
+    `invitation_updated_at`    DATETIME COMMENT '초대상태수정일시',
+    `family_id`    INTEGER NOT NULL COMMENT '가족id',
+ PRIMARY KEY ( `invitation_id` )
+) COMMENT = '초대';
+
+
+CREATE TABLE `joint_shopping_category`
+(
+    `joint_shopping_category_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '카테고리번호',
+    `joint_shopping_category_title`    VARCHAR(50) NOT NULL COMMENT '카테고리제목',
+ PRIMARY KEY ( `joint_shopping_category_num` )
+) COMMENT = '공동구매카테고리';
+
+
+CREATE TABLE `joint_shopping_group`
+(
+    `joint_shopping_group_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '공동구매모임번호',
+    `joint_shopping_group_name`    VARCHAR(50) NOT NULL COMMENT '공동구매모임이름',
+    `joint_shopping_products`    VARCHAR(50) NOT NULL COMMENT '공동구매물품',
+    `joint_shopping_products_state`    VARCHAR(20) NOT NULL COMMENT '공동구매물품상태',
+    `joint_shopping_products_file_directory`    LONGTEXT COMMENT '공동구매물품파일경로',
+    `joint_shopping_info`    LONGTEXT COMMENT '공동구매설명',
+    `joint_shopping_cost`    INTEGER NOT NULL COMMENT '공동구매비용',
+    `joint_shopping_group_maximum_count`    INTEGER NOT NULL COMMENT '공동구매모임최대인원수',
+    `joint_shopping_participation_maximum_count`    INTEGER NOT NULL COMMENT '공동구매참가최대인원수',
+    `host_invoice_num`    VARCHAR(50) COMMENT '방장송장번호',
+    `joint_shopping_group_state`    VARCHAR(20) NOT NULL COMMENT '공동구매모임상태',
+    `joint_shopping_group_insert_datetime`    DATETIME NOT NULL COMMENT '공동구매모임등록일시',
+    `joint_shopping_group_update_datetime`    DATETIME COMMENT '공동구매모임수정일시',
+    `joint_shopping_group_delete_datetime`    DATETIME COMMENT '공동구매모임삭제일시',
+    `joint_shopping_category_num`    INTEGER NOT NULL COMMENT '카테고리번호',
+    `user_id`    INTEGER NOT NULL COMMENT '방장회원아이디',
+    `host_courier_code`    VARCHAR(20) COMMENT '방장택배사코드',
+ PRIMARY KEY ( `joint_shopping_group_num` )
+) COMMENT = '공동구매모임';
+
+
+CREATE TABLE `joint_shopping_group_user_list`
+(
+    `joint_shopping_group_user_list_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '공동구매모임회원목록번호',
+    `resign_yn`    BOOLEAN NOT NULL COMMENT '강퇴여부',
+    `joint_shopping_user_insert_datetime`    DATETIME NOT NULL COMMENT '공동구매회원입장일시',
+    `joint_shopping_user_delete_datetime`    DATETIME COMMENT '공동구매회원퇴장일시',
+    `joint_shopping_group_num`    INTEGER NOT NULL COMMENT '공동구매모임번호',
+    `user_id`    INTEGER NOT NULL COMMENT '회원아이디',
+ PRIMARY KEY ( `joint_shopping_group_user_list_num` )
+) COMMENT = '공동구매모임회원목록';
+
+
+CREATE TABLE `joint_shopping_participation_user_list`
+(
+    `joint_shopping_participation_user_list_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '공동구매참가회원목록번호',
+    `payment_cost`    INTEGER NOT NULL COMMENT '결제비용',
+    `participation_state`    VARCHAR(20) NOT NULL COMMENT '참가상태',
+    `user_invoice_num`    VARCHAR(50) COMMENT '회원송장번호',
+    `products_receipt_yn`    BOOLEAN NOT NULL COMMENT '물품수령여부',
+    `joint_shopping_participation_insert_datetime`    DATETIME NOT NULL COMMENT '공동구매참가입장일시',
+    `joint_shopping_participation_delete_datetime`    DATETIME COMMENT '공동구매참가퇴장일시',
+    `joint_shopping_group_num`    INTEGER NOT NULL COMMENT '공동구매모임번호',
+    `user_id`    INTEGER NOT NULL COMMENT '회원아이디',
+    `user_courier_code`    VARCHAR(20) COMMENT '회원택배사코드',
+ PRIMARY KEY ( `joint_shopping_participation_user_list_num` )
+) COMMENT = '공동구매참가회원목록';
+
+
+CREATE TABLE `pet`
+(
+    `pet_id`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '반려동물id',
+    `pet_type`    VARCHAR(50) NOT NULL COMMENT '반려동물종류',
+    `pet_name`    VARCHAR(50) NOT NULL COMMENT '반려동물이름',
+    `pet_breed`    VARCHAR(50) NOT NULL COMMENT '반려동물종',
+    `pet_birth`    DATE COMMENT '반려동물생년월일',
+    `pet_gender`    VARCHAR(50) NOT NULL COMMENT '반려동물성별',
+    `pet_neutering_yn`    BOOLEAN NOT NULL COMMENT '반려동물중성화여부',
+    `pet_weight`    INTEGER NOT NULL COMMENT '반려동물무게',
+    `pet_memo`    LONGTEXT COMMENT '반려동물메모',
+    `pet_insert_datetime`    DATETIME NOT NULL COMMENT '반려동물등록일시',
+    `pet_delete_datetime`    DATETIME COMMENT '반려동물삭제일시',
+    `pet_state`    VARCHAR(50) DEFAULT 'A' NOT NULL COMMENT '반려동물상태',
+    `user_id`    INTEGER COMMENT '회원id',
+    `family_id`    INTEGER COMMENT '가족id',
+    `pet_update_datetime`    DATETIME COMMENT '반려동물수정일시',
+ PRIMARY KEY ( `pet_id` )
+) COMMENT = '반려동물';
+
+
+CREATE TABLE `pet_access`
+(
+    `pet_access_id`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '반려동물접근권한id',
+    `pet_access_insert_datetime`    DATETIME NOT NULL COMMENT '반려동물접근권한등록일시',
+    `pet_access_update_datetime`    DATETIME COMMENT '반려동물접근권한수정일시',
+    `pet_access_delete_datetime`    DATETIME COMMENT '반려동물접근권한삭제일시',
+    `pet_access_state`    VARCHAR(20) NOT NULL COMMENT '반려동물절급권한상태',
+    `user_id`    INTEGER NOT NULL COMMENT '회원id',
+    `pet_id`    INTEGER NOT NULL COMMENT '반려동물id',
+ PRIMARY KEY ( `pet_access_id` )
+) COMMENT = '반려동물접근권한';
+
+
+CREATE TABLE `provision_record`
+(
+    `provision_record_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '지급기록번호',
+    `provision_cost`    INTEGER NOT NULL COMMENT '지급비용',
+    `provision_state`    VARCHAR(20) NOT NULL COMMENT '지급상태',
+    `provision_record_insert_datetime`    DATETIME NOT NULL COMMENT '지급기록등록일시',
+    `provision_complete_datetime`    DATETIME COMMENT '지급완료일시',
+    `joint_shopping_group_num`    INTEGER NOT NULL COMMENT '공동구매모임번호',
+ PRIMARY KEY ( `provision_record_num` )
+) COMMENT = '지급기록';
+
+
+CREATE TABLE `register_walking_group`
+(
+    `register_walking_group_id`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '가입한산책모임id',
+    `walking_group_id`    INTEGER NOT NULL COMMENT '산책모임id',
+    `register_walking_group_state`    VARCHAR(20) NOT NULL COMMENT '가입한회원상태',
+    `user_id`    INTEGER NOT NULL COMMENT '회원id',
+    `register_walking_group_insert_datetime`    DATETIME NOT NULL COMMENT '가입한산책모임등록일시',
+    `register_walking_group_update_datetime`    DATETIME COMMENT '가입한산책모임수정일시',
+    `register_walking_group_delete_datetime`    DATETIME COMMENT '가입한산책모임삭제일시',
+ PRIMARY KEY ( `register_walking_group_id` )
+) COMMENT = '가입한산책모임';
+
+
+CREATE TABLE `report_record`
+(
+    `report_record_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '신고기록번호',
+    `report_record_category_num`    INTEGER NOT NULL COMMENT '신고기록카테고리번호',
+    `report_record_user_num`    INTEGER NOT NULL COMMENT '신고기록대상자번호',
+    `report_record_content`    LONGTEXT NOT NULL COMMENT '신고기록내용',
+    `report_record_state`    BOOLEAN NOT NULL COMMENT '신고기록상태',
+    `report_record_insert_datetime`    DATETIME NOT NULL COMMENT '신고기록작성일시',
+    `report_record_delete_datetime`    DATETIME COMMENT '신고기록삭제일시',
+    `report_record_update_datetime`    DATETIME COMMENT '신고기록수정일시',
+    `user_id`    INTEGER NOT NULL COMMENT '회원id',
+    `report_record_kind_num`    INTEGER NOT NULL COMMENT '신고기록분류번호',
+    `report_record_kind`    VARCHAR(20) NOT NULL COMMENT '신고기록분류',
+ PRIMARY KEY ( `report_record_num` )
+) COMMENT = '신고기록';
+
+
+CREATE TABLE `report_record_category`
+(
+    `report_record_category_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '신고기록카테고리번호',
+    `report_record_category_name`    VARCHAR(255) NOT NULL COMMENT '신고기록카테고리명',
+    `report_record_category_date`    INTEGER NOT NULL COMMENT '신고기록카테고리제재일수',
+ PRIMARY KEY ( `report_record_category_num` )
+) COMMENT = '신고기록카테고리';
+
+
+CREATE TABLE `report_record_file`
+(
+    `report_record_file_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '신고기록파일번호',
+    `report_record_file_size`    INTEGER NOT NULL COMMENT '신고기록파일크기',
+    `report_record_file_directory`    LONGTEXT NOT NULL COMMENT '신고기록파일경로',
+    `report_record_num`    INTEGER NOT NULL COMMENT '신고기록번호',
+ PRIMARY KEY ( `report_record_file_num` )
+) COMMENT = '신고기록첨부파일';
+
+
+CREATE TABLE `user`
+(
+    `user_id`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '회원id',
+    `user_email`    VARCHAR(50) NOT NULL COMMENT '회원이메일',
+    `user_nickname`    VARCHAR(50) NOT NULL COMMENT '회원닉네임',
+    `user_name`    VARCHAR(50) NOT NULL COMMENT '회원이름',
+    `user_birth`    DATE NOT NULL COMMENT '회원생년월일',
+    `user_state`    VARCHAR(20) NOT NULL COMMENT '회원상태',
+    `user_role`    VARCHAR(20) NOT NULL COMMENT '회원역할',
+    `user_walking_record_public_yn`    BOOLEAN DEFAULT '1' NOT NULL COMMENT '회원산책기록공개여부',
+    `user_hospital_info`    VARCHAR(255) COMMENT '회원병원정보',
+    `user_register_datetime`    DATETIME NOT NULL COMMENT '회원등록일시',
+    `user_withdraw_datetime`    DATETIME COMMENT '회원탈퇴일시',
+    `family_id`    INTEGER COMMENT '가족id',
+    `user_hospital_name`    VARCHAR(50) COMMENT '회원병원이름',
+    `user_suspension_count`    INTEGER DEFAULT 0 NOT NULL COMMENT '회원계정정지횟수',
+    `user_suspension_end_datetime`    DATETIME COMMENT '회원계정정지종료일시',
+    `user_password`    VARCHAR(255) NOT NULL COMMENT '회원비밀번호',
+    `user_auth_provider`    VARCHAR(20) NOT NULL COMMENT '회원인증제공자',
+ PRIMARY KEY ( `user_id` )
+) COMMENT = '회원';
+
+
+CREATE TABLE `vote_choose_result_table`
+(
+    `vote_choice_result_unique_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '투표선택고유번호',
+    `vote_choice_unique_num`    INTEGER COMMENT '투표선택지고유번호',
+    `vote_choice_result_insert_time`    DATETIME NOT NULL COMMENT '투표선택등록시간',
+    `vote_choice_result_update_time`    DATETIME COMMENT '투표선택수정시간',
+    `vote_choice_result_delete_time`    DATETIME COMMENT '투표선택삭제시간',
+    `vote_choice_result_state`    VARCHAR(20) NOT NULL COMMENT '투표선택상태',
+    `user_id`    INTEGER NOT NULL COMMENT '투표선택지투표회원번호',
+ PRIMARY KEY ( `vote_choice_result_unique_num` )
+) COMMENT = '투표선택결과';
+
+
+CREATE TABLE `vote_choose_table`
+(
+    `vote_choice_unique_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '투표선택지고유번호',
+    `vote_unique_num`    INTEGER COMMENT '투표고유번호',
+    `vote_choice`    VARCHAR(50) NOT NULL COMMENT '투표선택지',
+    `vote_choice_content`    VARCHAR(200) NOT NULL COMMENT '투표선택지내용',
+ PRIMARY KEY ( `vote_choice_unique_num` )
+) COMMENT = '투표선택지';
+
+
+CREATE TABLE `vote_table`
+(
+    `vote_unique_num`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '투표고유번호',
+    `vote_chatroom_unique_num`    INTEGER COMMENT '투표채팅방고유번호',
+    `vote_title`    VARCHAR(50) NOT NULL COMMENT '투표제목',
+    `vote_content`    VARCHAR(255) NOT NULL COMMENT '투표내용',
+    `vote_insert_time`    DATETIME NOT NULL COMMENT '투표등록시간',
+    `vote_update_time`    DATETIME COMMENT '투표수정시간',
+    `vote_delete_time`    DATETIME COMMENT '투표삭제시간',
+    `vote_state`    VARCHAR(20) NOT NULL COMMENT '투표상태',
+ PRIMARY KEY ( `vote_unique_num` )
+) COMMENT = '투표';
+
+
+CREATE TABLE `walking_group`
+(
+    `walking_group_id`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '산책모임id',
+    `walking_group_name`    VARCHAR(50) NOT NULL COMMENT '산책모임이름',
+    `walking_group_info`    LONGTEXT NOT NULL COMMENT '산책모임설명',
+    `walking_group_maximum_count`    INTEGER NOT NULL COMMENT '산책모임가입최대인원',
+    `walking_group_state`    VARCHAR(20) NOT NULL COMMENT '산책모임상태',
+    `walking_group_insert_datetime`    DATETIME NOT NULL COMMENT '산책모임등록시간',
+    `walking_group_update_datetime`    DATETIME COMMENT '산책모임수정시간',
+    `walking_group_delete_datetime`    DATETIME COMMENT '산책모임삭제시간',
+    `walking_group_owner`    INTEGER NOT NULL COMMENT '산책모임방장',
+ PRIMARY KEY ( `walking_group_id` )
+) COMMENT = '산책모임';
+
+
+CREATE TABLE `walking_group_application`
+(
+    `walking_group_application_id`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '산책모임신청id',
+    `walking_group_approval_state`    VARCHAR(20) NOT NULL COMMENT '산책모임신청승인상태',
+    `walking_group_application_insert_datetime`    DATETIME NOT NULL COMMENT '산책모임신청등록시간',
+    `walking_group_application_delete_datetime`    DATETIME COMMENT '산책모임신청삭제시간',
+    `walking_group_id`    INTEGER NOT NULL COMMENT '산책모임id',
+    `user_id`    INTEGER NOT NULL COMMENT '회원id',
+    `walking_group_approval_update_datetime`    DATETIME COMMENT '산책모임승인수정시간',
+ PRIMARY KEY ( `walking_group_application_id` )
+) COMMENT = '산책모임신청';
+
+
+CREATE TABLE `walking_group_record`
+(
+    `walking_group_record_id`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '산책모임기록id',
+    `walking_group_record_duration`    INTEGER NOT NULL COMMENT '산책모임기록경과시간',
+    `walking_group_route_start`    VARCHAR(50) NOT NULL COMMENT '산책모임경로시작',
+    `walking_group_route_end`    VARCHAR(50) NOT NULL COMMENT '산책모임경로끝',
+    `walking_group_record_insert_datetime`    DATETIME NOT NULL COMMENT '산책모임기록등록시간',
+    `walking_group_record_update_datetime`    DATETIME COMMENT '산책모임기록수정시간',
+    `walking_group_record_delete_datetime`    DATETIME COMMENT '산책모임기록삭제시간',
+    `walking_group_record_state`    VARCHAR(20) NOT NULL COMMENT '산책모임기록상태',
+    `walking_group_id`    INTEGER NOT NULL COMMENT '산책모임id',
+    `walking_group_date`    DATE NOT NULL COMMENT '산책모임날짜',
+ PRIMARY KEY ( `walking_group_record_id` )
+) COMMENT = '산책모임기록';
+
+
+CREATE TABLE `walking_record`
+(
+    `walking_record_id`    INTEGER NOT NULL AUTO_INCREMENT
+ COMMENT '산책기록id',
+    `walking_record_date`    DATE NOT NULL COMMENT '산책기록날짜',
+    `walking_record_duration`    INTEGER COMMENT '산책기록경과시간',
+    `walking_record_poop_count`    INTEGER COMMENT '산책기록배변횟수',
+    `walking_record_water_amount`    VARCHAR(50) COMMENT '산책기록음수량',
+    `walking_record_memo`    LONGTEXT COMMENT '산책기록메모',
+    `walking_record_image`    VARCHAR(255) COMMENT '산책기록사진',
+    `walking_record_color`    VARCHAR(50) COMMENT '산책기록색상',
+    `walking_record_insert_datetime`    DATETIME NOT NULL COMMENT '산책기록등록일시',
+    `walking_record_delete_datetime`    DATETIME COMMENT '산책기록삭제일시',
+    `walking_record_state`    VARCHAR(20) DEFAULT 'A' NOT NULL COMMENT '산책기록상태',
+    `pet_id`    INTEGER COMMENT '반려동물id',
+    `walking_record_update_datetime`    DATETIME COMMENT '산책기록수정일시',
+    `user_id`    INTEGER NOT NULL COMMENT '회원id',
+ PRIMARY KEY ( `walking_record_id` )
+) COMMENT = '산책기록';
+
+
+ALTER TABLE `board`
+ ADD CONSTRAINT `board_FK` FOREIGN KEY ( `post_writer_num` )
+ REFERENCES `user` (`user_id` );
+
+ALTER TABLE `board`
+ ADD CONSTRAINT `board_FK1` FOREIGN KEY ( `post_category_num` )
+ REFERENCES `board_category` (`category_num` );
+
+
+
+ALTER TABLE `board_comment`
+ ADD CONSTRAINT `board_comment_FK` FOREIGN KEY ( `post_num` )
+ REFERENCES `board` (`post_num` );
+
+ALTER TABLE `board_comment`
+ ADD CONSTRAINT `board_comment_FK1` FOREIGN KEY ( `user_id` )
+ REFERENCES `user` (`user_id` );
+
+
+
+ALTER TABLE `board_file_table`
+ ADD CONSTRAINT `board_file_table_FK` FOREIGN KEY ( `post_num` )
+ REFERENCES `board` (`post_num` );
+
+
+
+ALTER TABLE `bookmark`
+ ADD CONSTRAINT `bookmark_FK` FOREIGN KEY ( `user_id` )
+ REFERENCES `user` (`user_id` );
+
+ALTER TABLE `bookmark`
+ ADD CONSTRAINT `bookmark_FK1` FOREIGN KEY ( `joint_shopping_group_num` )
+ REFERENCES `joint_shopping_group` (`joint_shopping_group_num` );
+
+
+
+ALTER TABLE `chatting_file_table`
+ ADD CONSTRAINT `chatting_file_table_FK` FOREIGN KEY ( `file_chatting_unique_num` )
+ REFERENCES `chatting_table` (`chatting_unique_num` );
+
+
+
+ALTER TABLE `chatting_table`
+ ADD CONSTRAINT `chatting_table_FK` FOREIGN KEY ( `chatting_chatroom_unique_num` )
+ REFERENCES `chatroom_table` (`chatroom_unique_num` );
+
+ALTER TABLE `chatting_table`
+ ADD CONSTRAINT `chatting_table_FK1` FOREIGN KEY ( `user_id` )
+ REFERENCES `user` (`user_id` );
+
+
+
+ALTER TABLE `counseling_answer`
+ ADD CONSTRAINT `counseling_answer_FK` FOREIGN KEY ( `counseling_question_num` )
+ REFERENCES `counseling_question` (`counseling_question_num` );
+
+
+
+ALTER TABLE `counseling_answer_file`
+ ADD CONSTRAINT `counseling_answer_file_FK` FOREIGN KEY ( `counseling_answer_num` )
+ REFERENCES `counseling_answer` (`counseling_answer_num` );
+
+
+
+ALTER TABLE `counseling_question`
+ ADD CONSTRAINT `counseling_question_FK` FOREIGN KEY ( `user_id` )
+ REFERENCES `user` (`user_id` );
+
+
+
+ALTER TABLE `counseling_question_file`
+ ADD CONSTRAINT `counseling_question_file_FK` FOREIGN KEY ( `counseling_question_num` )
+ REFERENCES `counseling_question` (`counseling_question_num` );
+
+
+
+ALTER TABLE `feeding_record`
+ ADD CONSTRAINT `feeding_record_FK` FOREIGN KEY ( `pet_id` )
+ REFERENCES `pet` (`pet_id` );
+
+ALTER TABLE `feeding_record`
+ ADD CONSTRAINT `feeding_record_FK1` FOREIGN KEY ( `user_id` )
+ REFERENCES `user` (`user_id` );
+
+
+
+ALTER TABLE `invitation`
+ ADD CONSTRAINT `invitation_FK` FOREIGN KEY ( `family_id` )
+ REFERENCES `family` (`family_id` );
+
+
+
+ALTER TABLE `joint_shopping_group`
+ ADD CONSTRAINT `joint_shopping_group_FK` FOREIGN KEY ( `user_id` )
+ REFERENCES `user` (`user_id` );
+
+ALTER TABLE `joint_shopping_group`
+ ADD CONSTRAINT `joint_shopping_group_FK1` FOREIGN KEY ( `joint_shopping_category_num` )
+ REFERENCES `joint_shopping_category` (`joint_shopping_category_num` );
+
+
+
+ALTER TABLE `joint_shopping_group_user_list`
+ ADD CONSTRAINT `joint_shopping_group_user_list_FK` FOREIGN KEY ( `user_id` )
+ REFERENCES `user` (`user_id` );
+
+ALTER TABLE `joint_shopping_group_user_list`
+ ADD CONSTRAINT `joint_shopping_group_user_list_FK1` FOREIGN KEY ( `joint_shopping_group_num` )
+ REFERENCES `joint_shopping_group` (`joint_shopping_group_num` );
+
+
+
+ALTER TABLE `joint_shopping_participation_user_list`
+ ADD CONSTRAINT `joint_shopping_participation_user_list_FK` FOREIGN KEY ( `user_id` )
+ REFERENCES `user` (`user_id` );
+
+ALTER TABLE `joint_shopping_participation_user_list`
+ ADD CONSTRAINT `joint_shopping_participation_user_list_FK1` FOREIGN KEY ( `joint_shopping_group_num` )
+ REFERENCES `joint_shopping_group` (`joint_shopping_group_num` );
+
+
+
+ALTER TABLE `pet`
+ ADD CONSTRAINT `pet_FK` FOREIGN KEY ( `user_id` )
+ REFERENCES `user` (`user_id` );
+
+ALTER TABLE `pet`
+ ADD CONSTRAINT `pet_FK1` FOREIGN KEY ( `family_id` )
+ REFERENCES `family` (`family_id` );
+
+
+
+ALTER TABLE `pet_access`
+ ADD CONSTRAINT `pet_access_FK` FOREIGN KEY ( `pet_id` )
+ REFERENCES `pet` (`pet_id` );
+
+ALTER TABLE `pet_access`
+ ADD CONSTRAINT `pet_access_FK1` FOREIGN KEY ( `user_id` )
+ REFERENCES `user` (`user_id` );
+
+
+
+ALTER TABLE `provision_record`
+ ADD CONSTRAINT `provision_record_FK` FOREIGN KEY ( `joint_shopping_group_num` )
+ REFERENCES `joint_shopping_group` (`joint_shopping_group_num` );
+
+
+
+ALTER TABLE `register_walking_group`
+ ADD CONSTRAINT `register_walking_group_FK` FOREIGN KEY ( `user_id` )
+ REFERENCES `user` (`user_id` );
+
+ALTER TABLE `register_walking_group`
+ ADD CONSTRAINT `register_walking_group_FK1` FOREIGN KEY ( `walking_group_id` )
+ REFERENCES `walking_group` (`walking_group_id` );
+
+
+
+ALTER TABLE `report_record`
+ ADD CONSTRAINT `report_record_FK` FOREIGN KEY ( `report_record_category_num` )
+ REFERENCES `report_record_category` (`report_record_category_num` );
+
+ALTER TABLE `report_record`
+ ADD CONSTRAINT `report_record_FK1` FOREIGN KEY ( `user_id` )
+ REFERENCES `user` (`user_id` );
+
+
+
+ALTER TABLE `report_record_file`
+ ADD CONSTRAINT `report_record_file_FK` FOREIGN KEY ( `report_record_num` )
+ REFERENCES `report_record` (`report_record_num` );
+
+
+
+ALTER TABLE `user`
+ ADD CONSTRAINT `user_FK` FOREIGN KEY ( `family_id` )
+ REFERENCES `family` (`family_id` );
+
+
+
+ALTER TABLE `vote_choose_result_table`
+ ADD CONSTRAINT `vote_choose_result_table_FK` FOREIGN KEY ( `vote_choice_unique_num` )
+ REFERENCES `vote_choose_table` (`vote_choice_unique_num` );
+
+ALTER TABLE `vote_choose_result_table`
+ ADD CONSTRAINT `vote_choose_result_table_FK1` FOREIGN KEY ( `user_id` )
+ REFERENCES `user` (`user_id` );
+
+
+
+ALTER TABLE `vote_choose_table`
+ ADD CONSTRAINT `vote_choose_table_FK` FOREIGN KEY ( `vote_unique_num` )
+ REFERENCES `vote_table` (`vote_unique_num` );
+
+
+
+ALTER TABLE `vote_table`
+ ADD CONSTRAINT `vote_table_FK` FOREIGN KEY ( `vote_chatroom_unique_num` )
+ REFERENCES `chatroom_table` (`chatroom_unique_num` );
+
+
+
+ALTER TABLE `walking_group`
+ ADD CONSTRAINT `walking_group_FK` FOREIGN KEY ( `walking_group_owner` )
+ REFERENCES `user` (`user_id` );
+
+
+
+ALTER TABLE `walking_group_application`
+ ADD CONSTRAINT `walking_group_application_FK` FOREIGN KEY ( `walking_group_id` )
+ REFERENCES `walking_group` (`walking_group_id` );
+
+ALTER TABLE `walking_group_application`
+ ADD CONSTRAINT `walking_group_application_FK1` FOREIGN KEY ( `user_id` )
+ REFERENCES `user` (`user_id` );
+
+
+
+ALTER TABLE `walking_group_record`
+ ADD CONSTRAINT `walking_group_record_FK` FOREIGN KEY ( `walking_group_id` )
+ REFERENCES `walking_group` (`walking_group_id` );
+
+
+
+ALTER TABLE `walking_record`
+ ADD CONSTRAINT `walking_record_FK` FOREIGN KEY ( `pet_id` )
+ REFERENCES `pet` (`pet_id` );
+
+ALTER TABLE `walking_record`
+ ADD CONSTRAINT `walking_record_FK1` FOREIGN KEY ( `user_id` )
+ REFERENCES `user` (`user_id` );
+
+
+
