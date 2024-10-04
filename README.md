@@ -259,7 +259,7 @@
 ### 상담
 
  <details>
-   <summary>게시판</summary>
+   <summary>상담</summary>
    <div markdown="2">
 
 - 상담
@@ -312,7 +312,7 @@
 ### 공동구매
 
  <details>
-   <summary>게시판</summary>
+   <summary>공동구매</summary>
    <div markdown="2">
 
 - 공동구매모임
