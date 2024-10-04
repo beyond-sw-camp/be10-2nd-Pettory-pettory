@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.pettory.chat.mapper.VoteMapper">
+
+    <select id="selectVoteList" parameterType="java.lang.Integer" resultType="com.pettory.pettory.chat.dto.vote.SelectVoteDTO">
+        SELECT
+            vote_unique_num,
+            vote_chatroom_unique_num,
+            vote_title,
+            vote_content,
+            vote_insert_time,
+            vote_update_time,
+            vote_delete_time,
+            vote_state
+        FROM vote_table
+        WHERE vote_chatroom_unique_num = #{vote_chatroom_unique_num}
+    </select>
+
+</mapper>

@@ -1,0 +1,35 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      routes:
+        - id: user-server
+          uri: lb://USER-SERVER
+          predicates:
+            - Path=/user-server/**
+          filters:
+            - RewritePath=/user-server/(?<segment>.*),/$\{segment}
+        - id: main-server
+          uri: lb://MAIN-SERVER
+          predicates:
+            - Path=/main-server/**
+          filters:
+            - RewritePath=/main-server/(?<segment>.*),/$\{segment}
+
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.instance.instance-id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG

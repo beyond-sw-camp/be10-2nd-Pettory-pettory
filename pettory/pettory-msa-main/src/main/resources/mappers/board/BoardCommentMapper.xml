@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.pettory.board.query.mapper.BoardCommentMapper">
+
+    <!-- 댓글 조회 -->
+    <select id="selectComments" resultType="com.pettory.pettory.board.query.dto.BoardCommentDTO">
+        SELECT
+        post_num,
+        comment_content,
+        comment_insert_datetime,
+        user_id,
+        recomment_num
+        FROM board_comment
+        WHERE comment_state = 'ACTIVE'
+        <if test="postNum != null">
+            AND post_num = #{postNum}
+        </if>
+    </select>
+
+    <!-- 댓글 개수 조회 -->
+    <select id="countComments" resultType="int">
+        SELECT COUNT(*)
+        FROM board_comment
+        WHERE comment_state = 'ACTIVE'
+        <if test="postNum != null">
+            AND post_num = #{postNum}
+        </if>
+    </select>
+
+
+
+</mapper>
+
+

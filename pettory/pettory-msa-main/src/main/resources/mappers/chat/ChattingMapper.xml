@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.pettory.chat.mapper.ChattingMapper">
+
+    <!-- Alias 설정이 없으면... 풀로 주어야 함 -->
+    <select id="selectChatRoomChatting" parameterType="java.lang.Integer" resultType="com.pettory.pettory.chat.dto.chatting.SelectChattingDTO">
+        SELECT
+               chatting_unique_num,
+               chatting_chatroom_unique_num,
+               chatting_content,
+               chatting_insert_time,
+               chatting_update_time,
+               chatting_delete_time,
+               chatting_state,
+               user_id
+          FROM chatting_table
+         WHERE chatting_chatroom_unique_num = #{chattingChatRoomUniqueNum}
+    </select>
+
+</mapper>

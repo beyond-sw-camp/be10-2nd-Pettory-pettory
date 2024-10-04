@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.pettory.walkinggroup.query.mapper.WalkingGroupMapper">
+
+    <select id="selectWalkingGroups" resultType="com.pettory.pettory.walkinggroup.query.dto.WalkingGroupDTO">
+        SELECT
+            wg.walking_group_id,
+            wg.walking_group_name,
+            wg.walking_group_info,
+            u.user_name,
+            wg.walking_group_maximum_count,
+            wg.walking_group_state,
+            wg.walking_group_insert_datetime
+         FROM walking_group wg
+         JOIN user u ON wg.walking_group_owner = u.user_id
+        WHERE walking_group_state = 'APPLICATION'
+        <if test="walkingGroupName != null">
+            AND wg.walking_group_name LIKE CONCAT('%', #{walkingGroupName}, '%')
+        </if>
+        <if test="walkingGroupInfo != null">
+            AND wg.walking_group_info LIKE CONCAT('%', #{walkingGroupInfo}, '%')
+        </if>
+
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countWalkingGroups" resultType="long">
+        SELECT COUNT(*)
+          FROM walking_group
+         WHERE walking_group_state = 'APPLICATION'
+        <if test="walkingGroupName != null">
+            AND walking_group_name LIKE CONCAT('%', #{walkingGroupName}, '%')
+        </if>
+        <if test="walkingGroupInfo != null">
+            AND walking_group_info LIKE CONCAT('%', #{walkingGroupInfo}, '%')
+        </if>
+
+    </select>
+
+    <select id="selectWalkingGroupById" resultType="com.pettory.pettory.walkinggroup.query.dto.WalkingGroupDTO">
+        SELECT
+            wg.walking_group_id,
+            wg.walking_group_name,
+            wg.walking_group_info,
+            u.user_name,
+            wg.walking_group_maximum_count,
+            wg.walking_group_state,
+            wg.walking_group_insert_datetime
+         FROM walking_group wg
+         JOIN user u ON wg.walking_group_owner = u.user_id
+        WHERE walking_group_id = #{walkingGroupId}
+          AND walking_group_state = 'APPLICATION'
+    </select>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.pettory.board.query.mapper.BoardPostMapper">
+
+    <!-- 게시판 게시글 리스트 조회 -->
+    <select id="selectPosts" resultType="com.pettory.pettory.board.query.dto.BoardPostDTO">
+        SELECT
+        post_num,
+        post_title,
+        post_hits,
+        post_insert_datetime
+        FROM board
+        WHERE post_state = 'ACTIVE'
+        ORDER BY post_num
+    </select>
+
+    <!-- 게시글 갯수 -->
+    <!-- 게시글 갯수 -->
+    <select id="countPosts" resultType="int">
+        SELECT COUNT(*)
+        FROM board
+        WHERE post_state = 'ACTIVE'
+    </select>
+
+    <!-- 게시글 상세 내용 조회 -->
+    <select id="selectPostById" resultType="com.pettory.pettory.board.query.dto.BoardPostDetailDTO">
+        SELECT
+        post_num,
+        post_title,
+        post_content,
+        post_hits,
+        post_insert_datetime,
+        post_writer_num
+        FROM board
+        <if test="postNum != null">
+            WHERE post_num = #{postNum}
+        </if>
+    </select>
+
+    <!-- 게시글 첨부파일 조회 -->
+    <select id="postFilelinks" resultType="java.lang.String">
+        SELECT f.board_file_storage_directory
+        FROM board p
+        LEFT JOIN board_file_table f ON p.post_num = f.post_num
+        WHERE p.post_num = #{postNum}
+    </select>
+</mapper>

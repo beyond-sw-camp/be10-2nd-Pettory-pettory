@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.pettory.counseling.question.query.mapper.QuestionMapper">
+
+    <select id="findQuestionList" resultType="com.pettory.pettory.counseling.question.query.dto.QuestionQueryDTO">
+        SELECT
+        counseling_question_num
+        , user_id
+        , counseling_question_title
+        , counseling_question_content
+        , counseling_question_hits
+        , counseling_question_state
+        , counseling_question_insert_datetime
+        , counseling_question_delete_datetime
+        , counseling_question_update_datetime
+        FROM counseling_question
+        WHERE counseling_question_state = 'ACTIVE'
+        ORDER BY counseling_question_num DESC
+    </select>
+
+    <select id="findQuestionByNum" resultType="com.pettory.pettory.counseling.question.query.dto.QuestionQueryDTO">
+        SELECT
+        counseling_question_num
+        , user_id
+        , counseling_question_title
+        , counseling_question_content
+        , counseling_question_hits
+        , counseling_question_state
+        , counseling_question_insert_datetime
+        , counseling_question_delete_datetime
+        , counseling_question_update_datetime
+        FROM counseling_question
+        WHERE counseling_question_state = 'ACTIVE'
+        AND counseling_question_num = #{ counselingQuestionNum }
+    </select>
+
+    <select id="findByCounselingQuestionTitle" resultType="com.pettory.pettory.counseling.question.query.dto.QuestionQueryDTO">
+        SELECT
+        counseling_question_num
+        , user_id
+        , counseling_question_title
+        , counseling_question_content
+        , counseling_question_hits
+        , counseling_question_state
+        , counseling_question_insert_datetime
+        , counseling_question_delete_datetime
+        , counseling_question_update_datetime
+        FROM counseling_question
+        WHERE counseling_question_state = 'ACTIVE'
+        AND counseling_question_title LIKE CONCAT('%', #{ counselingQuestionTitle }, '%')
+        ORDER BY counseling_question_num DESC
+    </select>
+
+    <select id="findByCounselingQuestionContent" resultType="com.pettory.pettory.counseling.question.query.dto.QuestionQueryDTO">
+        SELECT
+        counseling_question_num
+        , user_id
+        , counseling_question_title
+        , counseling_question_content
+        , counseling_question_hits
+        , counseling_question_state
+        , counseling_question_insert_datetime
+        , counseling_question_delete_datetime
+        , counseling_question_update_datetime
+        FROM counseling_question
+        WHERE counseling_question_state = 'ACTIVE'
+        AND counseling_question_content LIKE CONCAT('%', #{ counselingQuestionContent }, '%')
+        ORDER BY counseling_question_num DESC
+    </select>
+
+    <select id="findByCounselingQuestionTopic" resultType="com.pettory.pettory.counseling.question.query.dto.QuestionQueryDTO">
+        SELECT
+        counseling_question_num
+        , user_id
+        , counseling_question_title
+        , counseling_question_content
+        , counseling_question_hits
+        , counseling_question_state
+        , counseling_question_insert_datetime
+        , counseling_question_delete_datetime
+        , counseling_question_update_datetime
+        FROM counseling_question
+        WHERE counseling_question_state = 'ACTIVE'
+        AND counseling_question_title LIKE CONCAT('%', #{ counselingQuestionTopic }, '%')
+        AND counseling_question_content LIKE CONCAT('%', #{ counselingQuestionTopic }, '%')
+        ORDER BY counseling_question_num DESC
+    </select>
+
+    <select id="findByUserNickname" resultType="com.pettory.pettory.counseling.question.query.dto.QuestionQueryDTO">
+        SELECT
+        a.counseling_question_num
+        , a.user_id
+        , a.counseling_question_title
+        , a.counseling_question_content
+        , a.counseling_question_hits
+        , a.counseling_question_state
+        , a.counseling_question_insert_datetime
+        , a.counseling_question_delete_datetime
+        , a.counseling_question_update_datetime
+        FROM counseling_question a
+        WHERE a.counseling_question_state = 'ACTIVE'
+        AND a.user_id IN(SELECT
+        user_id
+        FROM user
+        WHERE user_nickname = #{ userNickname })
+        ORDER BY a.counseling_question_num DESC
+    </select>
+
+</mapper>

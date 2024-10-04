@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.userserver.family.query.mapper.InvitationMapper">
+
+    <!-- 받은 초대 조회 -->
+    <select id="selectReceivedInvitations" resultType="com.pettory.userserver.family.query.dto.ReceivedInvitationResponse">
+        SELECT
+                u.user_name
+              , f.family_name
+          FROM invitation i
+          JOIN user u ON u.user_id = i.invitation_receive_user_id
+          JOIN family f ON i.family_id = f.family_id
+         WHERE i.invitation_state = 'PENDING'
+           AND i.invitation_receive_user_id = #{receiverId}
+    </select>
+
+
+
+
+</mapper>
