@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.userserver.user.query.mapper.UserMapper">
+
+    <select id="findUserIdByEmail" parameterType="string" resultType="com.pettory.userserver.user.query.dto.UserEmailResponse">
+        SELECT
+                  user_id AS userId
+                , user_email AS userEmail
+          FROM user
+         WHERE user_email = #{userEmail}
+    </select>
+
+    <select id="findUserInfoByEmail" parameterType="string" resultType="com.pettory.userserver.user.query.dto.UserInfoResponse">
+        SELECT
+                  user_email AS userEmail
+                , user_nickname AS userNickname
+                , user_name AS userName
+                , user_birth AS userBirth
+                , user_state AS userState
+                , user_role AS userRole
+                , user_walking_record_public_yn AS userWalkingRecordPublicYn
+                , user_hospital_name AS userHospitalName
+                , user_hospital_info AS userHospitalInfo
+                , user_register_datetime AS userRegisterDatetime
+                , user_suspension_end_datetime AS userSuspensionEndDatetime
+          FROM user
+         WHERE user_email = #{userEmail}
+    </select>
+
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.pettory.jointshopping.query.mapper.JointShoppingParticipationMapper">
+
+    <!--  현재 공동구매모임 참가의 전체 사용자 목록 조회    -->
+    <select id="selectParticipants" resultType="com.pettory.pettory.user.query.dto.UserInfoResponse">
+        SELECT
+        u.user_email AS userEmail
+        , u.user_nickname AS userNickname
+        , u.user_name AS userName
+        , u.user_birth AS userBirth
+        , u.user_state AS userState
+        , u.user_role AS userRole
+        , u.user_walking_record_public_yn AS userWalkingRecordPublicYn
+        , u.user_hospital_name AS userHospitalName
+        , u.user_hospital_info AS userHospitalInfo
+        , u.user_register_datetime AS userRegisterDatetime
+        , u.user_suspension_end_datetime AS userSuspensionEndDatetime
+        FROM user u
+        JOIN joint_shopping_participation_user_list p ON (u.user_id = p.user_id)
+        WHERE p.joint_shopping_group_num = #{groupNum}
+        AND p.joint_shopping_participation_delete_datetime IS NULL
+        ORDER BY u.user_nickname
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countParticipants" resultType="long">
+        SELECT COUNT(*)
+        FROM user u
+        JOIN joint_shopping_participation_user_list p ON (u.user_id = p.user_id)
+        WHERE p.joint_shopping_group_num = #{groupNum}
+        AND p.joint_shopping_participation_delete_datetime IS NULL
+    </select>
+
+<!--    공동구매 물품 배송 정보 조회(참가자)-->
+    <select id="selectParticipantByNum" resultType="com.pettory.pettory.jointshopping.query.dto.JointShoppingParticipationDeliveryInfoResponse">
+        SELECT
+        user_courier_code
+        , user_invoice_num
+        , products_receipt_yn
+        FROM joint_shopping_participation_user_list
+        WHERE joint_shopping_participation_user_list_num = #{participationNum}
+    </select>
+
+</mapper>

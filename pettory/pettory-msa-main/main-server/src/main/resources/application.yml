@@ -1,0 +1,60 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: main-server
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/pettory
+    username : pettory
+    password : pettory
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: mypettory@gmail.com
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    default-encoding: UTF-8
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mappers/**/*.xml
+
+springdoc:
+  packages-to-scan: com.pettory.pettory
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+
+
+# TODO: ???? ?? ????? 7?(2024/09/28 ??)?? ??. ?? ?? ??
+token:
+  secret: z9Hwd2bJp8hffAvC8HM8E7U13IgHEXldNH1JyG88hqXxvk05afj0CHFazkGqxq2ZPRpWNwqSBWp4TDHpLC7KNA==
+  expiration_time : 604800000
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.instance.instance-id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka

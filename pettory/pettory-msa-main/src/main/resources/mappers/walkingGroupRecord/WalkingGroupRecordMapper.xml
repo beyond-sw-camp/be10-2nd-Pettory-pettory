@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.pettory.walkingGroupRecord.query.mapper.WalkingGroupRecordMapper">
+
+    <select id="selectWalkingGroupRecords" resultType="com.pettory.pettory.walkingGroupRecord.query.dto.WalkingGroupRecordDTO">
+        SELECT
+             walking_group_record_id,
+             walking_group_id,
+             walking_group_date,
+             walking_group_record_duration,
+             walking_group_route_start,
+             walking_group_route_end,
+             walking_group_record_state
+        FROM walking_group_record
+        WHERE true
+        <if test="walkingGroupDate != null">
+            AND walking_group_date = #{walkingGroupDate}
+        </if>
+        <if test="walkingGroupRecordState != null">
+            AND walking_group_record_state LIKE #{walkingGroupRecordState}
+        </if>
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countWalkingGroupRecords" resultType="long">
+        SELECT COUNT(*)
+        FROM walking_group_record
+        WHERE true
+        <if test="walkingGroupDate != null">
+            AND walking_group_date = #{walkingGroupDate}
+        </if>
+        <if test="walkingGroupRecordState != null">
+            AND walking_group_record_state LIKE #{walkingGroupRecordState}
+        </if>
+    </select>
+    
+    <select id="selectWalkingGroupRecordById" resultType="com.pettory.pettory.walkingGroupRecord.query.dto.WalkingGroupRecordDTO">
+        SELECT
+            walking_group_record_id,
+            walking_group_id,
+            walking_group_date,
+            walking_group_record_duration,
+            walking_group_route_start,
+            walking_group_route_end,
+            walking_group_record_state
+        FROM walking_group_record
+        WHERE walking_group_id = #{walkingGroupId}
+    </select>
+</mapper>

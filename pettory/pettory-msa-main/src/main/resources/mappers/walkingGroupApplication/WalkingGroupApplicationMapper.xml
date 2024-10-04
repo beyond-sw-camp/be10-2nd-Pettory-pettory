@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pettory.pettory.walkingGroupApplication.query.mapper.WalkingGroupApplicationMapper">
+
+    <select id="selectWalkingGroupApplications" resultType="com.pettory.pettory.walkingGroupApplication.query.dto.WalkingGroupApplicationDTO">
+        SELECT
+            wa.walking_group_application_id,
+            u1.user_name,
+            wg.walking_group_name,
+            u2.user_name,
+            wa.walking_group_approval_state,
+            wa.walking_group_application_insert_datetime
+        FROM walking_group_application wa
+        JOIN walking_group wg ON (wa.walking_group_id = wg.walking_group_id)
+        JOIN user u1 ON (wa.user_id = u1.user_id)
+        JOIN user u2 ON (wg.walking_group_owner = u2.user_id)
+
+     <if test="walkingGroupApprovalState != null">
+         WHERE wa.walking_group_approval_state LIKE CONCAT('%', #{walkingGroupApprovalState}, '%')
+     </if>
+
+     LIMIT #{limit} OFFSET #{offset}
+
+    </select>
+
+    <select id="countWalkingGroupApplications" resultType="long">
+        SELECT COUNT(*)
+        FROM walking_group_application
+
+        <if test="walkingGroupApprovalState != null">
+            WHERE walking_group_approval_state LIKE CONCAT('%', #{walkingGroupApprovalState}, '%')
+        </if>
+
+    </select>
+
+    <select id="selectWalkingGroupById" resultType="com.pettory.pettory.walkingGroupApplication.query.dto.WalkingGroupApplicationDTO">
+        SELECT
+            wa.walking_group_id,
+            wa.walking_group_application_id,
+            wg.walking_group_name,
+            u.user_name,
+            wa.walking_group_approval_state,
+            wa.walking_group_application_insert_datetime
+        FROM walking_group_application wa
+        JOIN walking_group wg ON (wa.walking_group_application_id = wg.walking_group_id)
+        JOIN user u  ON (wa.user_id = u.user_id)
+        WHERE wa.walking_group_id = #{walkingGroupId}
+    </select>
+
+</mapper>
