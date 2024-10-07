@@ -5,7 +5,7 @@
 # 2조 펫토리
 
 | [![](https://avatars.githubusercontent.com/u/103301589?v=4)](https://github.com/kimjm9911) | [![](https://avatars.githubusercontent.com/u/87793524?v=4)](https://github.com/dispear) | [![](https://avatars.githubusercontent.com/u/174981455?v=4)](https://github.com/eunseo-76) | [![](https://avatars.githubusercontent.com/u/158060587?v=4)](https://github.com/ygc1994) | [![](https://avatars.githubusercontent.com/u/132972216?v=4)](https://github.com/HanDJ00) | [![](https://avatars.githubusercontent.com/u/83564484?v=4)](https://github.com/aosskfdlrla)|
-|---|---|---|---|---|---|
+|:---:|:---:|:---:|:---:|:---:|:---:|
 | 김지민 | 박지훈 | 이은서 | 연건창 | 한동주 | 황희순
 |산책모임|공동구매|회원프로필 및 기타 기능|상담|게시판|채팅|
 
