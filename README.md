@@ -1,4 +1,4 @@
-﻿## 반려동물과 함께 만들어 가는 나의 이야기 펫토리
+## 반려동물과 함께 만들어 가는 나의 이야기 펫토리
 
 ![펫토리 아이콘](./images/어플_아이콘.PNG)
 
@@ -125,11 +125,24 @@
     </div>
 </details> 
 
+## 기능 설계서(API)
+<details>
+  <summary>기능 설계서</summary>
+  <div markdown="1">
+
+  ![API 명세 1](./images/API%20명세%201.png)  
+  ![API 명세 2](./images/API%20명세%202.png) 
+
+    </div>
+</details>  
+
 
 ## 테스트 결과 보고서
 <details>
   <summary>테스트 결과</summary>
   <div markdown="1">
+
+
 
 ### 채팅
 
@@ -259,7 +272,7 @@
 ### 상담
 
  <details>
-   <summary>상담</summary>
+   <summary>게시판</summary>
    <div markdown="2">
 
 - 상담
@@ -312,7 +325,7 @@
 ### 공동구매
 
  <details>
-   <summary>공동구매</summary>
+   <summary>게시판</summary>
    <div markdown="2">
 
 - 공동구매모임
@@ -560,7 +573,7 @@
 
 - 급여기록
 
-    ## 급여기록등록
+    ## 급여기록등
     
     ![급여기록등](./images/급여기록/pm-급여기록-1급여기록등록.png)
 
