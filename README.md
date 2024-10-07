@@ -35,7 +35,7 @@
 
 
 -
-    [GitHub](https://docs.google.com/spreadsheets/d/1xn3WYrcm1DOls6SgFvD8YYsPRyOG0y4JGV1NGI4js7w/edit?gid=0#gid=0)
+    [요구사항 명세서](https://docs.google.com/spreadsheets/d/1xn3WYrcm1DOls6SgFvD8YYsPRyOG0y4JGV1NGI4js7w/edit?gid=0#gid=0)
     
 
   <img src="./images/요구사항_명세서1.PNG" alt="요구사항 명세서 1">
