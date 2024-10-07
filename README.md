@@ -34,7 +34,7 @@
 ## 요구사항 명세서
 
 
-
+-
     [GitHub](https://docs.google.com/spreadsheets/d/1xn3WYrcm1DOls6SgFvD8YYsPRyOG0y4JGV1NGI4js7w/edit?gid=0#gid=0)
     
 
