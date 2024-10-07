@@ -50,7 +50,7 @@
    ### DDD-이벤트 스토밍
 
 
-- BoundedContext
+- Bounded-Context
     
     ![회원.png](/images/회원.png)
     
@@ -74,7 +74,7 @@
 
 
    
-- 논리모델링
+- 논리 모델링
     
     <img src="./images/논리_모델링3.PNG" alt="논리 모델링 3">
 
